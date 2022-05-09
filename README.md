@@ -81,7 +81,7 @@ Prerequisitos:
 Pasos para ejecutar los test
 
 1. Ingresar a la carpeta playwright
-2. Ejecutar el comando npm install
+2. Ejecutar el comando `npm install`
 3. Ejecutar el comando `npx playwright test`
 
 
