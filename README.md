@@ -84,7 +84,10 @@ Pasos para ejecutar los test
 
 1. Ingresar a la carpeta playwright
 2. Ejecutar el comando `npm install`
-3. Ejecutar el comando `npx playwright test`
+3. Configurar las variables `user` y `pass` de ghost en archivo `envitonment.ts`
+   que se encuentra en la carpeta `util`
+![img.png](Playwright/img/configuracion-environment.png)
+4. Ejecutar el comando `npx playwright test`
 
 
 
