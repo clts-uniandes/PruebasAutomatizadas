@@ -67,7 +67,7 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 ### Ejecución de pruebas:
 1. Instalar Cypress desde consola de comandos con el comando `npm install -g cypress`
-2. Ejecutar el comando `cypress open "<path>" ` donde path indica la carpeta "PruebasAutomatizadas\Cypress\pruebas_e2e" relativo a la carpeta donde descargó el contenido de repositorio (ejemplo, "C:\Fuentes\MisRepos\PruebasAutomatizadas\Cypress\pruebas_e2e" en el caso de Windows ). 
+2. Ejecutar el comando `cypress open --project "<path>" ` donde path indica la carpeta "PruebasAutomatizadas\Cypress\pruebas_e2e" relativo a la carpeta donde descargó el contenido de repositorio (ejemplo, "C:\Fuentes\MisRepos\PruebasAutomatizadas\Cypress\pruebas_e2e" en el caso de Windows ). 
 3. Espere a que apareza la pantalla de cypress. 
 4. Configure usuario de login de admin de Ghost en el archivo Cypress/pruebas_e2e/cypress/fixtures/loginData.json. con el editor de texto de su preferencia. Cambie los valores "username1" y "password1" segun el usuario admin disponible en Ghost local.
 5. Haga clic en la prueba que desee ejecutar (elementos tipo PAxyz.spec.js ) ![image](https://user-images.githubusercontent.com/98668775/167325358-429e0884-73a3-45ad-95ab-8f2c38b38f33.png)
