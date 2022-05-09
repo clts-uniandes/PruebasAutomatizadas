@@ -71,9 +71,15 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 ## Playwright
 
-1. Ejecutar desde consola sh (o Git Bash en caso de Windows) el comando `npm install playwright`
-2. ...
-3. ...
+Prerequisitos:
+
+- Instalar NodeJs ver 14+
+
+Pasos para ejecutar los test
+
+1. Ingresar a la carpeta playwright
+2. Ejecutar el comando npm install
+3. Ejecutar el comando `npx playwright test`
 
 
 
