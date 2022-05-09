@@ -88,7 +88,7 @@ Prerequisitos:
 
 Pasos para ejecutar los test
 
-1. Ingresar a la carpeta playwright
+1. Ingresar al directorio playwright `cd Playwright`
 2. Ejecutar el comando `npm install`
 3. Configurar las variables `user` y `pass` de ghost en archivo `envitonment.ts`
    que se encuentra en la carpeta `util`
