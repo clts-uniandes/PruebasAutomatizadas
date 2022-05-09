@@ -69,10 +69,16 @@ PA007. Renombrar página vinculada en navbar: Teniendo una página enlazada al n
 6. Haga clic en la prueba que desee ejecutar (elementos tipo PAxyz.spec.js ) ![image](https://user-images.githubusercontent.com/98668775/167325358-429e0884-73a3-45ad-95ab-8f2c38b38f33.png)
 
 ## Kraken
+### Prerequisitos:
+   - NodeJS 12 o posterior
+   - Ghost v3.41.1
+   - Ejecutar la instancia de Ghost con el comnando `ghost start`
 
-1. Ejecutar comando...
-2. ...
-3. ...
+1. Ingresar al direcorio kraken `cd kraken`
+2. Instalar dependencias `npm install`
+3. Configurar el archivo `kraken/properties.js` con los parametros `USERNAME`, `PASSWORD`, `LOGIN_URL` y `BASE_URl`
+4. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
+
 
 ## Playwright
 
