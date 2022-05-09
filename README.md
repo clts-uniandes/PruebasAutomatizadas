@@ -92,7 +92,7 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 ### Ejecución de pruebas:
 1. Ingresar al directorio playwright `cd Playwright`
 2. Ejecutar el comando `npm install`
-3. Configurar las variables `user` y `pass` de ghost en archivo `envitonment.ts`
+3. Configurar las variables `user` y `pass` de inicio de sesion ghost en el archivo `environment.ts` 
    que se encuentra en la carpeta `util`
 ![img.png](Playwright/img/configuracion-environment.png)
 4. Ejecutar el comando `npx playwright test`
