@@ -73,7 +73,7 @@ PA007. Renombrar página vinculada en navbar: Teniendo una página enlazada al n
    - NodeJS 12 o posterior
    - Ghost v3.41.1
    - Ejecutar la instancia de Ghost con el comnando `ghost start`
-
+### Ejecución de pruebas:
 1. Ingresar al direcorio kraken `cd kraken`
 2. Instalar dependencias `npm install`
 3. Configurar el archivo `kraken/properties.js` con los parametros `USERNAME`, `PASSWORD`, `LOGIN_URL` y `BASE_URl`
