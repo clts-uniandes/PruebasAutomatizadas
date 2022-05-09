@@ -55,13 +55,16 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 ## Precondiciones generales
 
-1. Instalar node v14.15.0 a través de...
+1. Instalar node v14.15.0 segun su sistema operativo. Se recomienda NVM tanto para Windows como para sistemas Linux. Instrucciones disponibles tanto para Linux: (https://github.com/nvm-sh/nvm) o su spin'off en Windows (https://github.com/coreybutler/nvm-windows)
+2. Descargar los contenidos del repositorio en su carpeta de preferencia, sea por descarga de ZIP o por "git clone https://github.com/clts-uniandes/PruebasAutomatizadas.git" 
 
 ## Cypress
 
-1. Instalar Cypress mediante npm...
-2. ...
-3. ..
+1. Instalar Cypress desde consola de comandos con el comando "npm install cypress"
+2. Ejecutar el comando "cypress open". Espere a que apareza la pantalla de cypress
+3. Hacer click en "select manually"
+4. Escoger la ubicación "pruebasautomatizadas/Cypress/pruebas_e2e/" desde la carpeta donde descargó el contenido de repositorio
+5. Haga clic en la prueba que desee ejecutar (elementos tipo PAxyz.spec.js ) ![image](https://user-images.githubusercontent.com/98668775/167325358-429e0884-73a3-45ad-95ab-8f2c38b38f33.png)
 
 ## Kraken
 
