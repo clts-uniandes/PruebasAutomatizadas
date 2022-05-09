@@ -84,6 +84,15 @@ module.exports = class TagsPage {
             throw new Error("No loginBtn element");
         }
     }
+    listPages(text){
+        const listPages = this.driver.$(`//li[@class='gh-list-row gh-tags-list-item ember-view']/a/h3[@class='gh-tag-list-name'][contains(., '${text}')]`);
+        console.log(listPages)
+        if(listPages != null) {
+            return listPages;
+        } else {
+            throw new Error("No listPages element");
+        }
+    }
 
 
 
