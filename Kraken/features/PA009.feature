@@ -1,4 +1,4 @@
-Feature: Delete Tag
+Feature: Login, creacion de tag y eliminacion del tag creado
 
   @user1 @web
   Scenario: As a user I want to delete a tag that I previously have created
@@ -12,14 +12,14 @@ Feature: Delete Tag
     When I click on new tag
     And I wait for 2 seconds
     Then I expect that url contain "#/tags/new"
-    When I enter tag name "tag to delete" 
+    When I enter tag name "tag to delete"
     And I wait for 2 seconds
     And I enter tag color "000088"
     And I wait for 2 seconds
     And I enter tag description "tag to delete"
     And I click on save tag
     And I wait for 2 seconds
-    And I return to tags list 
+    And I return to tags list
     Then I expect tag created with name "tag to delete"
     When I click on link having href "#/tags/tag-to-delete/"
     And I click in delete tag

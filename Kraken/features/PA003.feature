@@ -1,4 +1,4 @@
-Feature: Crear pagina y eliminarla
+Feature: Logueo del usuario, crear una pagina y eliminarla
   @user1 @web
   Scenario: As a user I want to create and publish page and deleted
     Given I navigate to page "<LOGIN_URL>"

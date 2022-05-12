@@ -1,4 +1,4 @@
-Feature: Create Page schedule for later 
+Feature: Login, programar post y publicar post
 
   @user1 @web
   Scenario: As a user I want to create and publish page

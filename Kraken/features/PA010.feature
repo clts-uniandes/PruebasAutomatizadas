@@ -1,4 +1,4 @@
-Feature: Edit Tag 
+Feature: Login, crear un tag y editarlo 
 
   @user1 @web
   Scenario: As a user I want to create and edit a Tag

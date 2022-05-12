@@ -1,4 +1,4 @@
-Feature: Create Page
+Feature: Login, creacion de pagina y verificar que exista
 
   @user1 @web
   

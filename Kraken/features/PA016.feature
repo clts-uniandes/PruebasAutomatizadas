@@ -1,4 +1,4 @@
-Feature: Cambiar email de usuario, probar login y dejar como estaba
+Feature: Login, Cambiar email de usuario, probar login y dejar como estaba
 
   @user1 @web
   Scenario: As a user I want to change email

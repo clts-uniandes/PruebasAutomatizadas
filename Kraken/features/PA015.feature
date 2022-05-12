@@ -1,4 +1,4 @@
-Feature: Cambiar contraseña de usuario, probar login y dejar como estaba
+Feature: Login, Cambiar contraseña de usuario, probar login y dejar como estaba
 
   @user1 @web
   Scenario: As a user I want to change password
