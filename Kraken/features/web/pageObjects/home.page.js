@@ -55,6 +55,12 @@ module.exports = class HomePage {
             throw new Error("No staffLink element");
         }
     }
-    
-
+    get eleDesign() {
+        const signOutLink = this.driver.$(`a[href='#/settings/design/']`);
+        if(signOutLink != null) {
+            return signOutLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    }
 }
