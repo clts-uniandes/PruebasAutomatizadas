@@ -90,6 +90,37 @@ export default class PageEditorPage {
         }
     }
 
+    public get eleSettingsButton() {
+        const buttonSettings = this.page.$("//button[@title='Settings']");
+        if(buttonSettings != null) {
+            return buttonSettings;
+        } else {
+            throw new Error("No settings Button element");
+        }
+    }
+
+    public get eleDeleteButton() {
+        
+        const buttonDelete = this.page.$("//span[contains(text(),'Delete')]");
+        
+        if(buttonDelete != null) {
+            return buttonDelete;
+        } else {
+            throw new Error("No button delete element");
+        }
+    }
+
+    public get eleConfirmDeleteButton() {
+        const buttonDelete = this.page.$("//span[text()='Delete']");
+        if(buttonDelete != null) {
+            return buttonDelete;
+        } else {
+            throw new Error("No delete confirmation Button element");
+        }
+    }
+
+    
+
     //actuadores
     public async fillPageTitle(title:string){
         const titleArea = await this.eleTitle;
@@ -137,5 +168,24 @@ export default class PageEditorPage {
         console.log("Error message: " + errorMessage);
         return errorMessage;
     }
+
+    public async clickDeleteButton() {
+        const buttonSave = await this.eleDeleteButton;
+        await buttonSave?.scrollIntoViewIfNeeded();
+        await buttonSave?.click();
+        await this.page.waitForLoadState();
+    }
+
+    public async clickSettingsButton() {
+        const buttonSave = await this.eleSettingsButton;
+        await buttonSave?.click();
+    }
+
+    public async clickConfirmDeleteButton() {
+        const buttonSave = await this.eleConfirmDeleteButton;
+        await buttonSave?.click();
+    }
+
+    
 
 }
