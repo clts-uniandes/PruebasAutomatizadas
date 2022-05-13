@@ -208,10 +208,15 @@ When("I enter url page slug {string}", async function (slug) {
   return newPageBtn.setValue(slug);
 });
 When("I click on config close", async function () {
-    const pagesPage = new PageEditorPage(this.driver);
-    const newPageBtn = pagesPage.eleConfigClose;
-    return newPageBtn.click();
-  });
+  const pagesPage = new PageEditorPage(this.driver);
+  const newPageBtn = pagesPage.eleConfigClose;
+  return newPageBtn.click();
+});
+When("I scroll on config page", async function () {
+  const pagePage = new PageEditorPage(this.driver);
+  const newPageBtn = pagePage.scrollConfigPage;
+  await newPageBtn.scrollIntoView(false);
+});
 // Tags
 When("I click on tags in the navbar", async function () {
   const homePage = new HomePage(this.driver);
@@ -321,6 +326,22 @@ Then(
     return await list.click();
   }
 );
+When("I click on delete post", async function () {
+  const postPage = new PostEditorPage(this.driver);
+  const newPageBtn = postPage.eleDetelePost;
+  return newPageBtn.click();
+});
+When("I click on confrim delete post", async function () {
+  const postPage = new PostEditorPage(this.driver);
+  const newPageBtn = postPage.eleDeteleConfirmPost;
+  return newPageBtn.click();
+});
+When("I scroll on config post", async function () {
+  const postPage = new PostEditorPage(this.driver);
+  const newPageBtn = postPage.scrollConfigPost;
+  await newPageBtn.scrollIntoView(false);
+  /* await this.driver.executeScript("arguments[0].scrollIntoView()", newPageBtn) */
+});
 //helpers
 Then("I should see text {string}", async function (text) {
   let element = await this.driver.$(`//*[contains(text(), '${text}')]`);
@@ -359,6 +380,26 @@ When("I click on new user", async function () {
   return newPageBtn.click();
 });
 
+When("I enter email new user {string}", async function (email) {
+  const pagesPage = new StaffPage(this.driver);
+  const newPageBtn = pagesPage.elementInputEmail;
+  return newPageBtn.setValue(email);
+});
+When("I click on Send invitation now", async function () {
+  const pagesPage = new StaffPage(this.driver);
+  const newPageBtn = pagesPage.elementBtnSend;
+  return newPageBtn.click();
+});
+When("I should see error send email", async function () {
+  const pagesPage = new StaffPage(this.driver);
+  const newPageBtn = pagesPage.elementErrorInvite;
+  return newPageBtn
+});
+When("I click on revoke the invite", async function () {
+  const pagesPage = new StaffPage(this.driver);
+  const newPageBtn = pagesPage.elementRevokeBtn;
+  return await newPageBtn.click()
+});
 When("I click on one user", async function () {
   const pagesPage = new StaffPage(this.driver);
   const newPageBtn = pagesPage.eleOnePageLink;

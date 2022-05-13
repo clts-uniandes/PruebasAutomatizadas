@@ -20,6 +20,38 @@ module.exports = class StaffPage {
             throw new Error("No newPostLink element");
         }
     }
+    get elementInputEmail() {
+        const newPostLink = this.driver.$(`//input[@id='new-user-email']`);
+        if(newPostLink != null) {
+            return newPostLink;
+        } else {
+            throw new Error("No newPostLink element");
+        }
+    }
+    get elementBtnSend() {
+        const newPostLink = this.driver.$(`//span[contains(text(), 'Send invitation now')]`);
+        if(newPostLink != null) {
+            return newPostLink;
+        } else {
+            throw new Error("No newPostLink element");
+        }
+    }
+    get elementErrorInvite() {
+        const newPostLink = this.driver.$(`//div[@class='gh-alert-content']`);
+        if(newPostLink != null) {
+            return newPostLink;
+        } else {
+            throw new Error("No newPostLink element");
+        }
+    }
+    get elementRevokeBtn() {
+        const staffLink = this.driver.$(`a[href="#revoke"]`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    }   
     listPages(text){
         const listPages = this.driver.$(`//li[@class='gh-list-row gh-posts-list-item']/a/h3[@class='gh-content-entry-title'][contains(., '${text}')]`);
         console.log(listPages)

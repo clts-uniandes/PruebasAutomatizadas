@@ -19,8 +19,9 @@ Feature: Logueo del usuario, crear una pagina y eliminarla
     And I found the page has been created "Crear pagina eliminarla" click
     And I wait for 2 seconds
     And I click on config page
+    And I scroll on config page
     And I wait for 5 seconds
     And I click on delete page
-    #And I wait for 20 seconds
-    #And I click on confrim delete page
-    #And I wait for 10 seconds
+    And I click on confrim delete page
+    Then I expect that url contain "/pages"
+    And I wait for 5 seconds

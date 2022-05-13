@@ -126,4 +126,21 @@ module.exports = class PageEditorPage {
       throw new Error("No viewPost element");
     }
   }
+  get scrollConfigPost(){
+    const viewPost = this.driver.$("//div[@class='settings-menu-pane-in settings-menu settings-menu-pane']");
+    if (viewPost != null) {
+      return viewPost;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  get scrollConfigPage(){
+    /* const viewPost = this.driver.$("//div[@class='settings-menu-pane-in settings-menu settings-menu-pane']"); */
+    const viewPost = this.driver.$("//div[@class='settings-menu-content']");
+    if (viewPost != null) {
+      return viewPost;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
 };
