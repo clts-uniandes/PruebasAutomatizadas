@@ -21,7 +21,6 @@ export default class ContentMainPage {
 
     public eleNavBarPageLink(resourceName:string) {
         const navBarPageLink = this.page.$(`//a[@href="http://localhost:2368/${resourceName}/"]`);
-        //cy.get('a[href*="http://localhost:2368/nuevaPag/"]').contains('NuevaPag').click()
         if(navBarPageLink != null) {
             return navBarPageLink;
         } else {
@@ -34,7 +33,6 @@ export default class ContentMainPage {
     }
 
     public async clickNavBarLink(itemName:string) {
-        //await this.page.waitForSelector("//form[@id='settings-navigation']");
         const navBarLink = await this.eleNavBarPageLink(itemName);
         await navBarLink?.click();
     }

@@ -113,7 +113,6 @@ export default class DesignPage {
     }
 
     public async fillNewLinkInput(linkPath: string) {
-        
         const newLinkInput = await this.eleNewLinkInputField;
         await newLinkInput?.fill(linkPath);
     }
