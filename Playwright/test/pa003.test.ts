@@ -21,13 +21,13 @@ test.describe("PA003: Borrar página existente'", () => {
 
     test.beforeAll( async() => {
         browser = await chromium.launch({
-            headless: Env.headless
+            headless: Env.HEADLESS
         });
         context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
         page = await context.newPage();
 
         //Given I navigate to admin module
-        await page.goto(Env.baseUrl + Env.adminSection);
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);
@@ -36,7 +36,7 @@ test.describe("PA003: Borrar página existente'", () => {
 
     test("should create a page and delete said page - Positive scenario", async () => {
         //Given I log in
-        await login.signInWith(Env.user, Env.pass);
+        await login.signInWith(Env.USER, Env.PASS);
 
         // I navigate to Page module
         await home.clickPagesLink();

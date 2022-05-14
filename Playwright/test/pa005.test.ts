@@ -27,13 +27,13 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
 
     test.beforeAll( async() => {
         browser = await chromium.launch({
-            headless: Env.headless
+            headless: Env.HEADLESS
         });
         context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
         page = await context.newPage();
 
         //Given I navigate to admin module
-        await page.goto(Env.baseUrl + Env.adminSection);
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);
@@ -43,9 +43,9 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         contentPage = new ContentPagePage(page);
     });
 
-    test("should create a page and delete said page - Positive scenario", async () => {
+    test("should create a page and link to navbar item - Positive scenario", async () => {
         //Given I log in
-        await login.signInWith(Env.user, Env.pass);
+        await login.signInWith(Env.USER, Env.PASS);
 
         // I navigate to Page module
         await home.clickPagesLink();
@@ -60,26 +60,29 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         await pageEditor.fillPostContent("Érase una vez una página a enlazar");
         await pageEditor.clickPublishLink();
         await pageEditor.clickPublishButton();
+        await new Promise(r => setTimeout(r, 3000));
         await pageEditor.clickPagesLink();
         
         const linkCreatedPage = await pageGhost.findPageByTitle("PaginaAEnlazar");
         expect(linkCreatedPage).not.toBeNull();
+        await new Promise(r => setTimeout(r, 3000));
         
         // When enlazo la nueva pagina en el navbar del sitio
         await home.clickDesignLink();
 
         // Then puedo navegar a la nueva pagina desde el sitio de contenido
         
-        await design.selectNewLabelInput("NuevaPag");
-        await design.selectNewLinkInput("nuevaPag");
+        await design.selectNewLabelInput("PaginaAEnlazar");
+        await design.selectNewLinkInput("paginaAEnlazar");
         await design.clickSaveButton();
+        await new Promise(r => setTimeout(r, 3000));
 
         await page.goto('http://localhost:2368/');
-        await contentMain.clickNavBarLink("nuevaPag");
-        await new Promise(r => setTimeout(r, 2000));
-        await contentPage.elePageTitle("NuevaPag");
+        await contentMain.clickNavBarLink("paginaAEnlazar");
+        await new Promise(r => setTimeout(r, 3000));
+        await contentPage.elePageTitle("PaginaAEnlazar");
         // TODO, expect title functional
-        await new Promise(r => setTimeout(r, 2000));
+        await new Promise(r => setTimeout(r, 3000));
 
         
 
