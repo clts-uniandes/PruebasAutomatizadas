@@ -76,12 +76,28 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
    
 ### Prerequisitos:
 - NodeJS 12 o posterior
+- Ghost V3.41.1
+- Ghost V4.4
 
+### Instalar Ghost:
+- Ejecutar el comando `ghost install 4.4 --local --force` en el directorio que desee hacer la instalacion de la version 4.4
+- Ejecutar el comando `ghost install 3.41.1 --local --force` en el directorio que desee hacer la instalacion de la version 3.41.1
 ### Ejecución de pruebas:
 1. Ingresar al directorio kraken `cd kraken`
 2. Instalar dependencias `npm install`
-3. Configurar el archivo `kraken/properties.js` con los parametros `USERNAME`, `PASSWORD`, `LOGIN_URL` y `BASE_URL`
-4. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
+3. Configurar el archivo `kraken/properties.js` con los parametros 
+```json
+{
+    "USERNAME": "usuario@login.ghost", //usuario login del sitio
+    "PASSWORD": "*******", //Contraseña login del sitio
+    "LOGIN_URL": "http://localhost:2369/ghost/#/signin", //URL del sitio a probar
+    "BASE_URl": "http://localhost:2369/ghost/#/signin", //URL del sitio a probar
+    "PATH_SCREENSHOTS": "./screenshots/ghost3" //debe cambiar el directorio al cambiar version de Ghost
+}
+```
+4. En el directorio `kraken` __encontrará dos carpetas__ `features_ghost3` y `features_ghost4`, dependiendo la version que desee probar __debe renombrar la carpeta a `features`__
+5. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
+6. Los screenshots quedaran almacenados en `screenshots/{nombre_configurado/{id_screenshot}.png`
 
 
 ## Playwright
@@ -96,6 +112,3 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
    que se encuentra en la carpeta `util`
 ![img.png](Playwright/img/configuracion-environment.png)
 4. Ejecutar el comando `npx playwright test`
-
-
-
