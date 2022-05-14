@@ -9,14 +9,14 @@ Scenario: Tag en Ghost
     When I login with "<USERNAME>" and "<PASSWORD>"
     And I take a screenshot on "PA012"
     And I wait
-    Then I expect that url contain "/site"
+    Then I expect that url contain "/dashboard"
     When I click on post in the navbar
     And I take a screenshot on "PA012"
     And I click on new post
     And I take a screenshot on "PA012"
-    And I enter post title "Nuevo Post Draft" 
+    And I enter post title "Nuevo Post Draft 1" 
     And I take a screenshot on "PA012"
-    And I enter post description "Descripcion del Post Draft"
+    And I enter post description "Descripcion del Post Draft 1"
     And I take a screenshot on "PA012"
     And I click on pubish post link
     And I take a screenshot on "PA012"
@@ -26,7 +26,7 @@ Scenario: Tag en Ghost
     And I wait for 2 seconds
     When I click on post in the navbar
     And I take a screenshot on "PA012"
-    And I found the post has been created "Nuevo Post Draft" click
+    And I found the post has been created "Nuevo Post Draft 1" click
     And I take a screenshot on "PA012"
     And I click on update post link
     And I take a screenshot on "PA012"

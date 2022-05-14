@@ -12,15 +12,15 @@ Feature: Login - crear post  - eliminar post creado
     And I take a screenshot on "PA013"
     And I click on new post
     And I take a screenshot on "PA013"
-    And I enter post title "Nuevo Post Draft" 
+    And I enter post title "Nuevo Post Draft 2" 
     And I take a screenshot on "PA013"
-    And I enter post description "Descripcion del Post Draft"
+    And I enter post description "Descripcion del Post Draft 2"
     And I take a screenshot on "PA013"
     And I wait for 2 seconds
     And I click on post in the navbar
     And I take a screenshot on "PA013"
     And I wait for 2 seconds
-    And I found the post has been created "Nuevo Post Draft" click
+    And I found the post has been created "Nuevo Post Draft 2" click
     And I take a screenshot on "PA013"
     And I wait for 2 seconds
     And I click on post settings
