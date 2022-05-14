@@ -4,15 +4,27 @@ Feature: Login, creacion de pagina y verificar que exista
   
   Scenario: As a user I want to create and publish page
     Given I navigate to page "<LOGIN_URL>"
-    When I login with "<USERNAME>" and "<PASSWORD>"
-    When I wait
+    When I take a screenshot on "PA001"
+    And I login with "<USERNAME>" and "<PASSWORD>"
+    And I take a screenshot on "PA001"
+    And I wait
     Then I expect that url contain "#/site"
-    When I click on link having href "#/pages/"
-    When I click on link having href "#/editor/page/"
-    When I enter "Titulo pagina usando Kraken" into input field having css selector "textarea[placeholder='Page Title']"
-    When I enter "Descripcion pagina usando Kraken" into input field having css selector "div.koenig-editor__editor.__mobiledoc-editor"
-    When I click on element having css selector "div.gh-publishmenu"
-    When I click on element having css selector "button.gh-publishmenu-button"
-    Then I should see text "Published"
-    When I click on link having href "#/pages/"
+    And I take a screenshot on "PA001"
+    When I click on pages in the navbar
+    And I take a screenshot on "PA001"
+    And I click on link having href "#/editor/page/"
+    And I take a screenshot on "PA001"
+    And I enter page title "Titulo pagina usando Kraken"
+    And I take a screenshot on "PA001"
+    And I begin writing page description "Descripcion pagina usando Kraken" 
+    And I take a screenshot on "PA001"
+    And I click on pubish page link
+    And I take a screenshot on "PA001"
+    And I click on publish page button
+    And I take a screenshot on "PA001"
+    And I should see text "Published"
+    And I take a screenshot on "PA001"
+    And I click on pages in the navbar
+    And I take a screenshot on "PA001"
     Then I should see text in post list "Titulo pagina usando Kraken"
+    And I take a screenshot on "PA001"

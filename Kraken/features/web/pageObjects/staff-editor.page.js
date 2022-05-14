@@ -51,5 +51,47 @@ module.exports = class StaffEditorPage {
             throw new Error("No title element");
         }
     }
+    get elementConfigBtn() {
+        const staffLink = this.driver.$(`//button[@class='gh-btn gh-btn-white gh-btn-icon only-has-icon user-actions-cog closed ember-view']`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    }  
+
+    get elementSuspendBtn() {
+        const staffLink = this.driver.$(`//button[@class='suspend']`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    }
+    get elementUnSuspendedBtn() {
+        const staffLink = this.driver.$(`//button[@class='unsuspend']`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    } 
+    get elementUnSuspendConfirmBtn() {
+        const staffLink = this.driver.$(`//button/span[contains(text(), 'Un-suspend')]`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    } 
+    get elementSuspendConfirmBtn() {
+        const staffLink = this.driver.$(`//button/span[contains(text(), 'Suspend')]`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    } 
+
     
 }

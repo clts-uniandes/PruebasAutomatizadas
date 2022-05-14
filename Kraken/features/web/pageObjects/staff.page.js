@@ -52,6 +52,22 @@ module.exports = class StaffPage {
             throw new Error("No staffLink element");
         }
     }   
+    get elementAuthorBtn() {
+        const staffLink = this.driver.$(`//div[@class='apps-grid-cell tooltip-centered']//div[@class='apps-configured']//span[contains(text(), 'Author')]`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    } 
+    get elementSuspendedBtn() {
+        const staffLink = this.driver.$(`//div[@class='apps-grid-cell tooltip-centered']//div[@class='apps-configured']//span[contains(text(), 'Suspended')]`);
+        if(staffLink != null) {
+            return staffLink;
+        } else {
+            throw new Error("No staffLink element");
+        }
+    } 
     listPages(text){
         const listPages = this.driver.$(`//li[@class='gh-list-row gh-posts-list-item']/a/h3[@class='gh-content-entry-title'][contains(., '${text}')]`);
         console.log(listPages)

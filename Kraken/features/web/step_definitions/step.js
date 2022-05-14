@@ -1,4 +1,5 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
+const fs = require("fs");
 const assert = require("assert");
 const LoginPage = require("../pageObjects/login.page");
 const HomePage = require("../pageObjects/home.page");
@@ -11,6 +12,9 @@ const PostEditorPage = require("../pageObjects/post-editor.page");
 const StaffEditorPage = require("../pageObjects/staff-editor.page");
 const StaffPage = require("../pageObjects/staff.page");
 const DesignPage = require("../pageObjects/design.page");
+// Variables para la toma de screenshots
+var incremento = 0;
+var featureIncremento = "";
 
 //ready
 //login steps
@@ -393,12 +397,12 @@ When("I click on Send invitation now", async function () {
 When("I should see error send email", async function () {
   const pagesPage = new StaffPage(this.driver);
   const newPageBtn = pagesPage.elementErrorInvite;
-  return newPageBtn
+  return newPageBtn;
 });
 When("I click on revoke the invite", async function () {
   const pagesPage = new StaffPage(this.driver);
   const newPageBtn = pagesPage.elementRevokeBtn;
-  return await newPageBtn.click()
+  return await newPageBtn.click();
 });
 When("I click on one user", async function () {
   const pagesPage = new StaffPage(this.driver);
@@ -489,6 +493,43 @@ When(
     await button.click();
   }
 );
+When("I click on one user type Author", async function () {
+  const staffEditor = new StaffPage(this.driver);
+  const userConfigBtn = staffEditor.elementAuthorBtn;
+  return await userConfigBtn.click();
+});
+When("I click on config user", async function () {
+  const staffEditor = new StaffEditorPage(this.driver);
+  const userConfigBtn = staffEditor.elementConfigBtn;
+  return await userConfigBtn.click();
+});
+
+When("I Click on suspend button", async function () {
+  const staffEditor = new StaffEditorPage(this.driver);
+  const userConfigBtn = staffEditor.elementSuspendBtn;
+  return await userConfigBtn.click();
+});
+When("I Click on un-suspend button", async function () {
+  const staffEditor = new StaffEditorPage(this.driver);
+  const userConfigBtn = staffEditor.elementUnSuspendedBtn;
+  return await userConfigBtn.click();
+});
+When("I Click on confirm suspend button", async function () {
+  const staffEditor = new StaffEditorPage(this.driver);
+  const userConfigBtn = staffEditor.elementSuspendConfirmBtn;
+  return await userConfigBtn.click();
+});
+When("I Click on confirm un-suspend button", async function () {
+  const staffEditor = new StaffEditorPage(this.driver);
+  const userConfigBtn = staffEditor.elementUnSuspendConfirmBtn;
+  return await userConfigBtn.click();
+});
+When("I click on one user type Suspended", async function () {
+  const staffEditor = new StaffPage(this.driver);
+  const userConfigBtn = staffEditor.elementSuspendedBtn;
+  return await userConfigBtn.click();
+});
+
 // Settings Page
 When("I click on Design in the navbar", async function () {
   const homePage = new HomePage(this.driver);
@@ -566,4 +607,21 @@ When("I return to tags list", async function () {
   const tagsPage = new TagsPage(this.driver);
   const returnLink = tagsPage.eleReturnTagLink;
   return returnLink.click();
+});
+
+When("I take a screenshot on {string}", async function (feature) {
+  if (!fs.existsSync("./screenshots")) {
+    fs.mkdirSync("./screenshots");
+  }
+  if (!fs.existsSync(`./screenshots/${feature}`)) {
+    fs.mkdirSync(`./screenshots/${feature}`);
+  }
+  if (featureIncremento == feature) {
+    incremento = incremento + 1;
+  } else {
+    incremento = 1;
+    featureIncremento = feature;
+  }
+  const browser = this.driver;
+  await browser.saveScreenshot(`./screenshots/${feature}/${incremento}.png`);
 });
