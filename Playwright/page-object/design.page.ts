@@ -38,14 +38,14 @@ export default class DesignPage {
         }
     }
 
-    public get eleClosePopup() {
+    /*public get eleClosePopup() {
         const loginBtn = this.page.waitForSelector("//button[@class='gh-notification-close']");
         if(loginBtn != null) {
             return loginBtn;
         } else {
             throw new Error("No eleClosePopup element");
         }
-    }
+    }*/
 
     public get eleNewLabelInputField() {
         const newLabelInput = this.page.$("(//form[@id='settings-navigation']//input[@placeholder='Label'])[last()]");
@@ -107,15 +107,15 @@ export default class DesignPage {
         await this.page.waitForNavigation();
     }
 
-    public async selectNewLabelInput(labelName: string) {
-        const ele = await this.eleNewLabelInputField;
-        await ele!.fill(labelName);
+    public async fillNewLabelInput(labelName: string) {
+        const newLabelInput = await this.eleNewLabelInputField;
+        await newLabelInput?.fill(labelName);
     }
 
-    public async selectNewLinkInput(linkPath: string) {
+    public async fillNewLinkInput(linkPath: string) {
         
-        const ele = await this.eleNewLinkInputField;
-        await ele?.fill(linkPath);
+        const newLinkInput = await this.eleNewLinkInputField;
+        await newLinkInput?.fill(linkPath);
     }
 
     /*public async clickClosePopup() {

@@ -27,6 +27,15 @@ export default class PageEditorPage {
         }
     }
 
+    public get elePageUrlInput() {
+        const pageUrlInput = this.page.$("input[name='post-setting-slug']");
+        if(pageUrlInput != null) {
+            return pageUrlInput;
+        } else {
+            throw new Error("No page URL input element");
+        }
+    }
+
     public get elePagesLink() {
         const postsLink = this.page.$("text='Pages'");
         if(postsLink != null) {
@@ -119,7 +128,14 @@ export default class PageEditorPage {
         }
     }
 
-    
+    public get eleCloseSettingsButton() {
+        const buttonDelete = this.page.$("//button[@aria-label='Close']");
+        if(buttonDelete != null) {
+            return buttonDelete;
+        } else {
+            throw new Error("No close settings button");
+        }
+    }
 
     //actuadores
     public async fillPageTitle(title:string){
@@ -186,6 +202,15 @@ export default class PageEditorPage {
         await buttonSave?.click();
     }
 
-    
+    public async refillPageUrlField(url:string){
+        const pageUrlInput = await this.elePageUrlInput;
+        //await pageUrlInput?.fill('');
+        await pageUrlInput?.fill(url);
+    }
+
+    public async clickCloseSettingsButton() {
+        const closeSettingsButton = await this.eleCloseSettingsButton;
+        await closeSettingsButton?.click();
+    }
 
 }

@@ -62,8 +62,8 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         
         // When I link the new page to a new nav item
         await home.clickDesignLink();
-        await design.selectNewLabelInput("PaginaAEnlazar");
-        await design.selectNewLinkInput("paginaAEnlazar");
+        await design.fillNewLabelInput("PaginaAEnlazar");
+        await design.fillNewLinkInput("paginaAEnlazar");
         await design.clickSaveButton();
         await new Promise(r => setTimeout(r, 2000));
         
@@ -71,9 +71,8 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         await page.goto('http://localhost:2368/');
         await contentMain.clickNavBarLink("paginaAEnlazar");
         await contentPage.elePageTitle("PaginaAEnlazar");
-        // TODO, expect title functional
         await new Promise(r => setTimeout(r, 2000));
-
+        
     });
 
     test.afterAll(async () => {

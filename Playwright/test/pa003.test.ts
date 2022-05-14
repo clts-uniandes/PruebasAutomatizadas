@@ -38,15 +38,11 @@ test.describe("PA003: Borrar página existente'", () => {
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
 
-        // I navigate to Page module
+        // Given I have a new Page to delete
         await home.clickPagesLink();
-
         expect(page.url()).toContain("/#/pages");
-
         await pageGhost.clickNewPageLink();
-
         expect(page.url()).toContain("/#/editor/page");
-        // Given I have a new page
         await pageEditor.fillPageTitle("Mi página a borrar");
         await pageEditor.fillPostContent("Érase una vez una página a borrar");
         await pageEditor.clickPublishLink();
@@ -57,21 +53,18 @@ test.describe("PA003: Borrar página existente'", () => {
         
         const linkCreatedPage = await pageGhost.findPageByTitle("Mi página a borrar");
         expect(linkCreatedPage).not.toBeNull();
-        
         await pageGhost.navigateToEditionLink(linkCreatedPage);
         
         //When I enter into its settings menu
-
         await pageEditor.clickSettingsButton();
 
-        //When I click delete
+        //When I delete the page
         await pageEditor.clickDeleteButton();
-
-        // When I confirm the delete
         await pageEditor.clickConfirmDeleteButton();
 
         // Then I should be back to the pages Module
         await page.waitForURL('**/#/pages');
+        await new Promise(r => setTimeout(r, 2000));
         /*const linkEditedPage = await pageGhost.findPageByTitle("Mi página a borrar");
         expect(linkEditedPage).not.toBeNull();*/
         

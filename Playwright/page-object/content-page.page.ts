@@ -20,8 +20,7 @@ export default class ContentPagePage {
     }
 
     public elePageTitle(title:string) {
-        const pageTitle = this.page.$(`//h1[text()=${title}]`);
-        //const pageTitle = this.page.$(`//h1[text()='Pedro']`);
+        const pageTitle = this.page.$(`//h1[text()='${title}']`);
         if(pageTitle != null) {
             return pageTitle;
         } else {
@@ -29,7 +28,14 @@ export default class ContentPagePage {
         }
     }
 
-    
+    public elePageSomeContent(contentFragment:string) {
+        const pageTitle = this.page.$(`//p[text()='${contentFragment}']`);
+        if(pageTitle != null) {
+            return pageTitle;
+        } else {
+            throw new Error("No such content fragment on the page");
+        }
+    }
 
     //actuadores
 
@@ -41,6 +47,5 @@ export default class ContentPagePage {
         const navBarItem = await this.eleNavBarPageLink(itemName);
         await navBarItem?.click();
     }
-
 
 }
