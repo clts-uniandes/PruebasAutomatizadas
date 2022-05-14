@@ -1,0 +1,5 @@
+{
+    "adminLogin": "http://localhost:2368/ghost",
+    "adminHomePage": "http://localhost:2368/ghost/#/site",
+    "siteHomePage": "http://localhost:2368/"
+}
