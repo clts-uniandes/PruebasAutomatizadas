@@ -59,7 +59,6 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         await pageEditor.clickPagesLink();
         const linkCreatedPage = await pageGhost.findPageByTitle("PaginaAEnlazar");
         expect(linkCreatedPage).not.toBeNull();
-        
         // When I link the new page to a new nav item
         await home.clickDesignLink();
         await design.fillNewLabelInput("PaginaAEnlazar");
@@ -76,6 +75,20 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
     });
 
     test.afterAll(async () => {
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await new Promise(r => setTimeout(r, 1500));
+        await home.clickPagesLink();
+        const linkCreatedPage = await pageGhost.findPageByTitle("PaginaAEnlazar");
+        expect(linkCreatedPage).not.toBeNull();
+        await pageGhost.navigateToEditionLink(linkCreatedPage);
+        await pageEditor.clickSettingsButton();
+        await pageEditor.clickDeleteButton();
+        await pageEditor.clickConfirmDeleteButton();
+        await page.waitForURL('**/#/pages');
+        await home.clickDesignLink();
+        await design.clickDeleteLastNavItemButton();
+        await design.clickSaveButton();
+        
         await page.close();
         await context.close();
         await browser.close();

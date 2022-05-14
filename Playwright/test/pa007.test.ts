@@ -43,7 +43,7 @@ test.describe("PA007: Modificar titulo de página y verificar enlace antiguo no 
         contentPage = new ContentPagePage(page);
     });
 
-    test("should modify a page title link and related link in navbar and keep navigation working - Positive scenario", async () => {
+    test("should modify a page title link and related link in navbar and navigation should fail - Positive scenario", async () => {
         // Given I log in and navigate 
         await login.signInWith(Env.USER, Env.PASS);
 
@@ -67,7 +67,6 @@ test.describe("PA007: Modificar titulo de página y verificar enlace antiguo no 
         
         //When I modify the page's title link
         await home.clickPagesLink();
-        //await new Promise(r => setTimeout(r, 3000));
         const linkCreatedPage = await pageGhost.findPageByTitle("PaginaADesenlazar");
         expect(linkCreatedPage).not.toBeNull();
         await pageGhost.navigateToEditionLink(linkCreatedPage);
@@ -92,6 +91,20 @@ test.describe("PA007: Modificar titulo de página y verificar enlace antiguo no 
     });
 
     test.afterAll(async () => {
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await new Promise(r => setTimeout(r, 1500));
+        await home.clickPagesLink();
+        const linkCreatedPage = await pageGhost.findPageByTitle("PaginaDesenlazada");
+        expect(linkCreatedPage).not.toBeNull();
+        await pageGhost.navigateToEditionLink(linkCreatedPage);
+        await pageEditor.clickSettingsButton();
+        await pageEditor.clickDeleteButton();
+        await pageEditor.clickConfirmDeleteButton();
+        await page.waitForURL('**/#/pages');
+        await home.clickDesignLink();
+        await design.clickDeleteLastNavItemButton();
+        await design.clickSaveButton();
+
         await page.close();
         await context.close();
         await browser.close();

@@ -65,6 +65,15 @@ export default class DesignPage {
         }
     }
 
+    public get eleDeleteLastNavItemBtn() {
+        const deleteLastNavItemBtn = this.page.$("(//form[@id='settings-navigation']//button[@class='gh-blognav-delete'])[last()]");
+        if(deleteLastNavItemBtn != null) {
+            return deleteLastNavItemBtn;
+        } else {
+            throw new Error("No Delete nav item button");
+        }
+    }
+
     public get eleSaveButton() {
         const saveButton = this.page.$("//span[text()='Save']");
         if(saveButton != null) {
@@ -121,6 +130,11 @@ export default class DesignPage {
         const ele = await this.eleClosePopup;
         await ele?.click();
     }*/
+
+    public async clickDeleteLastNavItemButton() {
+        const ele = await this.eleDeleteLastNavItemBtn;
+        await ele?.click();
+    }
 
     public async clickSaveButton() {
         const saveButton = await this.eleSaveButton;
