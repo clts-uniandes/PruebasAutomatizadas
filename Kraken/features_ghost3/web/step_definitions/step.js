@@ -1,5 +1,6 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const fs = require("fs");
+const properties = require("../../../properties.json")
 const assert = require("assert");
 const LoginPage = require("../pageObjects/login.page");
 const HomePage = require("../pageObjects/home.page");
@@ -610,11 +611,11 @@ When("I return to tags list", async function () {
 });
 
 When("I take a screenshot on {string}", async function (feature) {
-  if (!fs.existsSync("./screenshots")) {
-    fs.mkdirSync("./screenshots");
+  if (!fs.existsSync(properties.PATH_SCREENSHOTS)) {
+    fs.mkdirSync(properties.PATH_SCREENSHOTS);
   }
-  if (!fs.existsSync(`./screenshots/${feature}`)) {
-    fs.mkdirSync(`./screenshots/${feature}`);
+  if (!fs.existsSync(`${properties.PATH_SCREENSHOTS}/${feature}`)) {
+    fs.mkdirSync(`${properties.PATH_SCREENSHOTS}/${feature}`);
   }
   if (featureIncremento == feature) {
     incremento = incremento + 1;
@@ -623,5 +624,5 @@ When("I take a screenshot on {string}", async function (feature) {
     featureIncremento = feature;
   }
   const browser = this.driver;
-  await browser.saveScreenshot(`./screenshots/${feature}/${incremento}.png`);
+  await browser.saveScreenshot(`${properties.PATH_SCREENSHOTS}/${feature}/${incremento}.png`);
 });

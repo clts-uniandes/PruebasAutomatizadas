@@ -35,8 +35,8 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 * PA003. Borrar página existente: Teniendo una página (vinculada o no en navbar) creada en el sitio, se verifica que se pueda borrar y que no quede listada en la sección de Páginas después del borrado
 * PA004. Creación de página con título que trae carácteres no permitidos: Se accede a la sección de creación de nueva página, y se trata de crear una nueva página que incluya en su título carácteres no permitidos (por ejemplo ñ!@#¢∞¬÷), luego se verifica que ocurre error al tratar de publicarla.
 * PA005. Enlazar nueva página en componente navbar: Al crearse una nuevá pagina vinculada al sitio, se vincula en navbar del sitio y se logra navegar a la misma desde dicho navbar
-* PA006. Renombrar página y componente navbar asociado: Teniendo una página enlazada al navbar del sitio, se cambia el nombre de la página y del componente navbar (más su enlace interno) y se verifica que se puede acceder aun a la página editada desde el navbar.
-* PA007. Renombrar página vinculada en navbar: Teniendo una página enlazada al navbar del sitio, se cambia el nombre de la página (pero no se modifica item navbar) y se verifica que al hacer clic en el enlace ya existente desde navbar no se pueda acceder a la pagina editada.
+* PA006. Renombrar página y componentes navbar asociados: Teniendo una página enlazada al navbar del sitio, se cambia el nombre de la página y su URL asociado, y se edita el nombre del componente navbar más su enlace interno y se verifica que se puede acceder aun a la página editada desde el navbar.
+* PA007. Renombrar página vinculada en navbar: Teniendo una página enlazada al navbar del sitio, se cambia el nombre de la página y su URL (pero no se modifica item navbar) y se verifica que al hacer clic en el enlace ya existente desde navbar no se pueda acceder a la pagina editada.
 * PA008. Creación de tag y asignación a post: Teniendo un post ya creado en el sitio, se accede a sección de tags y se genera un nuevo tag, luego se aplica el tag creado al post deseado.
 * PA009. Creación y eliminación de tag: Se accede a sección de tags y se genera un nuevo tag, se observa que el tag nuevo aparece en la sección de tags, luego se procede a borrarlo y se verifica que no aparezca en la sección de tags.
 * PA010. Creación y edición de tag: Se accede a sección de tags y se genera un nuevo tag, se observa que el tag nuevo aparece en la sección de tags, luego se procede a editar sus detalles y se verifica que el tag incluya todos los cambios de propiedad.
@@ -76,12 +76,28 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
    
 ### Prerequisitos:
 - NodeJS 12 o posterior
+- Ghost V3.41.1
+- Ghost V4.4
 
+### Instalar Ghost:
+- Ejecutar el comando `ghost install 4.4 --local --force` en el directorio que desee hacer la instalacion de la version 4.4
+- Ejecutar el comando `ghost install 3.41.1 --local --force` en el directorio que desee hacer la instalacion de la version 3.41.1
 ### Ejecución de pruebas:
 1. Ingresar al directorio kraken `cd kraken`
 2. Instalar dependencias `npm install`
-3. Configurar el archivo `kraken/properties.js` con los parametros `USERNAME`, `PASSWORD`, `LOGIN_URL` y `BASE_URL`
-4. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
+3. Configurar el archivo `kraken/properties.js` con los parametros 
+```json
+{
+    "USERNAME": "usuario@login.ghost", //usuario login del sitio
+    "PASSWORD": "*******", //Contraseña login del sitio
+    "LOGIN_URL": "http://localhost:2369/ghost/#/signin", //URL del sitio a probar
+    "BASE_URl": "http://localhost:2369/ghost/#/signin", //URL del sitio a probar
+    "PATH_SCREENSHOTS": "./screenshots/ghost3" //debe cambiar el directorio al cambiar version de Ghost
+}
+```
+4. En el directorio `kraken` __encontrará dos carpetas__ `features_ghost3` y `features_ghost4`, dependiendo la version que desee probar __debe renombrar la carpeta a `features`__
+5. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
+6. Los screenshots quedaran almacenados en `screenshots/{nombre_configurado/{id_screenshot}.png`
 
 
 ## Playwright
@@ -96,6 +112,3 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
    que se encuentra en la carpeta `util`
 ![img.png](Playwright/img/configuracion-environment.png)
 4. Ejecutar el comando `npx playwright test`
-
-
-
