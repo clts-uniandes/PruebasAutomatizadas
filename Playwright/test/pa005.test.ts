@@ -44,48 +44,35 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
     });
 
     test("should create a page and link to navbar item - Positive scenario", async () => {
-        //Given I log in
+        // Given I log in and navigate 
         await login.signInWith(Env.USER, Env.PASS);
 
-        // I navigate to Page module
+        // Given I created my page to link
         await home.clickPagesLink();
-        // I create my page to link
         expect(page.url()).toContain("/#/pages");
-
         await pageGhost.clickNewPageLink();
-
         expect(page.url()).toContain("/#/editor/page");
-
         await pageEditor.fillPageTitle("PaginaAEnlazar");
         await pageEditor.fillPostContent("Érase una vez una página a enlazar");
         await pageEditor.clickPublishLink();
         await pageEditor.clickPublishButton();
-        await new Promise(r => setTimeout(r, 3000));
         await pageEditor.clickPagesLink();
-        
         const linkCreatedPage = await pageGhost.findPageByTitle("PaginaAEnlazar");
         expect(linkCreatedPage).not.toBeNull();
-        await new Promise(r => setTimeout(r, 3000));
         
-        // When enlazo la nueva pagina en el navbar del sitio
+        // When I link the new page to a new nav item
         await home.clickDesignLink();
-
-        // Then puedo navegar a la nueva pagina desde el sitio de contenido
-        
         await design.selectNewLabelInput("PaginaAEnlazar");
         await design.selectNewLinkInput("paginaAEnlazar");
         await design.clickSaveButton();
-        await new Promise(r => setTimeout(r, 3000));
-
+        await new Promise(r => setTimeout(r, 2000));
+        
+        // Then I can navigate to the new page through the navbar
         await page.goto('http://localhost:2368/');
         await contentMain.clickNavBarLink("paginaAEnlazar");
-        await new Promise(r => setTimeout(r, 3000));
         await contentPage.elePageTitle("PaginaAEnlazar");
         // TODO, expect title functional
-        await new Promise(r => setTimeout(r, 3000));
-
-        
-
+        await new Promise(r => setTimeout(r, 2000));
 
     });
 

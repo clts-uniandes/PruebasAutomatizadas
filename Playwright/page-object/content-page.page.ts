@@ -20,8 +20,8 @@ export default class ContentPagePage {
     }
 
     public elePageTitle(title:string) {
-        //const pageTitle = this.page.$(`//h1[text()=${title}]`);
-        const pageTitle = this.page.$(`//h1[text()='Pedro']`);
+        const pageTitle = this.page.$(`//h1[text()=${title}]`);
+        //const pageTitle = this.page.$(`//h1[text()='Pedro']`);
         if(pageTitle != null) {
             return pageTitle;
         } else {
