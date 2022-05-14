@@ -34,9 +34,9 @@ export default class ContentMainPage {
     }
 
     public async clickNavBarLink(itemName:string) {
+        //await this.page.waitForSelector("//form[@id='settings-navigation']");
         const navBarLink = await this.eleNavBarPageLink(itemName);
         await navBarLink?.click();
-        
     }
 
 

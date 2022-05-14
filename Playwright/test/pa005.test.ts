@@ -27,13 +27,13 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
 
     test.beforeAll( async() => {
         browser = await chromium.launch({
-            headless: Env.headless
+            headless: Env.HEADLESS
         });
         context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
         page = await context.newPage();
 
         //Given I navigate to admin module
-        await page.goto(Env.baseUrl + Env.adminSection);
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);
@@ -43,46 +43,36 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         contentPage = new ContentPagePage(page);
     });
 
-    test("should create a page and delete said page - Positive scenario", async () => {
-        //Given I log in
-        await login.signInWith(Env.user, Env.pass);
+    test("should create a page and link to navbar item - Positive scenario", async () => {
+        // Given I log in and navigate 
+        await login.signInWith(Env.USER, Env.PASS);
 
-        // I navigate to Page module
+        // Given I created my page to link
         await home.clickPagesLink();
-        // I create my page to link
         expect(page.url()).toContain("/#/pages");
-
         await pageGhost.clickNewPageLink();
-
         expect(page.url()).toContain("/#/editor/page");
-
         await pageEditor.fillPageTitle("PaginaAEnlazar");
         await pageEditor.fillPostContent("Érase una vez una página a enlazar");
         await pageEditor.clickPublishLink();
         await pageEditor.clickPublishButton();
         await pageEditor.clickPagesLink();
-        
         const linkCreatedPage = await pageGhost.findPageByTitle("PaginaAEnlazar");
         expect(linkCreatedPage).not.toBeNull();
         
-        // When enlazo la nueva pagina en el navbar del sitio
+        // When I link the new page to a new nav item
         await home.clickDesignLink();
-
-        // Then puedo navegar a la nueva pagina desde el sitio de contenido
-        
-        await design.selectNewLabelInput("NuevaPag");
-        await design.selectNewLinkInput("nuevaPag");
+        await design.selectNewLabelInput("PaginaAEnlazar");
+        await design.selectNewLinkInput("paginaAEnlazar");
         await design.clickSaveButton();
-
-        await page.goto('http://localhost:2368/');
-        await contentMain.clickNavBarLink("nuevaPag");
         await new Promise(r => setTimeout(r, 2000));
-        await contentPage.elePageTitle("NuevaPag");
+        
+        // Then I can navigate to the new page through the navbar
+        await page.goto('http://localhost:2368/');
+        await contentMain.clickNavBarLink("paginaAEnlazar");
+        await contentPage.elePageTitle("PaginaAEnlazar");
         // TODO, expect title functional
         await new Promise(r => setTimeout(r, 2000));
-
-        
-
 
     });
 

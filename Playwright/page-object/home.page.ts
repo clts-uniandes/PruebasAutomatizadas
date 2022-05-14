@@ -99,6 +99,6 @@ export default class HomePage {
     public async clickDesignLink() {
         const ele = await this.eleDesignLink;
         await ele?.click();
-        //TODO expect or something to check succesful load/navigation
+        await this.page.waitForSelector("//form[@id='settings-navigation']");
     }
 }
