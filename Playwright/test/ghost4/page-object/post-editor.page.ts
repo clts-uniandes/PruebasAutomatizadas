@@ -171,6 +171,14 @@ export default class PostEditorPage {
         }
     }
 
+    public get eleConfirmPublishBtn() {
+        const confirmPublishBtn = this.page.locator("//button[contains(@class, 'gh-btn gh-btn-black gh-btn-icon')]");
+        if (confirmPublishBtn != null) {
+            return confirmPublishBtn;
+        } else {
+            throw new Error("No scheduleRadioBtn element");
+        }
+    }
 
     //actuadores
     public async fillPostTitle(title:string){
@@ -186,7 +194,6 @@ export default class PostEditorPage {
     public async clickSettingButton(){
         const publishLink = await this.eleSettingButton;
         await publishLink?.click();
-        await this.page.waitForSelector("//label[text()='Tags']")
     }
 
     public async clickPublishLink(){
@@ -197,7 +204,12 @@ export default class PostEditorPage {
     public async clickPublishButton(){
         const publishButton = await this.elePublishBtn;
         await publishButton?.click();
-        await this.page.waitForSelector("(//span[text()='Published'])[2]");
+    }
+
+    public async clickConfirmPublishButton(){
+        const confirmPublishButton = await this.eleConfirmPublishBtn;
+        await confirmPublishButton?.click();
+        await this.page.waitForSelector("//span[text()='Published']");
     }
 
     public async clickScheduleButton(){
@@ -234,6 +246,7 @@ export default class PostEditorPage {
     }
 
     public async selectTagWithName(tagName: string) {
+        await this.page.waitForSelector("//label[text()='Tags']")
         const tagComboBoxInput = await this.eleTagComboBoxInput;
         await tagComboBoxInput?.click();
         await this.page.waitForSelector("//ul[@role='listbox']");
@@ -252,14 +265,10 @@ export default class PostEditorPage {
         const filteredAllTagsInDropDown = allTagsInDropDown.filter(elm => elm);
         console.log("ver: " + await filteredAllTagsInDropDown[0]?.innerText());
         await filteredAllTagsInDropDown[0]?.click();
-        await this.page.waitForSelector("button[aria-label='Close']");
     }
 
     public async clickCloseSetting() {
-        const closeSetting = await this.eleCloseSetting;
-        await closeSetting?.click();
-        const formSetting = await this.eleFormSetting;
-        await formSetting?.evaluate(node => node.setAttribute("style", "display: none"));
+        await this.clickSettingButton();
         await this.page.waitForSelector("//span[text()='Publish']");
     }
 

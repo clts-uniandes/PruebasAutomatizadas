@@ -31,7 +31,7 @@ test.describe("PA008 - ", () => {
         page = await context.newPage();
 
         //TODO GIVEN url tol login
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.goto(Env.BASE_URL_GHOST_V4 + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
         tags = new TagPage(page);
@@ -79,6 +79,7 @@ test.describe("PA008 - ", () => {
         //TODO WHEN I publish the post
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
+        await postEditor.clickConfirmPublishButton();
         await postEditor.clickPostsLink();
 
         //TODO THEN I expected the post will be published
