@@ -1,6 +1,5 @@
 {
-    "url":"https://monitor177.github.io/color-palette/",
-    "browsers":["chromium", "webkit", "firefox"],
+    "url":"http://localhost:2368/ghost/#/site",
     "options":{
         "output": {
             "errorColor": {
@@ -16,6 +15,7 @@
         "scaleToSameSize": true,
         "ignore": "antialiasing"
     },
-    "viewportHeight":600, 
-    "viewportWidth":800
+    "baseVersion": "../Kraken/screenshots/ghost3",
+    "compareVersion": "../Kraken/screenshots/ghost4"
+
 }
