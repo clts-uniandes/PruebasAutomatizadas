@@ -83,11 +83,19 @@ test.describe("PA008 - ", () => {
         await postEditor.clickPostsLink();
 
         //TODO THEN I expected the post will be published
-        const linkScheduledPost = await posts.findPostByTitleAndStatus("Titulo de post utilizando playwright", "PUBLISHED");
-        expect(linkScheduledPost).not.toBeNull();
+        const linkCreatedPost = await posts.findPostByTitleAndStatus("Titulo de post utilizando playwright", "PUBLISHED");
+        expect(linkCreatedPost).not.toBeNull();
     });
 
     test.afterAll(async () => {
+        //TODO THEN I delete the post
+        const linkCreatedPost = await posts.findPostByTitleAndStatus("Titulo de post utilizando playwright", "PUBLISHED");
+        expect(linkCreatedPost).not.toBeNull();
+        await posts.navigateToEditionLink(linkCreatedPost);
+        await postEditor.clickSettingButton();
+        await postEditor.clickDeletePostButton();
+        await postEditor.clickConfirmationDeletePostButton();
+
         await page.close();
         await context.close();
         await browser.close()
