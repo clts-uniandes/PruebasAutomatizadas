@@ -35,7 +35,7 @@ test.describe("PA006 - ", () => {
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);

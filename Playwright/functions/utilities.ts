@@ -10,7 +10,7 @@ export default class Utilities {
 
     public generateScreenshotPath(screenshotId:number) : string {
         if(screenshotId != null) {
-            return Env.SCREENSHOT_FOLDER + this.scenarioName + "/" + screenshotId+".png";
+            return Env.SCREENSHOT_FOLDER_GHOST_3 + this.scenarioName + "/" + screenshotId+".png";
         } else {
             throw new Error("No valid parameters");
         }
