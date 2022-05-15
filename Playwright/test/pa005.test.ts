@@ -84,7 +84,7 @@ test.describe("PA005: Crear nueva página y enlazar con nuevo elemento navbar", 
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         
         // Then I can navigate to the new page through the navbar
-        await page.goto('http://localhost:2368/');
+        await page.goto(Env.BASE_URL);
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await contentMain.clickNavBarLink("paginaAEnlazar");
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});

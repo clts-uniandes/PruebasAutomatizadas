@@ -106,7 +106,7 @@ test.describe("PA007: Modificar titulo de página y verificar enlace antiguo no 
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         // Then I can navigate to the old page through the same old navbar item
-        await page.goto('http://localhost:2368/');
+        await page.goto(Env.BASE_URL);
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await contentMain.clickNavBarLink("paginaADesenlazar");
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
