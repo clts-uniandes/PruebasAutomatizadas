@@ -5,6 +5,7 @@ export default class Env {
     public static USER:string = "luis.sajami@gmail.com";
     public static PASS:string = "Uniandes123456";
     public static HEADLESS:boolean = false;
+    public static SCREENSHOT_FOLDER:string = "./screenshots/";
     public static SCREENSHOT_FOLDER_GHOST_3:string = "./screenshots/ghost3/";
     public static SCREENSHOT_FOLDER_GHOST_4:string = "./screenshots/ghost4/";
     public static BASE_URL_GHOST_V4:string = "http://localhost:3002";
