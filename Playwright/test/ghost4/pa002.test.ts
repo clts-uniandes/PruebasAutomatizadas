@@ -1,9 +1,9 @@
 import { Browser, BrowserContext, chromium, Page } from "playwright";
-import HomePage from "../page-object/home.page";
-import LoginPage from "../page-object/login.page"
-import PostPage from "../page-object/post.page";
-import PostEditorPage from "../page-object/post-editor.page";
-import Env from "../util/environment";
+import HomePage from "./page-object/home.page";
+import LoginPage from "./page-object/login.page"
+import PostPage from "../../page-object/post.page";
+import PostEditorPage from "./page-object/post-editor.page";
+import Env from "../../util/environment";
 
 import { test, expect } from '@playwright/test';
 
@@ -27,7 +27,7 @@ test.describe("PA002 - ", () => {
         page = await context.newPage();
 
         //TODO GIVEN url tol login
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.goto(Env.BASE_URL_GHOST_V4 + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
         posts = new PostPage(page);

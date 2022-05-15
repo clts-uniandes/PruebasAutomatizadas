@@ -15,7 +15,7 @@
         "scaleToSameSize": true,
         "ignore": "antialiasing"
     },
-    "baseVersion": "../Kraken/screenshots/ghost3",
-    "compareVersion": "../Kraken/screenshots/ghost4"
+    "baseVersion": "../Playwright/screenshots/ghost3",
+    "compareVersion": "../Playwright/screenshots/ghost4"
 
 }
