@@ -6,4 +6,5 @@ export default class Env {
     public static PASS:string = "Uniandes123456";
     public static HEADLESS:boolean = false;
     public static SCREENSHOT_FOLDER:string = "./screenshots/";
+    public static BASE_URL_GHOST_V4:string = "http://localhost:3002";
 }

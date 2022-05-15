@@ -1,10 +1,10 @@
 import { Browser, BrowserContext, chromium, Page } from "playwright";
-import HomePage from "../page-object/home.page";
-import LoginPage from "../page-object/login.page"
-import PageGhostPage from "../page-object/page-ghost.page";
-import PageEditorPage from "../page-object/page-editor.page";
-import Env from "../util/environment";
-import Util from "../util/util";
+import PageGhostPage from "./page-object/page-ghost.page";
+import HomePage from "./page-object/home.page";
+import LoginPage from "./page-object/login.page"
+import PageEditorPage from "./page-object/page-editor.page";
+import Env from "../../util/environment";
+import Util from "../../util/util";
 
 import { test, expect } from '@playwright/test';
 
@@ -30,7 +30,7 @@ test.describe("PA001 - ", () => {
         page = await context.newPage();
 
         //TODO GIVEN url tol login
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.goto(Env.BASE_URL_GHOST_V4 + Env.ADMIN_SECTION);
         await page.screenshot({path: `${Env.SCREENSHOT_FOLDER}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);

@@ -128,7 +128,7 @@ test.describe("PA006 - ", () => {
 
         //TODO THEN I delete the created page
         await home.clickDesignLink();
-        await design.deleteNavBar("NAV PA006");
+        await design.deleteNavBar("NAV PA006 EDITED");
 
         await page.close();
         await context.close();

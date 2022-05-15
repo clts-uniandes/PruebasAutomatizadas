@@ -10,7 +10,7 @@ export default class PostEditorPage {
     //selectores
 
     public get eleTitle() {
-        const title = this.page.$("//textarea[@placeholder='Post title'] | //textarea[@placeholder='Post Title']");
+        const title = this.page.locator("//textarea[@placeholder='Post title'] | //textarea[@placeholder='Post Title']");
         if(title != null) {
             return title;
         } else {
@@ -162,6 +162,16 @@ export default class PostEditorPage {
         }
     }
 
+    public get eleScheduleConfirmation() {
+        const scheduleRadioBtn = this.page.locator("//button[contains(@class, 'gh-btn gh-btn-black gh-btn-icon ember-view')]");
+        if (scheduleRadioBtn != null) {
+            return scheduleRadioBtn;
+        } else {
+            throw new Error("No scheduleRadioBtn element");
+        }
+    }
+
+
     //actuadores
     public async fillPostTitle(title:string){
         const titleArea = await this.eleTitle;
@@ -180,7 +190,6 @@ export default class PostEditorPage {
     }
 
     public async clickPublishLink(){
-        await this.page.waitForSelector(`//div[contains(@class, 'gh-btn gh-btn-outline gh-publishmenu-trigger')]`);
         const publishLink = await this.elePublishLink;
         await publishLink?.click();
     }
@@ -211,10 +220,16 @@ export default class PostEditorPage {
         await scheduleRadioButton?.click();
     }
 
+    public async clickScheduleConfirmation() {
+        const scheduleConfirmation = await this.eleScheduleConfirmation;
+        await scheduleConfirmation?.click();
+    }
+
     public async updateTimeToPublish() {
         await this.page.waitForSelector("div.gh-date-time-picker-time input");
         await this.clickScheduleRadioButton();
         await this.clickScheduleButton();
+        await this.clickScheduleConfirmation();
         await this.page.waitForSelector("(//span[text()='Scheduled'])[2]");
     }
 
