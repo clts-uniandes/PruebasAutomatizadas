@@ -27,7 +27,7 @@ test.describe("PA012 - ", () => {
         page = await context.newPage();
 
         //TODO GIVEN url tol login
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.goto(Env.BASE_URL_GHOST_V4 + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
         posts = new PostPage(page);
@@ -60,6 +60,7 @@ test.describe("PA012 - ", () => {
         //TODO WHEN I publish the post
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
+        await postEditor.clickConfirmPublishButton();
 
         //TODO WHEN I return to post list
         await postEditor.clickPostsLink();
