@@ -61,7 +61,7 @@ test.describe("PA015: Verificar cambio de contraseña exitoso", () => {
         await staffEditorPage.fillPasswordVerificationInput('WhatABeautifulDay123');
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await staffEditorPage.clickChangePasswordButton();
-        await new Promise(r => setTimeout(r, 1500));
+        //await new Promise(r => setTimeout(r, 1500));
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await staffEditorPage.clickCloseNotification();
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});

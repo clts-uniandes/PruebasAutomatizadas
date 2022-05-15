@@ -126,7 +126,7 @@ export default class HomePage {
     public async clickDesignLink() {
         const ele = await this.eleDesignLink;
         await ele?.click();
-        await this.page.waitForSelector("//form[@id='settings-navigation']");
+        await this.page.waitForSelector("//div[text()='Theme Directory']");
     }
 
     public async clickUserMenu() {

@@ -55,24 +55,6 @@ export default class StaffEditorPage {
         }
     }
 
-    public get eleSaveButton() {
-        const ele = this.page.$("//span[text()='Save']");
-        if(ele != null) {
-            return ele;
-        } else {
-            throw new Error("No Save button element");
-        }
-    }
-
-    public get eleSavedButton() {
-        const ele = this.page.$("//button[text()='Saved']");
-        if(ele != null) {
-            return ele;
-        } else {
-            throw new Error("No Saved button element");
-        }
-    }
-
     public get eleSavedPasswordButton() {
         const ele = this.page.$("//button[text()='Saved']");
         if(ele != null) {
@@ -140,6 +122,24 @@ export default class StaffEditorPage {
         }
     }
 
+    public get eleSaveButton() {
+        const ele = this.page.$("//span[text()='Save']");
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Save button element");
+        }
+    }
+
+    public get eleSavedButton() {
+        const ele = this.page.$("//button[text()='Saved']");
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Saved button element");
+        }
+    }
+
     //actuadores
 
     public async clickUserSuspendConfigurationButton(){
@@ -200,6 +200,7 @@ export default class StaffEditorPage {
         const changePasswordButton = await this.eleChangePasswordButton;
         await changePasswordButton?.click();
         await this.eleSaveButton;
+        await this.page.waitForSelector("//span[text()='Password updated']");
     }
 
     public async clickSaveButton() {
