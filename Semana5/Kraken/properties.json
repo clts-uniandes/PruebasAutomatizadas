@@ -1,0 +1,7 @@
+
+{
+    "USERNAME": "d.zunigab@uniandes.edu.co",
+    "PASSWORD": "Admin12345",
+    "LOGIN_URL": "http://localhost:2369/ghost/#/signin",
+    "BASE_URl": "http://localhost:2369/ghost/#/signin"
+}
