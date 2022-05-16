@@ -98,6 +98,40 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 4. En el directorio `kraken` __encontrará dos carpetas__ `features_ghost3` y `features_ghost4`, dependiendo la version que desee probar __debe renombrar la carpeta a `features`__
 5. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
 6. Los screenshots quedaran almacenados en `screenshots/{nombre_configurado/{id_screenshot}.png`
+### Ejecución de pruebas de regresión visual:
+#### Prerequisitos:
+- Haber ejecutado las pruebas de kraken de los `features_ghost3` y `features_ghost4`
+- Contar con los directorios e imagenes en `.Kraken/screenshots/{nombre_configurad}/{id_screenshot}.png`.
+
+#### Ejecución:
+1. Ingresar al directorio `visual_regression` Ejemplo: `cd visual_regression`
+2. Ejecutar el comando `npm install` para instalar las dependencias.
+3. Configurar las pruebas, para ello ingreese al archivo `visual_regression/config.json` y modifique:
+```json
+{
+    "url":"http://localhost:2368/ghost/#/site", //URL del sitio bajo pruebas
+    "options":{
+        "output": {
+            "errorColor": {
+                "red": 255,
+                "green": 0,
+                "blue": 255
+            },
+            "errorType": "movement",
+            "largeImageThreshold": 1200,
+            "useCrossOrigin": false,
+            "outputDiff": true
+        },
+        "scaleToSameSize": true,
+        "ignore": "antialiasing"
+    },
+    "baseVersion": "../Kraken/screenshots/{nombre_para_ghost3}",// Directorio configurado en ejecucion de kraken para Ghost en la version 3
+    "compareVersion": "../Kraken/screenshots/{nombre_para_ghost4}"// Directorio configurado en ejecucion de kraken para Ghost en la version 4
+
+}
+```
+4. Dentro del directorio `visual_regression/` Ejecutar pruebas con el comando `node index.js`
+5. Revisar los resultados de las pruebas en el archivo: `visual_regression/results/{fecha_ejecucion}/report.html`
 
 
 ## Playwright
