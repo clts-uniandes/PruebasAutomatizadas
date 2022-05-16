@@ -148,16 +148,38 @@ ej. `docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.41.1
 
 ### Ejecución de pruebas de regresión visual:
 #### Prerequisitos:
-- Haber
+1. Ingresar a carpeta semana6 `cd Semana6`
+2. Ingresar a carpeta playwright `cd Playwright`
+3. Crear una carpeta llamada `vrt`
+4. Crear una carpeta llamada `ghost3` dentro de la carpeta `vrt` y copiar las carpetas:
+```json
+PA001
+PA002
+PA008
+PA011
+PA012
+```
+generadas por la ejecucion de los escenarios ubicados en `Playwright\ghost3\screenshots\`
+
+6. Crear una carpeta llamada `ghost4` dentro de la carpeta `vrt`y copiar las carpetas:
+```json
+PA001
+PA002
+PA008
+PA011
+PA012
+```
+generadas por la ejecucion de los escenarios ubicados en `Playwright\ghost4\screenshots\`
 
 #### Ejecución:
 1. Ingresar a carpeta semana6 `cd Semana6`
 2. Ingresar a carpeta playwright `cd Playwright`
 3. Ingresar a carpeta visual_regression `cd visual_regression`
-4. Modificar el archivo config.json para establecer las rutas de las carpetas que seras comparadas
+4. Ejecutar el comando `npm install` para obtener las dependencias.
+5. Modificar el archivo config.json para establecer las rutas de las carpetas que seras comparadas
 ```json
 {
-    "url":"http://localhost:2368/ghost/#/site", //URL del sitio bajo pruebas
+    "url":"http://localhost:3002/ghost/#/site", //URL del sitio bajo pruebas
     "options":{
         "output": {
             "errorColor": {
@@ -178,3 +200,5 @@ ej. `docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.41.1
 
 }
 ```
+5. Ejecutar el comando `node index.js`
+6. Verificar el reporte generado dentro de la carpeta  `results`
