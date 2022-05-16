@@ -98,15 +98,15 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 4. En el directorio `kraken` __encontrará dos carpetas__ `features_ghost3` y `features_ghost4`, dependiendo la version que desee probar __debe renombrar la carpeta a `features`__
 5. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
 6. Los screenshots quedaran almacenados en `screenshots/{nombre_configurado/{id_screenshot}.png`
-### Ejecución de pruebas de regreción visual:
+### Ejecución de pruebas de regresión visual:
 #### Prerequisitos:
 - Haber ejecutado las pruebas de kraken de los `features_ghost3` y `features_ghost4`
 - Contar con los directorios e imagenes en `.Kraken/screenshots/{nombre_configurad}/{id_screenshot}.png`.
 
 #### Ejecución:
-1. ingresar al directorio `visual_regrassion` Ejemplo: `cd visual_regrassion`
+1. Ingresar al directorio `visual_regression` Ejemplo: `cd visual_regression`
 2. Ejecutar el comando `npm install` para instalar las dependencias.
-3. Configurar las pruebas, para ello ingreese al archivo `visual_regrassion/config.json` y modifique:
+3. Configurar las pruebas, para ello ingreese al archivo `visual_regression/config.json` y modifique:
 ```json
 {
     "url":"http://localhost:2368/ghost/#/site", //URL del sitio bajo pruebas
@@ -130,8 +130,8 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 }
 ```
-4. Dentro del directorio `visual_regrassion/` Ejecutar pruebas con el comando `node index.js`
-5. Revisar los resultados de las pruebas en el archivo: `visual_regrassion/results/{fecha_ejecucion}/report.html`
+4. Dentro del directorio `visual_regression/` Ejecutar pruebas con el comando `node index.js`
+5. Revisar los resultados de las pruebas en el archivo: `visual_regression/results/{fecha_ejecucion}/report.html`
 
 
 ## Playwright
