@@ -5,7 +5,6 @@ import PageGhostPage from "../page-object/page-ghost.page";
 import PageEditorPage from "../page-object/page-editor.page";
 import DesignPage from "../page-object/design.page";
 import Env from "../util/environment";
-import Util from "../util/util";
 
 import { test, expect } from '@playwright/test';
 import SitePage from "../page-object/site.page";
@@ -13,7 +12,7 @@ import Utilities from "../functions/utilities";
 
 let screenshotNumber = 1;
 
-test.describe("PA006 - Renombrar página y componentes navbar asociados", () => {
+test.describe("PA006 - Renombrar página y componentes navbar asociados", () => { 
 
     let browser: Browser;
     let context: BrowserContext;
@@ -38,7 +37,6 @@ test.describe("PA006 - Renombrar página y componentes navbar asociados", () => 
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);

@@ -6,16 +6,16 @@ import StaffPage from "../page-object/staff.page";
 import StaffEditorPage from "../page-object/staff-editor.page";
 
 import { test, expect } from '@playwright/test';
-import Util from "../util/util";
+import Utilities from "../functions/utilities";
 
-let screenshotNumber = 0;
-let scenarioName = 'PA020/';
+let screenshotNumber = 1;
 
-test.describe("PA020 - ", () => {
+test.describe("PA020 - Remover la suspensión puesta sobre un usuario", () => {
 
     let browser: Browser;
     let context: BrowserContext;
     let page: Page;
+    let utilities: Utilities;
 
     //My pageObjects
     let login: LoginPage;
@@ -29,11 +29,11 @@ test.describe("PA020 - ", () => {
         });
         context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
         page = await context.newPage();
+        utilities = new Utilities("PA020");
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
         await page.waitForSelector("input[name='identification']");
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         staff = new StaffPage(page);
@@ -41,12 +41,13 @@ test.describe("PA020 - ", () => {
     });
 
     test.beforeEach( async() => {
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         //TODO WHEN I log in
         await login.signInWith(Env.USER, Env.PASS);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         //TODO WHEN I navigate to Page module
         await home.clickStaffLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         //TODO THEN I expected that url will updated
         expect(page.url()).toContain("/#/staff");
 
@@ -54,15 +55,15 @@ test.describe("PA020 - ", () => {
         if ( !(typeof userSuspendedLinkFound === 'undefined')) {
             //TODO WHEN I navigate to user detail to suspend
             await staff.navigateToUserDetailWithLink(userSuspendedLinkFound);
-            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
             //TODO WHEN I suspend user
             await staffEditor.clickUserUnSuspendConfigurationButton();
-            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
             await staffEditor.clickUnSuspendUserButton();
-            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
             await staffEditor.clickUnSuspendUserConfirmationButton();
-            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
             //TODO WHEN I navigate to Page module
             await home.clickStaffLink();
@@ -78,19 +79,19 @@ test.describe("PA020 - ", () => {
 
         //TODO WHEN I navigate to user detail to suspend
         await staff.navigateToUserDetailWithLink(userLinkFound);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         //TODO WHEN I suspend user
         await staffEditor.clickUserSuspendConfigurationButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await staffEditor.clickSuspendUserButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await staffEditor.clickSuspendUserConfirmationButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         //TODO WHEN I navigate to Page module
         await home.clickStaffLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         //TODO THEN I expected to found user suspended
         const userSuspendedLinkFound = await staff.findUserWithNameAndStatus("Ghost", "SUSPENDED");
@@ -98,19 +99,19 @@ test.describe("PA020 - ", () => {
 
         //TODO WHEN I navigate to user detail to suspend
         await staff.navigateToUserDetailWithLink(userSuspendedLinkFound);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         //TODO WHEN I suspend user
         await staffEditor.clickUserUnSuspendConfigurationButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await staffEditor.clickUnSuspendUserButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await staffEditor.clickUnSuspendUserConfirmationButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         //TODO WHEN I navigate to Page module
         await home.clickStaffLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 
         //TODO THEN I expected to found user suspended
         const userUnSuspendedLinkFound = await staff.findUserWithNameAndStatus("Ghost", "");
