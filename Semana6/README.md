@@ -1,5 +1,8 @@
 # PruebasAutomatizadas
-Contenidos de Semana 6
+Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
+
+* Contenidos Semana5, ver carpeta /Semana5
+* Contenidos Semana6, ver carpeta /Semana6
 
 # Integrantes del equipo
 
@@ -51,28 +54,22 @@ Contenidos de Semana 6
 * PA019. Suspender a un usuario activo: Habiendo ingresado a la sección de Staff en el sitio de administración, se selecciona un usuario activo y se aplica suspensión del mismo desde la página de administración del susodicho
 * PA020. Remover la suspensión puesta sobre un usuario: Habiendo ingresado a la sección de Staff en el sitio de administración, se selecciona un usuario suspendido y se remueve la suspensión sobre el mismo desde la página de administración del susodicho.
 
-#### WORK IN PROGRESS ####
-
 # Instrucciones de ejecución de código de escenarios de pruebas
 
 ## Precondiciones generales
 
 1. Instalar node versiones 14 (recomendado v14.15.0)  segun su sistema operativo. Se recomienda NVM tanto para Windows como para sistemas Linux. Instrucciones disponibles tanto para Linux: (https://github.com/nvm-sh/nvm) o su spin'off en Windows (https://github.com/coreybutler/nvm-windows)
-2. Tener instalada una instancia de Ghost v3.41.1. Más información en https://ghost.org/docs/install/local/
-3. Ejecutar la instancia de Ghost con el comando `ghost start` si no lo ha hecho
+2. Tener instalada una instancia de Ghost v3.41.1. y una de Ghost v4.44.0 Más información en https://ghost.org/docs/install/local/
+3. Activar la instancia de Ghost requerida con el comando `ghost start` si no lo ha hecho para la instancia con pruebas deseadas
 4. Descargar los contenidos del repositorio en su carpeta de preferencia, sea por descarga de ZIP o por "git clone https://github.com/clts-uniandes/PruebasAutomatizadas.git"
 
-## Cypress
+### Instalar Ghost:
+- Ejecutar el comando `ghost install 4.4 --local --force` en el directorio que desee hacer la instalacion de la version 4.4
+- Ejecutar el comando `ghost install 3.41.1 --local --force` en el directorio que desee hacer la instalacion de la version 3.41.1
 
-### Prerequisitos:
-- NodeJs 14 o posterior
-
-### Ejecución de pruebas:
-1. Instalar Cypress desde consola de comandos con el comando `npm install -g cypress`
-2. Ejecutar el comando `cypress open --project "<path>" ` donde path indica la carpeta "PruebasAutomatizadas\Cypress\pruebas_e2e" relativo a la carpeta donde descargó el contenido de repositorio (ejemplo, "C:\Fuentes\MisRepos\PruebasAutomatizadas\Cypress\pruebas_e2e" en el caso de Windows ). 
-3. Espere a que apareza la pantalla de cypress. 
-4. Configure usuario de login de admin de Ghost en el archivo Cypress/pruebas_e2e/cypress/fixtures/loginData.json. con el editor de texto de su preferencia. Cambie los valores "username1" y "password1" segun el usuario admin disponible en Ghost local.
-5. Haga clic en la prueba que desee ejecutar (elementos tipo PAxyz.spec.js ) ![image](https://user-images.githubusercontent.com/98668775/167325358-429e0884-73a3-45ad-95ab-8f2c38b38f33.png)
+### Desplegar Ghost con Docker
+- docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_x.yy.z ghost:x.yy.z donde x.yy.z se reemplaza con la imagen requerida (3.41.1 y 4.44.0)
+ej. `docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.41.1 ghost:3.41.1`
 
 ## Kraken
    
@@ -81,9 +78,6 @@ Contenidos de Semana 6
 - Ghost V3.41.1
 - Ghost V4.4
 
-### Instalar Ghost:
-- Ejecutar el comando `ghost install 4.4 --local --force` en el directorio que desee hacer la instalacion de la version 4.4
-- Ejecutar el comando `ghost install 3.41.1 --local --force` en el directorio que desee hacer la instalacion de la version 3.41.1
 ### Ejecución de pruebas:
 1. Ingresar al directorio kraken `cd kraken`
 2. Instalar dependencias `npm install`
@@ -100,17 +94,111 @@ Contenidos de Semana 6
 4. En el directorio `kraken` __encontrará dos carpetas__ `features_ghost3` y `features_ghost4`, dependiendo la version que desee probar __debe renombrar la carpeta a `features`__
 5. Ejecutar el comando `./node_modules/kraken-node/bin/kraken-node run`
 6. Los screenshots quedaran almacenados en `screenshots/{nombre_configurado/{id_screenshot}.png`
+### Ejecución de pruebas de regresión visual:
+#### Prerequisitos:
+- Haber ejecutado las pruebas de kraken de los `features_ghost3` y `features_ghost4`
+- Contar con los directorios e imagenes en `.Kraken/screenshots/{nombre_configurad}/{id_screenshot}.png`.
+
+#### Ejecución:
+1. Ingresar al directorio `visual_regression` Ejemplo: `cd visual_regression`
+2. Ejecutar el comando `npm install` para instalar las dependencias.
+3. Configurar las pruebas, para ello ingreese al archivo `visual_regression/config.json` y modifique:
+```json
+{
+    "url":"http://localhost:2368/ghost/#/site", //URL del sitio bajo pruebas
+    "options":{
+        "output": {
+            "errorColor": {
+                "red": 255,
+                "green": 0,
+                "blue": 255
+            },
+            "errorType": "movement",
+            "largeImageThreshold": 1200,
+            "useCrossOrigin": false,
+            "outputDiff": true
+        },
+        "scaleToSameSize": true,
+        "ignore": "antialiasing"
+    },
+    "baseVersion": "../Kraken/screenshots/{nombre_para_ghost3}",// Directorio configurado en ejecucion de kraken para Ghost en la version 3
+    "compareVersion": "../Kraken/screenshots/{nombre_para_ghost4}"// Directorio configurado en ejecucion de kraken para Ghost en la version 4
+
+}
+```
+4. Dentro del directorio `visual_regression/` Ejecutar pruebas con el comando `node index.js`
+5. Revisar los resultados de las pruebas en el archivo: `visual_regression/results/{fecha_ejecucion}/report.html`
 
 
 ## Playwright
 
 ### Prerequisitos:
 - NodeJs 14 o posterior
+- Instancia Ghost V3.41.1 disponible 
+- Instancia Ghost V4.4.0 disponible
 
 ### Ejecución de pruebas:
-1. Ingresar al directorio playwright `cd Playwright`
+1. Ingresar al directorio playwright deseado (Playwright/ghost3 o Playwright/ghost4) `cd Playwright`
 2. Ejecutar el comando `npm install`
-3. Configurar las variables `user` y `pass` de inicio de sesion ghost en el archivo `environment.ts` 
-   que se encuentra en la carpeta `util`
-![img.png](Playwright/img/configuracion-environment.png)
-4. Ejecutar el comando `npx playwright test`
+3. Configurar el archivo `util/environment.ts` con los parametros comentados (`BASE_URL`, `USER`, `PASS`)
+![image](https://user-images.githubusercontent.com/98668775/168510550-069b32ab-d3eb-4ae4-99e7-2775191c3ed2.png)
+
+4. Ejecutar el comando `npx playwright test test/pa0xy.test` donde xy se reemplaza con la prueba deseada a ejecutar, e.g. PA001 usa `npx playwright test test/pa001.test` (no se soporta ejecución simultánea)
+5. Verificar que se haya creado la carperta `screenshots`
+
+### Ejecución de pruebas de regresión visual:
+#### Prerequisitos:
+1. Ingresar a carpeta semana6 `cd Semana6`
+2. Ingresar a carpeta playwright `cd Playwright`
+3. Crear una carpeta llamada `vrt`
+4. Crear una carpeta llamada `ghost3` dentro de la carpeta `vrt` y copiar las carpetas:
+```json
+PA001
+PA002
+PA008
+PA011
+PA012
+```
+generadas por la ejecucion de los escenarios ubicados en `Playwright\ghost3\screenshots\`
+
+6. Crear una carpeta llamada `ghost4` dentro de la carpeta `vrt`y copiar las carpetas:
+```json
+PA001
+PA002
+PA008
+PA011
+PA012
+```
+generadas por la ejecucion de los escenarios ubicados en `Playwright\ghost4\screenshots\`
+
+#### Ejecución:
+1. Ingresar a carpeta semana6 `cd Semana6`
+2. Ingresar a carpeta playwright `cd Playwright`
+3. Ingresar a carpeta visual_regression `cd visual_regression`
+4. Ejecutar el comando `npm install` para obtener las dependencias.
+5. Modificar el archivo config.json para establecer las rutas de las carpetas que seras comparadas
+```json
+{
+    "url":"http://localhost:3002/ghost/#/site", //URL del sitio bajo pruebas
+    "options":{
+        "output": {
+            "errorColor": {
+                "red": 255,
+                "green": 0,
+                "blue": 255
+            },
+            "errorType": "movement",
+            "largeImageThreshold": 1200,
+            "useCrossOrigin": false,
+            "outputDiff": true
+        },
+        "scaleToSameSize": true,
+        "ignore": "antialiasing"
+    },
+    "baseVersion": "../Playwright/vrt/ghost3",// Directorio creado previamente
+    "compareVersion": "../Playwright/vrt/ghost4"// Directorio creado previamente
+
+}
+```
+5. Ejecutar el comando `node index.js`
+6. Verificar el reporte generado dentro de la carpeta  `results`
