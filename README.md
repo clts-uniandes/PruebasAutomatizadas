@@ -1,6 +1,9 @@
 # PruebasAutomatizadas
 Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
+* Contenidos Semana5, ver carpeta /Semana5
+* Contenidos Semana6, ver carpeta /Semana6
+
 # Integrantes del equipo
 
 | Nombre                           | Correo                    |
