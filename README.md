@@ -140,7 +140,7 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 ### Ejecucion de escenarios de pruebas para Ghost 4.44.0
 
-### Prerequisitos:
+#### Prerequisitos:
 - NodeJs 14 o posterior
 - Docker
 
