@@ -59,9 +59,17 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 ## Precondiciones generales
 
 1. Instalar node versiones 14 (recomendado v14.15.0)  segun su sistema operativo. Se recomienda NVM tanto para Windows como para sistemas Linux. Instrucciones disponibles tanto para Linux: (https://github.com/nvm-sh/nvm) o su spin'off en Windows (https://github.com/coreybutler/nvm-windows)
-2. Tener instalada una instancia de Ghost v3.41.1. Más información en https://ghost.org/docs/install/local/
-3. Ejecutar la instancia de Ghost con el comando `ghost start` si no lo ha hecho
+2. Tener instalada una instancia de Ghost v3.41.1. y una de Ghost v4.44.0 Más información en https://ghost.org/docs/install/local/
+3. Activar la instancia de Ghost requerida con el comando `ghost start` si no lo ha hecho para la instancia con pruebas deseadas
 4. Descargar los contenidos del repositorio en su carpeta de preferencia, sea por descarga de ZIP o por "git clone https://github.com/clts-uniandes/PruebasAutomatizadas.git"
+
+### Instalar Ghost:
+- Ejecutar el comando `ghost install 4.4 --local --force` en el directorio que desee hacer la instalacion de la version 4.4
+- Ejecutar el comando `ghost install 3.41.1 --local --force` en el directorio que desee hacer la instalacion de la version 3.41.1
+
+### Desplegar Ghost con Docker
+- docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_x.yy.z ghost:x.yy.z donde x.yy.z se reemplaza con la imagen requerida (3.41.1 y 4.44.0)
+ej. `docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.41.1 ghost:3.41.1`
 
 ## Kraken
    
@@ -70,9 +78,6 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 - Ghost V3.41.1
 - Ghost V4.4
 
-### Instalar Ghost:
-- Ejecutar el comando `ghost install 4.4 --local --force` en el directorio que desee hacer la instalacion de la version 4.4
-- Ejecutar el comando `ghost install 3.41.1 --local --force` en el directorio que desee hacer la instalacion de la version 3.41.1
 ### Ejecución de pruebas:
 1. Ingresar al directorio kraken `cd kraken`
 2. Instalar dependencias `npm install`
@@ -129,33 +134,21 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 ### Prerequisitos:
 - NodeJs 14 o posterior
+- Instancia Ghost V3.41.1 disponible 
+- Instancia Ghost V4.4.0 disponible
 
 ### Ejecución de pruebas:
-1. Ingresar al directorio playwright `cd Playwright`
+1. Ingresar al directorio playwright deseado (Playwright/ghost3 o Playwright/ghost4) `cd Playwright`
 2. Ejecutar el comando `npm install`
-3. Configurar las variables `user` y `pass` de inicio de sesion ghost en el archivo `environment.ts` 
-   que se encuentra en la carpeta `util`
-![img.png](Playwright/img/configuracion-environment.png)
-4. Ejecutar el comando `npx playwright test`
+3. Configurar el archivo `util/environment.ts` con los parametros comentados (`BASE_URL`, `USER`, `PASS`)
+![image](https://user-images.githubusercontent.com/98668775/168510550-069b32ab-d3eb-4ae4-99e7-2775191c3ed2.png)
 
-### Ejecucion de escenarios de pruebas para Ghost 4.44.0
-
-#### Prerequisitos:
-- NodeJs 14 o posterior
-- Docker
-
-#### Desplegar ghost 4.44.0 localmente
-- docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.44.0 ghost:3.44.0
-
-#### Ejecución de pruebas:
-1. Ingresar al directorio semana6 `cd Semana6`
-2. Ingresar al directorio playwright `cd Playwright`
-3. Ingresar al directorio ghost4 `cd ghost4`
-4. Ejecutar el comando `npm install`
-5. Configurar las variables `user`, `pass` de inicio de sesion ghost en el archivo `environment.ts` 
-   que se encuentra en la carpeta `util`
-   
-![img.png](Playwright/img/configuracion-environment.png)
-
-4. Ejecutar el comando `npx playwright test`
+4. Ejecutar el comando `npx playwright test test/pa0xy.test` donde xy se reemplaza con la prueba deseada a ejecutar, e.g. PA001 usa `npx playwright test test/pa001.test` (no se soporta ejecución simultánea)
 5. Verificar que se haya creado la carperta `screenshots`
+
+### Ejecución de pruebas de regresión visual:
+#### Prerequisitos:
+- Haber
+
+#### Ejecución:
+1. Ingresar
