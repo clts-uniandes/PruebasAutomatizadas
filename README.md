@@ -151,4 +151,30 @@ ej. `docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.41.1
 - Haber
 
 #### Ejecución:
-1. Ingresar
+1. Ingresar a carpeta semana6 `cd Semana6`
+2. Ingresar a carpeta playwright `cd Playwright`
+3. Ingresar a carpeta visual_regression `cd visual_regression`
+4. Modificar el archivo config.json para establecer las rutas de las carpetas que seras comparadas
+```json
+{
+    "url":"http://localhost:2368/ghost/#/site", //URL del sitio bajo pruebas
+    "options":{
+        "output": {
+            "errorColor": {
+                "red": 255,
+                "green": 0,
+                "blue": 255
+            },
+            "errorType": "movement",
+            "largeImageThreshold": 1200,
+            "useCrossOrigin": false,
+            "outputDiff": true
+        },
+        "scaleToSameSize": true,
+        "ignore": "antialiasing"
+    },
+    "baseVersion": "../Playwright/vrt/{nombre_para_ghost3}",// Directorio configurado en ejecucion de kraken para Ghost en la version 3
+    "compareVersion": "../Playwright/vrt/{nombre_para_ghost4}"// Directorio configurado en ejecucion de kraken para Ghost en la version 4
+
+}
+```
