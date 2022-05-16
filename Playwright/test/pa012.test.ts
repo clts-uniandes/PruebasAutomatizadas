@@ -6,6 +6,10 @@ import PostEditorPage from "../page-object/post-editor.page";
 import Env from "../util/environment";
 
 import { test, expect } from '@playwright/test';
+import Util from "../util/util";
+
+let screenshotNumber = 0;
+let scenarioName = 'PA012/';
 
 test.describe("PA012 - ", () => {
 
@@ -28,6 +32,8 @@ test.describe("PA012 - ", () => {
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.waitForSelector("input[name='identification']");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         posts = new PostPage(page);
@@ -37,17 +43,22 @@ test.describe("PA012 - ", () => {
     test("should create post , keep in draft , edit the created post and publish it - positive scenario", async () => {
         //TODO WHEN I log in
         await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await home.clickPostsLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         expect(page.url()).toContain("/#/posts");
         await posts.clickNewPostLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         expect(page.url()).toContain("/#/editor/post");
 
         //TODO WHEN I create a post
         await postEditor.fillPostTitle("Titulo de post pa012 utilizando playwright");
         await postEditor.fillPostContent("Contenido de post utilizando playwright");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I draft the post
         await postEditor.clickPostsLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO THEN I expected the post will be draft status
         const linkDraftPost = await posts.findPostByTitleAndStatus("Titulo de post pa012 utilizando playwright", "DRAFT");
@@ -55,14 +66,19 @@ test.describe("PA012 - ", () => {
 
         //TODO WHEN I edit the created post
         await posts.navigateToEditionLink(linkDraftPost);
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.fillPostTitle("Titulo de post pa012 editado utilizando playwright");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I publish the post
         await postEditor.clickPublishLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.clickPublishButton();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I return to post list
         await postEditor.clickPostsLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO THEN I expected the post will be deleted
         const linkDeletedPost = await posts.findPostByTitleAndStatus("Titulo de post pa012 editado utilizando playwright", "PUBLISHED");

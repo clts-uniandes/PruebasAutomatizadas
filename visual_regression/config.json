@@ -15,7 +15,7 @@
         "scaleToSameSize": true,
         "ignore": "antialiasing"
     },
-    "baseVersion": "../Playwright/screenshots/ghost3",
-    "compareVersion": "../Playwright/screenshots/ghost4"
+    "baseVersion": "../Playwright/screenshots/ghost3/vrt",
+    "compareVersion": "../Playwright/screenshots/ghost4/vrt"
 
 }

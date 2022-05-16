@@ -6,6 +6,10 @@ import StaffPage from "../page-object/staff.page";
 import StaffEditorPage from "../page-object/staff-editor.page";
 
 import { test, expect } from '@playwright/test';
+import Util from "../util/util";
+
+let screenshotNumber = 0;
+let scenarioName = 'PA019/';
 
 test.describe("PA019 - ", () => {
 
@@ -28,6 +32,8 @@ test.describe("PA019 - ", () => {
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.waitForSelector("input[name='identification']");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         staff = new StaffPage(page);
@@ -37,8 +43,10 @@ test.describe("PA019 - ", () => {
     test.beforeEach( async() => {
         //TODO WHEN I log in
         await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         //TODO WHEN I navigate to Page module
         await home.clickStaffLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         //TODO THEN I expected that url will updated
         expect(page.url()).toContain("/#/staff");
 
@@ -46,14 +54,19 @@ test.describe("PA019 - ", () => {
         if ( !(typeof userSuspendedLinkFound === 'undefined')) {
             //TODO WHEN I navigate to user detail to suspend
             await staff.navigateToUserDetailWithLink(userSuspendedLinkFound);
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
             //TODO WHEN I suspend user
             await staffEditor.clickUserUnSuspendConfigurationButton();
-            await staffEditor.clickUnSuspendUserButton()
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+            await staffEditor.clickUnSuspendUserButton();
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
             await staffEditor.clickUnSuspendUserConfirmationButton();
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
             //TODO WHEN I navigate to Page module
             await home.clickStaffLink();
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         }
     } )
@@ -66,11 +79,15 @@ test.describe("PA019 - ", () => {
 
         //TODO WHEN I navigate to user detail to suspend
         await staff.navigateToUserDetailWithLink(userLinkFound);
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I suspend user
         await staffEditor.clickUserSuspendConfigurationButton();
-        await staffEditor.clickSuspendUserButton()
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await staffEditor.clickSuspendUserButton();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await staffEditor.clickSuspendUserConfirmationButton();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I navigate to Page module
         await home.clickStaffLink();
@@ -85,14 +102,19 @@ test.describe("PA019 - ", () => {
         if ( !(typeof userSuspendedLinkFound === 'undefined')) {
             //TODO WHEN I navigate to user detail to suspend
             await staff.navigateToUserDetailWithLink(userSuspendedLinkFound);
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
             //TODO WHEN I suspend user
             await staffEditor.clickUserUnSuspendConfigurationButton();
-            await staffEditor.clickUnSuspendUserButton()
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+            await staffEditor.clickUnSuspendUserButton();
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
             await staffEditor.clickUnSuspendUserConfirmationButton();
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
             //TODO WHEN I navigate to Page module
             await home.clickStaffLink();
+            await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         }
     })

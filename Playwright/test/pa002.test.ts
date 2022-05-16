@@ -6,6 +6,10 @@ import PostEditorPage from "../page-object/post-editor.page";
 import Env from "../util/environment";
 
 import { test, expect } from '@playwright/test';
+import Util from "../util/util";
+
+let screenshotNumber = 0;
+let scenarioName = 'PA002/';
 
 test.describe("PA002 - ", () => {
 
@@ -28,6 +32,8 @@ test.describe("PA002 - ", () => {
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.waitForSelector("input[name='identification']");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         posts = new PostPage(page);
@@ -36,15 +42,22 @@ test.describe("PA002 - ", () => {
 
     test("should schedule a post and validate the creation - positive scenario", async () => {
         await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await home.clickPostsLink();
         expect(page.url()).toContain("/#/posts");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await posts.clickNewPostLink();
         expect(page.url()).toContain("/#/editor/post");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.fillPostTitle("Titulo de post programado utilizando playwright");
         await postEditor.fillPostContent("Contenido de post programado utilizando playwright");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.clickPublishLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.updateTimeToPublish();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.clickPostsLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         const linkScheduledPost = await posts.findPostByTitleAndStatus("Titulo de post programado utilizando playwright", "SCHEDULED");
         expect(linkScheduledPost).not.toBeNull();
     });

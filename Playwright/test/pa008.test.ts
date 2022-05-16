@@ -8,6 +8,10 @@ import PostEditorPage from "../page-object/post-editor.page";
 import Env from "../util/environment";
 
 import { test, expect } from '@playwright/test';
+import Util from "../util/util";
+
+let screenshotNumber = 0;
+let scenarioName = 'PA008/';
 
 test.describe("PA008 - ", () => {
 
@@ -32,6 +36,8 @@ test.describe("PA008 - ", () => {
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await page.waitForSelector("input[name='identification']");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         tags = new TagPage(page);
@@ -43,43 +49,57 @@ test.describe("PA008 - ", () => {
     test("should create tag and assign tag to post - positive scenario", async () => {
         //TODO WHEN I log in
         await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         //TODO WHEN I navigate to Page module
         await home.clickTagsLink();
         //TODO THEN I expected that url will updated
         expect(page.url()).toContain("/#/tags");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         await tags.clickNewTagLink();
         expect(page.url()).toContain("/#/tags/new");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I create a tag
         await tagEditor.fillTagName("Nombre tag con playwright");
         await tagEditor.fillTagSlug("Slug utilizando playwright");
         await tagEditor.fillTagDescription("Descripcion utilizando playwright");
         await tagEditor.clickButtonSave();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await tagEditor.clickTagsLink();
         expect(page.url()).toContain("/#/tags");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         const linkCreatedTag = await tags.findPageByTitle("Nombre tag con playwright");
         expect(linkCreatedTag).not.toBeNull();
 
         await home.clickPostsLink();
         expect(page.url()).toContain("/#/posts");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await posts.clickNewPostLink();
         expect(page.url()).toContain("/#/editor/post");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I create a post
         await postEditor.fillPostTitle("Titulo de post utilizando playwright");
         await postEditor.fillPostContent("Contenido de post utilizando playwright");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I set tag
         await postEditor.clickSettingButton();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.selectTagWithName("Nombre tag con playwright");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.clickCloseSetting();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO WHEN I publish the post
         await postEditor.clickPublishLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.clickPublishButton();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await postEditor.clickPostsLink();
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_3_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         //TODO THEN I expected the post will be published
         const linkScheduledPost = await posts.findPostByTitleAndStatus("Titulo de post utilizando playwright", "PUBLISHED");

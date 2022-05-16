@@ -32,7 +32,8 @@ test.describe("PA001 - ", () => {
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL_GHOST_V4 + Env.ADMIN_SECTION);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.waitForSelector("input[name='identification']");
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);
@@ -42,38 +43,38 @@ test.describe("PA001 - ", () => {
     test("should create and edit a page - positive scenario", async () => {
         //TODO WHEN I log in
         await login.signInWith(Env.USER, Env.PASS);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         //TODO WHEN I navigate to Page module
         await home.clickPagesLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         //TODO THEN I expected that url will updated
         expect(page.url()).toContain("/#/pages");
 
         await pageGhost.clickNewPageLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         expect(page.url()).toContain("/#/editor/page");
 
         await pageEditor.fillPageTitle("Titulo de pagina utilizando playwright");
         await pageEditor.fillPostContent("Contenido de pagina utilizando playwright");
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await pageEditor.clickPublishLink();
         await pageEditor.clickPublishButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await pageEditor.clickPagesLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
 
         const linkCreatedPage = await pageGhost.findPageByTitle("Titulo de pagina utilizando playwright");
         expect(linkCreatedPage).not.toBeNull();
         await pageGhost.navigateToEditionLink(linkCreatedPage);
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await pageEditor.fillPageTitle("Titulo de pagina editado utilizando playwright");
         await pageEditor.fillPostContent("Contenido de pagina editado utilizando playwright");
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await pageEditor.clickUpdateLink();
         await pageEditor.clickUpdateButton();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         await pageEditor.clickPagesLink();
-        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
+        await page.screenshot({path: `${Env.SCREENSHOT_FOLDER_GHOST_4_REGRESSION_TESTING}${scenarioName}${Util.getScreenName(screenshotNumber++)}`});
         const linkEditedPage = await pageGhost.findPageByTitle("Titulo de pagina editado utilizando playwright");
         expect(linkEditedPage).not.toBeNull();
     });
