@@ -195,8 +195,8 @@ generadas por la ejecucion de los escenarios ubicados en `Playwright\ghost4\scre
         "scaleToSameSize": true,
         "ignore": "antialiasing"
     },
-    "baseVersion": "../Playwright/vrt/{nombre_para_ghost3}",// Directorio configurado en ejecucion de kraken para Ghost en la version 3
-    "compareVersion": "../Playwright/vrt/{nombre_para_ghost4}"// Directorio configurado en ejecucion de kraken para Ghost en la version 4
+    "baseVersion": "../Playwright/vrt/ghost3",// Directorio configurado en ejecucion de kraken para Ghost en la version 3
+    "compareVersion": "../Playwright/vrt/ghost4"// Directorio configurado en ejecucion de kraken para Ghost en la version 4
 
 }
 ```
