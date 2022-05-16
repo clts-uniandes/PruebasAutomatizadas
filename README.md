@@ -140,6 +140,10 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 ### Ejecucion de escenarios de pruebas para Ghost 4.44.0
 
+### Prerequisitos:
+- NodeJs 14 o posterior
+- Docker
+
 #### Desplegar ghost 4.44.0 localmente
 - docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.44.0 ghost:3.44.0
 
