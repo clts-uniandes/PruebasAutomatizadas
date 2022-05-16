@@ -1,8 +1,6 @@
 # PruebasAutomatizadas
-Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
-* Contenidos Semana5, ver carpeta /Semana5
-* Contenidos Semana6, ver carpeta /Semana6
+Enlace a copia de reporte en OneDrive: https://uniandes-my.sharepoint.com/:f:/g/personal/d_zunigab_uniandes_edu_co/ErsoyRttTRxIu4IUZ6Tn7RwBBUf3ggXDGmIY_A68XZXJLw?e=e3f21S
 
 # Integrantes del equipo
 
