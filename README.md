@@ -137,3 +137,21 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
    que se encuentra en la carpeta `util`
 ![img.png](Playwright/img/configuracion-environment.png)
 4. Ejecutar el comando `npx playwright test`
+
+### Ejecucion de escenarios de pruebas para Ghost 4.44.0
+
+### Desplegar ghost 4.44.0 localmente
+- docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.44.0 ghost:3.44.0
+
+### Ejecución de pruebas:
+1. Ingresar al directorio semana6 `cd Semana6`
+2. Ingresar al directorio playwright `cd Playwright`
+3. Ingresar al directorio ghost4 `cd ghost4`
+4. Ejecutar el comando `npm install`
+5. Configurar las variables `user`, `pass` de inicio de sesion ghost en el archivo `environment.ts` 
+   que se encuentra en la carpeta `util`
+   
+![img.png](Playwright/img/configuracion-environment.png)
+
+4. Ejecutar el comando `npx playwright test`
+5. Verificar que se haya creado la carperta `screenshots`
