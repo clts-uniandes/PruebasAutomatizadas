@@ -150,7 +150,7 @@ module.exports = class PostEditorPage {
   }
 
   get eleTagElement() {
-    const tagElement = this.driver.$(`//li[text()='Getting Started']`);
+    const tagElement = this.driver.$(`//li[@class='ember-power-select-option']`);
     if (tagElement != null) {
       return tagElement;
     } else {
