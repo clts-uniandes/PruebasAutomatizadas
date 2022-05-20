@@ -13,7 +13,7 @@ const PostEditorPage = require("../pageObjects/post-editor.page");
 const StaffEditorPage = require("../pageObjects/staff-editor.page");
 const StaffPage = require("../pageObjects/staff.page");
 const DesignPage = require("../pageObjects/design.page");
-const utilsFaker = require("../utilsFaker/utilsFaker");
+const utilsFaker = require("../utilsDataGeneration/utilsDataGeneration");
 // Variables para la toma de screenshots
 var incremento = 0;
 var featureIncremento = "";
