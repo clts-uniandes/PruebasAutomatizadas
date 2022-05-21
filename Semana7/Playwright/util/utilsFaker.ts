@@ -1,25 +1,26 @@
 import { faker } from "@faker-js/faker";
 
+import { FakerCategories } from "./faker.enum";
+
 export default class RandomElement {
 
     constructor() {
     }
 
-    useFaker(fakerValue: string, cantidad: number) {
+    public useFaker(fakerValue: FakerCategories, quantity?: number) {
         switch (fakerValue) {
-            case "#words":
-                return faker.random.words(cantidad);
-            case "#paragraph":
-                return faker.lorem.paragraphs(cantidad);
-            case "#numbers":
-                return faker.random.numeric(cantidad);
-            case "#chars":
-                return faker.datatype.string(cantidad);
-            case "#vacio":
+            case FakerCategories.WORDS:
+                return faker.random.words(quantity);
+            case FakerCategories.PARAGRAPH:
+                return faker.lorem.paragraphs(quantity);
+            case FakerCategories.NUMBERS:
+                return faker.random.numeric(quantity);
+            case FakerCategories.CHARS:
+                return faker.datatype.string(quantity);
+            case FakerCategories.EMPTY:
                 return "";
             default:
-                return fakerValue;
+                return "";
         }
     }
-
 }

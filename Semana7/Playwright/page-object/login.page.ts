@@ -83,6 +83,7 @@ export default class LoginPage {
     }
 
     public async signInWith(user:string, pass:string) {
+        console.log("Iniciando sesion...");
         await this.enterEmailAddress(user);
         await this.enterPassword(pass);
         await this.clickSignIn();

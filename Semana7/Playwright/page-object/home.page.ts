@@ -106,6 +106,7 @@ export default class HomePage {
     }
 
     public async clickPagesLink() {
+        console.log("Navegando en funcionalidad pagina...");
         const ele = await this.elePagesLink;
         await ele?.click();
         await this.page.waitForURL('**/#/pages');

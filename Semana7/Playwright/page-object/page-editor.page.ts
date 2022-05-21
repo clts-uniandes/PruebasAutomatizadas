@@ -191,11 +191,13 @@ export default class PageEditorPage {
 
     //actuadores
     public async fillPageTitle(title:string){
+        console.log("Ingresando titulo de pagina...");
         const titleArea = await this.eleTitle;
         await titleArea?.fill(title);
     }
 
     public async fillPostContent(content:string){
+        console.log("Ingresando contenido de pagina...");
         const contentArea = await this.eleContent;
         await contentArea?.fill(content);
     }
@@ -213,6 +215,7 @@ export default class PageEditorPage {
     }
 
     public async clickPublishButton(){
+        console.log("Publicando pagina...");
         await this.page.waitForSelector("button.gh-publishmenu-button");
         const publishButton = await this.elePublishBtn;
         await publishButton?.click();
@@ -272,6 +275,7 @@ export default class PageEditorPage {
     }
 
     public async deletePage() {
+        console.log("Eliminando pagina para limpiar datos creados...");
         await this.clickSettingButton();
         await this.clickDeletePageButton();
         await this.clickConfirmationDeletePostButton();

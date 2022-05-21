@@ -1,4 +1,5 @@
 import { Page } from "playwright";
+import Env from "../util/environment";
 
 export default class PageGhostPage {
 
@@ -33,14 +34,17 @@ export default class PageGhostPage {
     //actuadores
 
     public async clickNewPageLink() {
+        console.log("Creando una pagina en el editor...");
         const ele = await this.eleNewPageLink;
         await ele?.click();
         await this.page.waitForURL('**/#/editor/page');
     }
 
     public async findPageByTitle(pageTitle: string) {
+        if(pageTitle == "") {
+            pageTitle = Env.DEFAULT_PAGE_TITLE;
+        }
         const pagesGhost = await this.pagesList();
-        console.log("Total pages: " + pagesGhost.length);
         const allHref = await Promise.all(pagesGhost
             .map(async (pageGhost, i) => {
                 const elementText = await pageGhost.innerText();
@@ -59,6 +63,18 @@ export default class PageGhostPage {
         const formattedHref = href.substring(0,href.length-1)
         await link.click();
         await this.page.waitForURL(`**/${formattedHref}`);
+    }
+
+    public async checkIfPageHasBeenPublished(pageTitle: string) {
+        const linkCreatedPage = await this.findPageByTitle(pageTitle);
+        console.log("Verificando que pagina fue publicada correctamente...");
+
+        if(linkCreatedPage != null) {
+            console.log("Pagina publicada correctamente...");
+        } else {
+            console.log("Pagina no fue publicada...");
+        }
+
     }
 
 }

@@ -8,17 +8,23 @@ import Env from "../util/environment";
 import { test, expect } from '@playwright/test';
 import Utilities from "../functions/utilities";
 import RandomElement from "../util/utilsFaker";
+import { FakerCategories } from "../util/faker.enum";
 
 let screenshotNumber = 1;
+let testCode: string =  'DP001';
+let testNumber:number = 0;
 
-test.describe("DP001 - Funcionalidad Page", () => {
+test.describe(`${testCode} - Page Feature`, () => {
 
     let browser: Browser;
     let context: BrowserContext;
     let page: Page;
     let utilities: Utilities;
     let randomElement: RandomElement;
+
+    //Random Elements
     let randomTitle: string;
+    let randomContent: string;
 
     //My pageObjects
     let login: LoginPage;
@@ -26,13 +32,15 @@ test.describe("DP001 - Funcionalidad Page", () => {
     let pageGhost: PageGhostPage;
     let pageEditor: PageEditorPage;
 
-    test.beforeAll( async() => {
+    test.beforeEach( async() => {
         browser = await chromium.launch({
             headless: Env.HEADLESS
         });
         context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
         page = await context.newPage();
-        utilities = new Utilities("DP001");
+        testNumber++;
+        screenshotNumber = 1;
+        utilities = new Utilities(`${testCode}-${testNumber}`);
 
         //TODO GIVEN url tol login
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
@@ -44,51 +52,108 @@ test.describe("DP001 - Funcionalidad Page", () => {
         randomElement = new RandomElement();
     });
 
-    test("should create a page with random title", async () => {
+    test(`should create a page with random title having 20 words and random content having 10 words`, async () => {
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-        console.log("Iniciando sesion...");
         await login.signInWith(Env.USER, Env.PASS);
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await home.clickPagesLink();
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-        console.log("Navegando en funcionalidad pagina...");
         expect(page.url()).toContain("/#/pages");
         await pageGhost.clickNewPageLink();
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-        console.log("Creando una pagina en el editor de pagina...");
         expect(page.url()).toContain("/#/editor/page");
-        randomTitle = randomElement.useFaker("#words", 20)
+        randomTitle = await randomElement.useFaker(FakerCategories.WORDS, 20)
         await pageEditor.fillPageTitle(randomTitle);
-        console.log("Ingresando titulo de pagina...");
-        await pageEditor.fillPostContent("Contenido de pagina utilizando playwright");
+        randomContent = await randomElement.useFaker(FakerCategories.WORDS, 10);
+        await pageEditor.fillPostContent(randomContent);
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-        console.log("Ingresando contenido de pagina...");
         await pageEditor.clickPublishLink();
         await pageEditor.clickPublishButton();
-        console.log("Publicando pagina...");
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await pageEditor.clickPagesLink();
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-        const linkCreatedPage = await pageGhost.findPageByTitle("Titulo de pagina utilizando playwright");
-        console.log("Verificando que pagina fue publicada correctamente...");
-        if(linkCreatedPage != null) {
-            console.log("Pagina publicada correctamente...");
-        } else {
-            console.log("Pagina no fue publicada...");
-        }
+        const linkCreatedPage = await pageGhost.checkIfPageHasBeenPublished(randomTitle);
         expect(linkCreatedPage).not.toBeNull();
-
-
     });
 
-    test.afterAll(async () => {
+    test(`should create a page with random title and random content having 200 words`, async () => {
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await home.clickPagesLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        expect(page.url()).toContain("/#/pages");
+        await pageGhost.clickNewPageLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        expect(page.url()).toContain("/#/editor/page");
+        randomTitle = await randomElement.useFaker(FakerCategories.WORDS, 3);
+        await pageEditor.fillPageTitle(randomTitle);
+        randomContent = await randomElement.useFaker(FakerCategories.WORDS, 200);
+        await pageEditor.fillPostContent(randomContent);
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await pageEditor.clickPublishLink();
+        await pageEditor.clickPublishButton();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await pageEditor.clickPagesLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        const linkCreatedPage = await pageGhost.checkIfPageHasBeenPublished(randomTitle);
+        expect(linkCreatedPage).not.toBeNull();
+    });
+
+    test(`should create a page with empty title and random content having 100 words`, async () => {
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await home.clickPagesLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        expect(page.url()).toContain("/#/pages");
+        await pageGhost.clickNewPageLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        expect(page.url()).toContain("/#/editor/page");
+        randomTitle = await randomElement.useFaker(FakerCategories.EMPTY);
+        await pageEditor.fillPageTitle(randomTitle);
+        randomContent = await randomElement.useFaker(FakerCategories.WORDS, 100);
+        await pageEditor.fillPostContent(randomContent);
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await pageEditor.clickPublishLink();
+        await pageEditor.clickPublishButton();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await pageEditor.clickPagesLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        const linkCreatedPage = await pageGhost.checkIfPageHasBeenPublished(randomTitle);
+        expect(linkCreatedPage).not.toBeNull();
+    });
+
+    test(`should create a page with random title having 5 words and empty content`, async () => {
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await login.signInWith(Env.USER, Env.PASS);
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await home.clickPagesLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        expect(page.url()).toContain("/#/pages");
+        await pageGhost.clickNewPageLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        expect(page.url()).toContain("/#/editor/page");
+        randomTitle = await randomElement.useFaker(FakerCategories.WORDS, 5);
+        await pageEditor.fillPageTitle(randomTitle);
+        randomContent = await randomElement.useFaker(FakerCategories.EMPTY);
+        await pageEditor.fillPostContent(randomContent);
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await pageEditor.clickPublishLink();
+        await pageEditor.clickPublishButton();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        await pageEditor.clickPagesLink();
+        await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+        const linkCreatedPage = await pageGhost.checkIfPageHasBeenPublished(randomTitle);
+        expect(linkCreatedPage).not.toBeNull();
+    });
+
+    test.afterEach(async () => {
         //TODO THEN I delete page in order to clean test
         const pageToDelete = await pageGhost.findPageByTitle(randomTitle);
         expect(pageToDelete).not.toBeNull();
         await pageGhost.navigateToEditionLink(pageToDelete);
-        console.log("Eliminando pagina para limpiar datos creados...");
         await pageEditor.deletePage();
-
         await page.close();
         await context.close();
         await browser.close()
