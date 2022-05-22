@@ -145,3 +145,132 @@ Feature: Pruebas aleatoreas en creacion de Post
     And I click on pubish post link
     And I click on publish post button
     Then I should see text "published"
+
+  @user11 @web
+  Scenario: 11. Crear post con nuevo url
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words-2"
+    And I enter post description "#paragraph-3"
+    And I click on post settings
+    And I enter post slug "#url"
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"
+
+  @user12 @web
+  Scenario: 12. Crear post con nuevo url numerico
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words-2"
+    And I enter post description "#paragraph-3"
+    And I click on post settings
+    And I enter post slug "#numbers-12"
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"
+
+  @user13 @web
+  Scenario: 13. Crear post con nuevo url con caracteres especiales
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words"
+    And I enter post description "#paragraph"
+    And I click on post settings
+    And I enter post slug "#chars-10"
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"
+
+  @user14 @web
+  Scenario: 14. Crear post con titulo en meta data
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words"
+    And I enter post description "#paragraph"
+    And I click on post settings
+    And I enter post slug "#url"
+    And I click on meta data
+    And I enter the title meta data "#words"
+    And I back settings post
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"
+
+  @user15 @web
+  Scenario: 15. Crear post con titulo numerico en meta data
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words"
+    And I enter post description "#paragraph"
+    And I click on post settings
+    And I enter post slug "#url"
+    And I click on meta data
+    And I enter the title meta data "#numbers-15"
+    And I back settings post
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"
+
+  @user16 @web
+  Scenario: 16. Crear post con titulo con caracteres especiales en meta data
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words"
+    And I enter post description "#paragraph"
+    And I click on post settings
+    And I click on meta data
+    And I enter the title meta data "#chars-12"
+    And I back settings post
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"
+    
+  @user17 @web
+  Scenario: 17. Crear post con titulo 256 caracteres en meta data
+    Given I navigate to page "<LOGIN_URL>"
+    When I login with "<USERNAME>" and "<PASSWORD>"
+    And I wait
+    Then I expect that url contain "/site"
+    When I click on post in the navbar
+    And I click on new post
+    And I enter post title "#words"
+    And I enter post description "#paragraph"
+    And I click on post settings
+    And I click on meta data
+    And I enter the title meta data "#chars-256"
+    And I back settings post
+    And I click on close post settings button
+    And I click on pubish post link
+    And I click on publish post button
+    Then I should see text "published"

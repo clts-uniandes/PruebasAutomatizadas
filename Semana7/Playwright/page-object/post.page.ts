@@ -54,11 +54,9 @@ export default class PostPage {
         }
     }
 
-    //ACTUADORES
-
     //clickers
-
     public async clickNewPostLink() {
+        console.log("Creando un post en el editor...");
         const ele = await this.eleNewPostLink;
         await ele?.click();
         await this.page.waitForURL('**/#/editor/post');
@@ -66,6 +64,7 @@ export default class PostPage {
 
     public async navigateToEditionLink(link: any) {
         const href = await link.getAttribute("href");
+        console.log(`Ingresando al editor del post: ${href} para actualizarlo o eliminarlo...`);
         const formattedHref = href.substring(0,href.length-1)
         await link.click();
         await this.page.waitForURL(`**/${formattedHref}`);
@@ -79,9 +78,9 @@ export default class PostPage {
     }
 
     public async findPostByTitleAndStatus(pageTitle: string, status: string) {
+        console.log("Buscando un post por titulo y estado...");
         await this.page.waitForURL('**/#/posts');
         const postList = await this.postList();
-        console.log("Total pages: " + postList.length);
         const allHref = await Promise.all(postList
             .map(async (post, i) => {
                 const elementText = await post.innerText();
@@ -92,10 +91,7 @@ export default class PostPage {
         );
 
         const filteredAllHref = allHref.filter(elm => elm);
-        console.log("ver: " + await filteredAllHref[0]?.innerText());
         return filteredAllHref[0];
     }
-
-    
 
 }

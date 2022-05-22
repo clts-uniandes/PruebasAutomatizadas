@@ -143,4 +143,28 @@ module.exports = class PageEditorPage {
       throw new Error("No viewPost element");
     }
   }
+  get eleLinkMetaDataPage() {
+    const element = this.driver.$("//button/b[contains(text(), 'Meta data')]");
+    if (element != null) {
+      return element;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  get eleLinkMetaDataBackPage() {
+    const element = this.driver.$("//button[@class='back settings-menu-header-action']");
+    if (element != null) {
+      return element;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  get eleLinkMetaDataTitlePage() {
+    const element = this.driver.$("//input[@id='meta-title']");
+    if (element != null) {
+      return element;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
 };

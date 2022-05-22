@@ -114,9 +114,37 @@ When("I select post tag {string}", async function (tag) {
   return await menu.setValue(randomValue);
 });
 
+When("I enter post slug {string}", async function (slug) {
+  const elements = new PostEditorPage(this.driver);
+  const validateString = new utilsFaker(slug);
+  const randomValue = validateString.validateTypeParam;
+  const menu = elements.eleSlugPost;
+  return await menu.setValue(randomValue);
+});
+
 When("I click on post tag element", async function () {
   const elements = new PostEditorPage(this.driver);
   const listElement = elements.eleTagElement;
+  return await listElement.click();
+});
+
+When("I click on meta data", async function () {
+  const elements = new PostEditorPage(this.driver);
+  const listElement = elements.eleLinkMetaDataPost;
+  return await listElement.click();
+});
+
+When("I enter the title meta data {string}", async function (title) {
+  const elements = new PostEditorPage(this.driver);
+  const validateString = new utilsFaker(title);
+  const randomValue = validateString.validateTypeParam;
+  const menu = elements.eleLinkMetaDataTitlePost;
+  return await menu.setValue(randomValue);
+});
+
+When("I back settings post", async function () {
+  const elements = new PostEditorPage(this.driver);
+  const listElement = elements.eleLinkMetaDataBackPost;
   return await listElement.click();
 });
 
@@ -130,6 +158,26 @@ When("I click on view post", async function () {
   const elements = new PostEditorPage(this.driver);
   const viewPost = elements.eleViewPost;
   return await viewPost.click();
+});
+
+When("I click on meta data page", async function () {
+  const elements = new PageEditorPage(this.driver);
+  const listElement = elements.eleLinkMetaDataPage;
+  return await listElement.click();
+});
+
+When("I enter the title meta data page {string}", async function (title) {
+  const elements = new PageEditorPage(this.driver);
+  const validateString = new utilsFaker(title);
+  const randomValue = validateString.validateTypeParam;
+  const menu = elements.eleLinkMetaDataTitlePage;
+  return await menu.setValue(randomValue);
+});
+
+When("I back settings page", async function () {
+  const elements = new PageEditorPage(this.driver);
+  const listElement = elements.eleLinkMetaDataBackPage;
+  return await listElement.click();
 });
 
 //tags steps
@@ -216,8 +264,10 @@ When("I click on confrim delete page", async function () {
 });
 When("I enter url page slug {string}", async function (slug) {
   const pagesPage = new PageEditorPage(this.driver);
+  const validateString = new utilsFaker(slug);
+  const randomValue = validateString.validateTypeParam;
   const newPageBtn = pagesPage.eleConfigSlug;
-  return newPageBtn.setValue(slug);
+  return newPageBtn.setValue(randomValue);
 });
 When("I click on config close", async function () {
   const pagesPage = new PageEditorPage(this.driver);
@@ -250,8 +300,18 @@ When("I enter tag title {string}", async function (title) {
 
 When("I enter tag description {string}", async function (description) {
   const tagEditorPage = new TagsEditorPage(this.driver);
+  const validateString = new utilsFaker(description);
+  const randomValue = validateString.validateTypeParam;
   const pageDescription = tagEditorPage.eleDescription;
-  return await pageDescription.setValue(description);
+  return await pageDescription.setValue(randomValue);
+});
+
+When("I enter tag slug {string}", async function (text) {
+  const tagEditorPage = new TagsEditorPage(this.driver);
+  const validateString = new utilsFaker(text);
+  const randomValue = validateString.validateTypeParam;
+  const pageDescription = tagEditorPage.eleTagSlug;
+  return await pageDescription.setValue(randomValue);
 });
 
 When("I enter tag color {string}", async function (color) {

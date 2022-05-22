@@ -1,4 +1,4 @@
-Feature: Pruebas aleatoreas en creacion de Post
+Feature: Pruebas de creacion de staff apriori
 
   @user1 @web
   Scenario: 1. Crear un usuario con un correo vacio

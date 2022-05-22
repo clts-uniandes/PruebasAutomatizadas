@@ -20,6 +20,16 @@ module.exports = class TagsEditorPage {
             throw new Error("No description element");
         }
     }
+
+    get eleTagSlug() {
+        const slug = this.driver.$("#tag-slug");
+        if(slug) {
+            return slug;
+        } else {
+            return new Error("No description element");
+        }
+    }
+
     get saveBtn() {
         const save = this.driver.$("//button[@class='gh-btn gh-btn-blue gh-btn-icon ember-view']");
         if(save != null) {
