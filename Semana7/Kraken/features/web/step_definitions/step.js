@@ -48,14 +48,18 @@ When("I click on new page", async function () {
 
 When("I enter page title {string}", async function (title) {
   const pageEditorPage = new PageEditorPage(this.driver);
+  const validateString = new utilsFaker(title);
+  const randomValue = validateString.validateTypeParam;
   const pageTitle = pageEditorPage.eleTitle;
-  return await pageTitle.setValue(title);
+  return await pageTitle.setValue(randomValue);
 });
 
 When("I begin writing page description {string}", async function (description) {
   const pageEditorPage = new PageEditorPage(this.driver);
+  const validateString = new utilsFaker(description);
+  const randomValue = validateString.validateTypeParam;
   const pageDescription = pageEditorPage.eleDescription;
-  return await pageDescription.setValue(description);
+  return await pageDescription.setValue(randomValue);
 });
 
 When("I click on pubish page link", async function () {
