@@ -295,7 +295,7 @@ test.describe(`${testCode} - Page Feature`, () => {
         await pageEditor.clickSettingsButton();
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await pageEditor.refillPageUrlField(randomElement.useFaker(FakerCategories.CHARS, 191));
-        await pageEditor.refillExcerptField(randomElement.useFaker(FakerCategories.CHARS, 1000));
+        await pageEditor.refillExcerptField(randomElement.useFaker(FakerCategories.CHARS, 100));
         await new Promise(r => setTimeout(r, 1500));
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await pageEditor.clickCloseSetting();
