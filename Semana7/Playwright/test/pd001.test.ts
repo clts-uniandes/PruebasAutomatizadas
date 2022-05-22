@@ -1,12 +1,12 @@
 import { Browser, BrowserContext, chromium, Page } from "playwright";
 import HomePage from "../page-object/home.page";
 import LoginPage from "../page-object/login.page"
-import PageGhostPage from "../page-object/page-ghost.page";
-import PageEditorPage from "../page-object/page-editor.page";
 import Env from "../util/environment";
 
 import { test, expect } from '@playwright/test';
 import StaffEditorPage from "../page-object/staff-editor.page";
+import PostEditorPage from "../page-object/post-editor.page";
+import PostPage from "../page-object/post.page";
 //import Utilities from "../functions/utilities";
 
 //let screenshotNumber = 1;
@@ -14,7 +14,7 @@ import StaffEditorPage from "../page-object/staff-editor.page";
 const fs = require('fs');
 let selected = 0;
 
-test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valores bajo el límite", () => {
+test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valores bajo el límite, nuevo post author encaja con nombre perfil actual", () => {
 
     let browser: Browser;
     let context: BrowserContext;
@@ -24,9 +24,9 @@ test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valore
     //My pageObjects
     let login: LoginPage;
     let home: HomePage;
-    let pageGhost: PageGhostPage;
-    let pageEditor: PageEditorPage;
     let staffEditorPage: StaffEditorPage;
+    let posts: PostPage;
+    let postEditor: PostEditorPage;
 
     //Data pool loading
     const path = require("path");
@@ -47,16 +47,14 @@ test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valore
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
         login = new LoginPage(page);
         home = new HomePage(page);
-        pageGhost = new PageGhostPage(page);
-        pageEditor = new PageEditorPage(page);
         staffEditorPage = new StaffEditorPage(page);
+        posts = new PostPage(page);
+        postEditor = new PostEditorPage(page);
         selected = Math.floor(Math.random() * 500)-1;
     });
 
     test("P: Pool (a-priori), F: frontera, por debajo", async () => {
-        console.log(foundList[selected].nombre);
-        //await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-
+        console.log("The selected element is " + selected);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
         //When I enter the user profile settings
@@ -74,18 +72,34 @@ test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valore
         await staffEditorPage.fillWebsite(foundList[selected].url);
         await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));//clear
         await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));//clear
-        await staffEditorPage.fillBio(foundList[selected].contenido);//clear
+        await staffEditorPage.fillBio(foundList[selected].contenido_limite.substring(1,200));//clear
         await staffEditorPage.clickSaveButton();
+        //Then the data is saved successfully
         expect(await staffEditorPage.eleSavedButton).toBeTruthy;
+        await new Promise(r => setTimeout(r, 3000));
+        await home.clickPostsLink();
+        expect(page.url()).toContain("/#/posts");
+        await posts.clickNewPostLink();
+        expect(page.url()).toContain("/#/editor/post");
+        //When I create a post
+        await postEditor.fillPostTitle("PostObservado");
+        await postEditor.fillPostContent("Contenido de post observado");
+        await postEditor.clickPublishLink();
+        await postEditor.clickPublishButton();
+        //When I return to post list
+        await postEditor.clickPostsLink();
+        const postAuthor = await posts.eleLastPostAuthorSpan.textContent();
+        expect(postAuthor).toContain(foundList[selected].nombre_completo);
         await new Promise(r => setTimeout(r, 3000));
     });
 
     test.afterAll(async () => {
-        // Update profile page with clean data
-        //await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        //await home.clickUserMenu();
-        //await home.clickUserProfileLink();
-        // staffEditorPage.eleSaveButton;
+        // Update profile page with clean data and delete created post
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await new Promise(r => setTimeout(r, 2500));
+        await home.clickUserMenu();
+        await home.clickUserProfileLink();
+        await staffEditorPage.eleSaveButton;
         await staffEditorPage.refillFullName(Env.FULL_NAME)
         await staffEditorPage.refillSlug(Env.USER_SLUG);
         await staffEditorPage.refillEmail(Env.USER);
@@ -94,9 +108,15 @@ test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valore
         await staffEditorPage.fillFacebookProfile('');//clear
         await staffEditorPage.fillTwitterProfile('');//clear
         await staffEditorPage.fillBio('');//clear
-        await new Promise(r => setTimeout(r, 10000));
+        await new Promise(r => setTimeout(r, 3000));
         await staffEditorPage.clickSaveButton();
-        expect(await staffEditorPage.eleSavedButton).toBeTruthy;
+        await home.clickPostsLink();
+        expect(page.url()).toContain("/#/posts");
+        const linkPostToDelete = await posts.findPostByTitleAndStatus("PostObservado", "PUBLISHED");
+        await posts.navigateToEditionLink(linkPostToDelete);
+        await postEditor.clickSettingButton();
+        await postEditor.clickDeletePostButton();
+        await postEditor.clickConfirmationDeletePostButton();
         await page.close();
         await context.close();
         await browser.close();
