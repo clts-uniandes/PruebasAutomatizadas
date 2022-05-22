@@ -203,4 +203,37 @@ module.exports = class PostEditorPage {
       throw new Error("No viewPost element");
     }
   }
+  get eleSlugPost() {
+    const viewPost = this.driver.$("//input[@name='post-setting-slug']");
+    if (viewPost != null) {
+      return viewPost;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  get eleLinkMetaDataPost() {
+    const element = this.driver.$("//button/b[contains(text(), 'Meta data')]");
+    if (element != null) {
+      return element;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  get eleLinkMetaDataBackPost() {
+    const element = this.driver.$("//button[@class='back settings-menu-header-action']");
+    if (element != null) {
+      return element;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  get eleLinkMetaDataTitlePost() {
+    const element = this.driver.$("//input[@id='meta-title']");
+    if (element != null) {
+      return element;
+    } else {
+      throw new Error("No viewPost element");
+    }
+  }
+  
 };

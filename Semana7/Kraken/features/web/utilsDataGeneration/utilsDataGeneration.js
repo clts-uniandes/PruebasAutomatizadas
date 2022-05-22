@@ -30,6 +30,8 @@ module.exports = class RandomElement {
         return faker.random.numeric(cantidad);
       case "#chars":
         return faker.datatype.string(cantidad);
+      case "#url":
+        return faker.internet.url();
       case "#vacio":
         return "";
       default:
