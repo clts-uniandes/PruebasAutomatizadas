@@ -114,6 +114,15 @@ export default class StaffEditorPage {
         }
     }
 
+    public get eleLeaveButton() {
+        const ele = this.page.$("//span[text()='Leave']");//or button?
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Retry button element");
+        }
+    }
+
     //Input fields
 
     public get eleCurrentPasswordInput() {
@@ -272,6 +281,11 @@ export default class StaffEditorPage {
     public async clickCloseNotification() {
         const notificationCloseBtn = await this.eleNotificationCloseButton;
         await notificationCloseBtn?.click();
+    }
+
+    public async clickLeaveButton() {
+        const leaveBtn = await this.eleLeaveButton;
+        await leaveBtn?.click();
     }
 
     //Form fillers
