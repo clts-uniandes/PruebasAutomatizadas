@@ -61,7 +61,7 @@ test.describe(`${testCode} - Page Feature`, () => {
         await pageGhost.clickNewPageLink();
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         expect(page.url()).toContain("/#/editor/page");
-        randomTitle = randomElement.useFaker(FakerCategories.WORDS, 20)
+        randomTitle = randomElement.useFaker(FakerCategories.WORDS, 20);
         await pageEditor.fillPageTitle(randomTitle);
         await pageEditor.fillPostContent(randomElement.useFaker(FakerCategories.WORDS, 10));
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});

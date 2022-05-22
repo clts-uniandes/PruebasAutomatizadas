@@ -238,6 +238,7 @@ export default class PageEditorPage {
     }
 
     public async clickUpdateButton(){
+        console.log("Actualizando pagina...");
         const publishButton = await this.eleUpdateBtn;
         await publishButton?.click();
         await this.page.waitForSelector("(//span[text()='Updated'])[2]");
