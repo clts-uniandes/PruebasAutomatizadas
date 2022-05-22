@@ -415,9 +415,20 @@ When("I click on new user", async function () {
 
 When("I enter email new user {string}", async function (email) {
   const pagesPage = new StaffPage(this.driver);
+  const validateString = new utilsFaker(email);
+  const randomValue = validateString.validateTypeParam;
   const newPageBtn = pagesPage.elementInputEmail;
-  return newPageBtn.setValue(email);
+  return newPageBtn.setValue(randomValue);
 });
+
+When("I enter email existing user {kraken-string}", async function (email) {
+  const pagesPage = new StaffPage(this.driver);
+  const validateString = new utilsFaker(email);
+  const randomValue = validateString.validateTypeParam;
+  const newPageBtn = pagesPage.elementInputEmail;
+  return newPageBtn.setValue(randomValue);
+});
+
 When("I click on Send invitation now", async function () {
   const pagesPage = new StaffPage(this.driver);
   const newPageBtn = pagesPage.elementBtnSend;
