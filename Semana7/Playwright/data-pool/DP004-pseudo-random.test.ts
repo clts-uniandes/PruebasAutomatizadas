@@ -14,11 +14,12 @@ import PseudoRandomData from "../util/pseudo-random-data";
 
 let screenshotNumber = 1;
 let testCode: string =  'DP004';
-let testNumber:number = 1;
+let testNumber:number = 0;
+let i:number=1;
 
 let randomElement: RandomElement = new RandomElement();
 let pseudoRandomData: PseudoRandomData = new PseudoRandomData();
-let dataPageList = pseudoRandomData.getPageDataList();
+let dataPageList = pseudoRandomData.getPageDataListWithTitleAndContentAndPageUrlAndExcerptAndTwitterCardData();
 
 for (const pageData of dataPageList) {
     test.describe(`${testCode} - Page Feature`, () => {
@@ -43,6 +44,8 @@ for (const pageData of dataPageList) {
             });
             context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
             page = await context.newPage();
+            testNumber++;
+            screenshotNumber = 1;
             utilities = new Utilities(`${testCode}-${testNumber}`);
 
             //TODO GIVEN url tol login
@@ -54,7 +57,7 @@ for (const pageData of dataPageList) {
             pageEditor = new PageEditorPage(page);
         });
 
-        test(`${testNumber++} - should create a page with random title and random content after that update page with random preload data`, async () => {
+        test(`${i++} - should create a page with random title and random content after that update page with random preload data`, async () => {
             await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
             await login.signInWith(Env.USER, Env.PASS);
             await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
@@ -86,6 +89,16 @@ for (const pageData of dataPageList) {
             await pageEditor.refillExcerptField(pageData.get(PageFields.EXCERPT));
             await new Promise(r => setTimeout(r, 1500));
             await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+
+            //TWITTER
+            await pageEditor.clickTwitterSection();
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await pageEditor.fillTwitterTitle(pageData.get(PageFields.TWITTER_TITLE));
+            await pageEditor.fillTwitterDescription(pageData.get(PageFields.TWITTER_DESCRIPTION));
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await pageEditor.closeTwitterSection();
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+
             await pageEditor.clickCloseSetting();
             await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
 

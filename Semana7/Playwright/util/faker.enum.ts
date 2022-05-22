@@ -3,6 +3,7 @@ export enum FakerCategories {
     PARAGRAPH,
     NUMBERS,
     CHARS,
+    URL,
     EMPTY,
     FULL_NAME,
     FIRST_NAME,
