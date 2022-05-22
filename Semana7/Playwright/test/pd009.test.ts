@@ -111,7 +111,7 @@ test.describe("PDxxx09 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
         await staffEditorPage.refillFullName(Env.FULL_NAME)
-        //await staffEditorPage.refillSlug(Env.USER_SLUG);
+        await staffEditorPage.refillSlug(Env.USER_SLUG);
         await staffEditorPage.refillEmail(Env.USER);
         await staffEditorPage.fillLocation('');
         await staffEditorPage.fillWebsite('');
