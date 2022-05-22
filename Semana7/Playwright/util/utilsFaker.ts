@@ -33,6 +33,8 @@ export default class RandomElement {
                 return 'https://www.facebook.com/' + faker.name.firstName();
             case FakerCategories.TWITTER_PROFILE:
                 return 'https://twitter.com/' + faker.name.firstName();
+            case FakerCategories.ALPHANUMERIC:
+                return faker.random.alphaNumeric(quantity);
             case FakerCategories.EMPTY:
                 return "";
             default:

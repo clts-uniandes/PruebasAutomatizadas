@@ -11,5 +11,6 @@ export enum FakerCategories {
     CITY,
     PAGE_URL,
     FB_PROFILE,
-    TWITTER_PROFILE
+    TWITTER_PROFILE,
+    ALPHANUMERIC
 }
