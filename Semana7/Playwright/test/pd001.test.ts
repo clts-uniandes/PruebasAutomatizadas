@@ -6,16 +6,15 @@ import PageEditorPage from "../page-object/page-editor.page";
 import Env from "../util/environment";
 
 import { test, expect } from '@playwright/test';
+import StaffEditorPage from "../page-object/staff-editor.page";
 //import Utilities from "../functions/utilities";
 
 //let screenshotNumber = 1;
 
 const fs = require('fs');
-const path = require("path");
-const directoryPath = path.join(__dirname, "../data/MOCK_DATA.json");
-let i = 0;
+let selected = 0;
 
-test.describe("PA001 - Edición de página", () => {
+test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valores bajo el límite", () => {
 
     let browser: Browser;
     let context: BrowserContext;
@@ -27,74 +26,80 @@ test.describe("PA001 - Edición de página", () => {
     let home: HomePage;
     let pageGhost: PageGhostPage;
     let pageEditor: PageEditorPage;
+    let staffEditorPage: StaffEditorPage;
 
-    let rawdata = fs.readFileSync(directoryPath)
-    const dataPool = JSON.parse(rawdata)
-    const foundList = dataPool
-
+    //Data pool loading
+    const path = require("path");
+    const directoryPath = path.join(__dirname, "../data/MOCK_DATA.json");
+    let rawdata = fs.readFileSync(directoryPath);
+    const dataPool = JSON.parse(rawdata);
+    const foundList = dataPool;
     
-
     test.beforeAll( async() => {
         browser = await chromium.launch({
             headless: Env.HEADLESS
         });
         context = await browser.newContext({ viewport: { width: 1200, height: 600 } });
         page = await context.newPage();
-        //utilities = new Utilities("PA001");
+        //utilities = new Utilities("PDxxx01");
 
-        //TODO GIVEN url tol login
+        //Given I have arrived to admin (login) page
         await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await page.waitForSelector("input[name='identification']");
         login = new LoginPage(page);
         home = new HomePage(page);
         pageGhost = new PageGhostPage(page);
         pageEditor = new PageEditorPage(page);
-        for  (i = 0; i < 10; i++) {
-            console.log(foundList[i].nombre);
-            //const bookTitle = await page.$eval(`.preview:nth-child(${i+1}) > .preview-title`, e => e.innerText)
-            //const bookAuthor = await page.$eval(`.preview:nth-child(${i+1}) > .preview-author`, e => e.innerText)
-            //foundList = foundList.filter(e => (!((e.title === bookTitle) && (e.author === bookAuthor))))
-        }
+        staffEditorPage = new StaffEditorPage(page);
+        selected = Math.floor(Math.random() * 500)-1;
     });
 
-    test("should create and edit a page - positive scenario", async () => {
+    test("P: Pool (a-priori), F: frontera, por debajo", async () => {
+        console.log(foundList[selected].nombre);
         //await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
-        //TODO WHEN I log in
-        await new Promise(r => setTimeout(r, 2000));
+
+        //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
-        //TODO WHEN I navigate to Page module
-        await home.clickPagesLink();
-        //TODO THEN I expected that url will updated
-        expect(page.url()).toContain("/#/pages");
-        await pageGhost.clickNewPageLink();
-        expect(page.url()).toContain("/#/editor/page");
-        await pageEditor.fillPageTitle("Titulo de pagina utilizando playwright");
-        await pageEditor.fillPostContent("Contenido de pagina utilizando playwright");
-        await pageEditor.clickPublishLink();
-        await pageEditor.clickPublishButton();
-        await pageEditor.clickPagesLink();
-        const linkCreatedPage = await pageGhost.findPageByTitle("Titulo de pagina utilizando playwright");
-        expect(linkCreatedPage).not.toBeNull();
-        await pageGhost.navigateToEditionLink(linkCreatedPage);
-        await pageEditor.fillPageTitle("Titulo de pagina editado utilizando playwright");
-        await pageEditor.fillPostContent("Contenido de pagina editado utilizando playwright");
-        await pageEditor.clickUpdateLink();
-        await pageEditor.clickUpdateButton();
-        await pageEditor.clickPagesLink();
-        const linkEditedPage = await pageGhost.findPageByTitle("Titulo de pagina editado utilizando playwright");
-        expect(linkEditedPage).not.toBeNull();
+        //When I enter the user profile settings
+        await home.clickUserMenu();
+        await home.clickUserProfileLink();
+        await staffEditorPage.eleSaveButton;
+        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        await home.clickUserMenu();
+        await home.clickUserProfileLink();
+        await staffEditorPage.eleSaveButton;
+        await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
+        await staffEditorPage.refillSlug(foundList[selected].nombre);
+        await staffEditorPage.refillEmail(foundList[selected].e_mail);
+        await staffEditorPage.fillLocation(foundList[selected].palabra);//crear lugar en pool
+        await staffEditorPage.fillWebsite(foundList[selected].url);
+        await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));//clear
+        await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));//clear
+        await staffEditorPage.fillBio(foundList[selected].contenido);//clear
+        await staffEditorPage.clickSaveButton();
+        expect(await staffEditorPage.eleSavedButton).toBeTruthy;
+        await new Promise(r => setTimeout(r, 3000));
     });
 
     test.afterAll(async () => {
-        //TODO THEN I delete page in order to clean test
-        const pageToDelete = await pageGhost.findPageByTitle("Titulo de pagina editado utilizando playwright");
-        expect(pageToDelete).not.toBeNull();
-        await pageGhost.navigateToEditionLink(pageToDelete);
-        await pageEditor.deletePage();
-
+        // Update profile page with clean data
+        //await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
+        //await home.clickUserMenu();
+        //await home.clickUserProfileLink();
+        // staffEditorPage.eleSaveButton;
+        await staffEditorPage.refillFullName(Env.FULL_NAME)
+        await staffEditorPage.refillSlug(Env.USER_SLUG);
+        await staffEditorPage.refillEmail(Env.USER);
+        await staffEditorPage.fillLocation('');//await staffEditorPage.fillLocation(Env.LOCATION);//clear
+        await staffEditorPage.fillWebsite('');//clear
+        await staffEditorPage.fillFacebookProfile('');//clear
+        await staffEditorPage.fillTwitterProfile('');//clear
+        await staffEditorPage.fillBio('');//clear
+        await new Promise(r => setTimeout(r, 10000));
+        await staffEditorPage.clickSaveButton();
+        expect(await staffEditorPage.eleSavedButton).toBeTruthy;
         await page.close();
         await context.close();
-        await browser.close()
+        await browser.close();
     })
 
 });
