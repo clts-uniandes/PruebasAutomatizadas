@@ -59,7 +59,7 @@ test.describe(`${testCode} - Page Feature`, () => {
         pageData.set(PageFields.EXCERPT, randomElement.useFaker(FakerCategories.PARAGRAPH, 1));
     });
 
-    test(`should create a page with random title and random content after that update page`, async () => {
+    test(`should create a page with random title and random content after that update page with random preload data`, async () => {
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
         await login.signInWith(Env.USER, Env.PASS);
         await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
