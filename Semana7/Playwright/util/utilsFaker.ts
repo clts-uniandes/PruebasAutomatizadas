@@ -17,7 +17,7 @@ export default class RandomElement {
                 return faker.random.numeric(quantity);
             case FakerCategories.CHARS:
                 return faker.datatype.string(quantity);
-            case FakerCategories.NAME:
+            case FakerCategories.FULL_NAME:
                 return faker.name.findName();
             case FakerCategories.FIRST_NAME:
                 return faker.name.firstName();

@@ -4,7 +4,7 @@ export enum FakerCategories {
     NUMBERS,
     CHARS,
     EMPTY,
-    NAME,
+    FULL_NAME,
     FIRST_NAME,
     EMAIL,
     CITY,
