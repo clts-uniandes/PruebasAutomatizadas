@@ -164,11 +164,13 @@ export default class PostEditorPage {
 
     //actuadores
     public async fillPostTitle(title:string){
+        console.log("Ingresando titulo del post...");
         const titleArea = await this.eleTitle;
         await titleArea?.fill(title);
     }
 
     public async fillPostContent(title:string){
+        console.log("Ingresando contenido del post...");
         const contentArea = await this.eleContent;
         await contentArea?.fill(title);
     }
@@ -186,6 +188,7 @@ export default class PostEditorPage {
     }
 
     public async clickPublishButton(){
+        console.log("Publicando post...");
         const publishButton = await this.elePublishBtn;
         await publishButton?.click();
         await this.page.waitForSelector("(//span[text()='Published'])[2]");
@@ -254,6 +257,7 @@ export default class PostEditorPage {
     }
 
     public async clickConfirmationDeletePostButton() {
+        console.log("Eliminando post...");
         const deleteButton = await this.eleConfirmationDeletePostButton;
         await deleteButton?.click();
     }
