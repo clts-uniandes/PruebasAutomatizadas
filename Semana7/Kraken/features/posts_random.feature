@@ -97,7 +97,7 @@ Feature: Pruebas aleatoreas en creacion de Post
     Then I should see text "published"
 
   @user8 @web
-  Scenario: 8. Crear post con 100 parrafos de descripcion
+  Scenario: 8. Crear post con 15 parrafos de descripcion
     Given I navigate to page "<LOGIN_URL>"
     When I login with "<USERNAME>" and "<PASSWORD>"
     And I wait
@@ -105,7 +105,7 @@ Feature: Pruebas aleatoreas en creacion de Post
     When I click on post in the navbar
     And I click on new post
     And I enter post title "#words-7"
-    And I enter post description "#paragraph-100"
+    And I enter post description "#paragraph-15"
     And I click on pubish post link
     And I click on publish post button
     Then I should see text "published"
