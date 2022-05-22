@@ -16,8 +16,8 @@ import AuthorPage from "../page-object/author.page";
 let randomTrialLocation: string;
 
 
-test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo el límite pero location al limite (191, implicito por db), \
-               nuevo post author sin problemas y la location es la correcta; ISSUE: la frontera parece ser menos, falla test", () => {
+test.describe("PDxxx22 - Actualizacion perfil de usuario, todos los valores bajo el límite pero location alfanumerico, \
+               nuevo post author sin problemas y la location es la correcta", () => {
 
     let browser: Browser;
     let context: BrowserContext;
@@ -32,7 +32,6 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
     let posts: PostPage;
     let postEditor: PostEditorPage;
     let authorPage: AuthorPage;
-
 
     //Random Elements
     let randomFullName: string;
@@ -61,12 +60,12 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
         postEditor = new PostEditorPage(page);
         authorPage = new AuthorPage(page);
         randomElement = new RandomElement();
-        
-        //Random data extraction
+
+        //random data extraction
         randomFullName = randomElement.useFaker(FakerCategories.FULL_NAME);
         randomSlug = randomElement.useFaker(FakerCategories.FIRST_NAME);
         randomEmail = randomElement.useFaker(FakerCategories.EMAIL);
-        randomTrialLocation = randomElement.useFaker(FakerCategories.NUMBERS, 191);
+        randomTrialLocation = randomElement.useFaker(FakerCategories.ALPHANUMERIC, 20);
         randomWebsite = randomElement.useFaker(FakerCategories.PAGE_URL);
         randomFacebookProfile = randomElement.useFaker(FakerCategories.FB_PROFILE);
         randomTwitterProfile = randomElement.useFaker(FakerCategories.TWITTER_PROFILE);

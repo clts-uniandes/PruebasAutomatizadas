@@ -15,15 +15,14 @@ import AuthorPage from "../page-object/author.page";
 //let screenshotNumber = 1;
 let randomTrialLocation: string;
 
-
-test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo el límite pero location al limite (191, implicito por db), \
-               nuevo post author sin problemas y la location es la correcta; ISSUE: la frontera parece ser menos, falla test", () => {
+test.describe("PDxxx23 - Actualizacion perfil de usuario, todos los valores bajo el límite pero location arriba del limite (191), \
+               nuevo post author sin problemas y la location es la correcta", () => {
 
     let browser: Browser;
     let context: BrowserContext;
     let page: Page;
-    //let utilities: Utilities;
     let randomElement: RandomElement;
+    //let utilities: Utilities;
 
     //My pageObjects
     let login: LoginPage;
@@ -32,7 +31,6 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
     let posts: PostPage;
     let postEditor: PostEditorPage;
     let authorPage: AuthorPage;
-
 
     //Random Elements
     let randomFullName: string;
@@ -61,12 +59,12 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
         postEditor = new PostEditorPage(page);
         authorPage = new AuthorPage(page);
         randomElement = new RandomElement();
-        
+
         //Random data extraction
         randomFullName = randomElement.useFaker(FakerCategories.FULL_NAME);
         randomSlug = randomElement.useFaker(FakerCategories.FIRST_NAME);
         randomEmail = randomElement.useFaker(FakerCategories.EMAIL);
-        randomTrialLocation = randomElement.useFaker(FakerCategories.NUMBERS, 191);
+        randomTrialLocation = randomElement.useFaker(FakerCategories.CHARS, 195);
         randomWebsite = randomElement.useFaker(FakerCategories.PAGE_URL);
         randomFacebookProfile = randomElement.useFaker(FakerCategories.FB_PROFILE);
         randomTwitterProfile = randomElement.useFaker(FakerCategories.TWITTER_PROFILE);
@@ -101,10 +99,11 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
         await staffEditorPage.fillTwitterProfile(randomTwitterProfile);
         await staffEditorPage.fillBio(randomBio);
         await staffEditorPage.clickSaveButton();
-        //Then the data is saved successfully
-        expect(await staffEditorPage.eleSavedButton).toBeTruthy;
+        //Then the data isn't saved
+        expect(await staffEditorPage.eleRetryButton).toBeTruthy;
         await new Promise(r => setTimeout(r, 2000));
-        await home.clickPostsLink();
+        await home.clickPostsLinkNoWait();
+        await staffEditorPage.clickLeaveButton();
         expect(page.url()).toContain("/#/posts");
         await posts.clickNewPostLink();
         expect(page.url()).toContain("/#/editor/post");
@@ -114,13 +113,13 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
         //When I return to post list
-        await page.goto(Env.BASE_URL + '/author/' + randomSlug);
+        await page.goto(Env.BASE_URL + '/author/' + Env.USER_SLUG);
         //Then the profile can be seen
         const pageStatus = await authorPage.eleNotFoundHeader;
         expect(pageStatus).toBeFalsy();
-        //Then the location can be seen
-        const authorLocation = await authorPage.eleLocationDiv.textContent();
-        expect(authorLocation).toContain(randomTrialLocation);
+        //Then the location isn't set
+        const authorLocation = await authorPage.eleLocationDivNoWait;
+        expect(authorLocation).toBeFalsy();
         await new Promise(r => setTimeout(r, 2000));
         //Then the post can be seen
         const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();

@@ -15,15 +15,14 @@ import AuthorPage from "../page-object/author.page";
 //let screenshotNumber = 1;
 let randomTrialLocation: string;
 
-
-test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo el límite pero location al limite (191, implicito por db), \
-               nuevo post author sin problemas y la location es la correcta; ISSUE: la frontera parece ser menos, falla test", () => {
+test.describe("PDxxx24 - Actualizacion perfil de usuario, todos los valores bajo el límite pero enviar location vacío, \
+               nuevo post author sin problemas y la location es la correcta (no tiene)", () => {
 
     let browser: Browser;
     let context: BrowserContext;
     let page: Page;
-    //let utilities: Utilities;
     let randomElement: RandomElement;
+    //let utilities: Utilities;
 
     //My pageObjects
     let login: LoginPage;
@@ -32,7 +31,6 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
     let posts: PostPage;
     let postEditor: PostEditorPage;
     let authorPage: AuthorPage;
-
 
     //Random Elements
     let randomFullName: string;
@@ -66,7 +64,7 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
         randomFullName = randomElement.useFaker(FakerCategories.FULL_NAME);
         randomSlug = randomElement.useFaker(FakerCategories.FIRST_NAME);
         randomEmail = randomElement.useFaker(FakerCategories.EMAIL);
-        randomTrialLocation = randomElement.useFaker(FakerCategories.NUMBERS, 191);
+        randomTrialLocation = '';
         randomWebsite = randomElement.useFaker(FakerCategories.PAGE_URL);
         randomFacebookProfile = randomElement.useFaker(FakerCategories.FB_PROFILE);
         randomTwitterProfile = randomElement.useFaker(FakerCategories.TWITTER_PROFILE);
@@ -118,9 +116,9 @@ test.describe("PDxxx21 - Actualizacion perfil de usuario, todos los valores bajo
         //Then the profile can be seen
         const pageStatus = await authorPage.eleNotFoundHeader;
         expect(pageStatus).toBeFalsy();
-        //Then the location can be seen
-        const authorLocation = await authorPage.eleLocationDiv.textContent();
-        expect(authorLocation).toContain(randomTrialLocation);
+        //Then the location isn't set
+        const authorLocation = await authorPage.eleLocationDivNoWait;
+        expect(authorLocation).toBeFalsy();
         await new Promise(r => setTimeout(r, 2000));
         //Then the post can be seen
         const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();

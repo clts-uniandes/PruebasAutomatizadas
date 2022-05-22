@@ -22,6 +22,42 @@ export default class AuthorPage {
         }
     }
 
+    public get eleLocationDiv() {
+        const locationDiv = this.page.locator("(//div[@class='author-location'])");
+        if(locationDiv != null) {
+            return locationDiv;
+        } else {
+            throw new Error("Couldn't find the author's location div");
+        }
+    }
+
+    public get eleLocationDivNoWait() {
+        const locationDiv = this.page.$("(//div[@class='author-location'])");
+        if(locationDiv != null) {
+            return locationDiv;
+        } else {
+            throw new Error("Couldn't find the author's location div");
+        }
+    }
+
+    public get eleBioHeader() {
+        const bioHeader = this.page.locator("(//h2[@class='author-bio'])");
+        if(bioHeader != null) {
+            return bioHeader;
+        } else {
+            throw new Error("Couldn't find the author's location div");
+        }
+    }
+
+    public get eleBioHeaderNoWait() {
+        const bioHeader = this.page.$("(//h2[@class='author-bio'])");
+        if(bioHeader != null) {
+            return bioHeader;
+        } else {
+            throw new Error("Couldn't find the author's location div");
+        }
+    }
+
     public get eleNotFoundHeader() {
         //const authorSpan = this.page.locator("//input[@autocomplete='current-password']");
         const notFoundHeader = this.page.$("(//h1[text()='404'])[1]");
