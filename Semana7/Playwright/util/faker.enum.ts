@@ -3,5 +3,12 @@ export enum FakerCategories {
     PARAGRAPH,
     NUMBERS,
     CHARS,
-    EMPTY
+    EMPTY,
+    NAME,
+    FIRST_NAME,
+    EMAIL,
+    CITY,
+    PAGE_URL,
+    FB_PROFILE,
+    TWITTER_PROFILE
 }
