@@ -8,7 +8,9 @@ export default class PostPage {
         this.page = page;
     }
 
-    //selectores
+    //SELECTORES
+
+    //Buttons
 
     public get eleNewPostLink() {
         const newPostLink = this.page.$("text='New post'");
@@ -19,14 +21,7 @@ export default class PostPage {
         }
     }
 
-    public selectedPostTitle(postTitle:string) {
-        const selectedPostTitle = this.page.$(`//*[contains(text(), '${postTitle}')]`);
-        if(selectedPostTitle != null) {
-            return selectedPostTitle;
-        } else {
-            throw new Error("No selectedPostTitle element");
-        }
-    }
+    //elementos lista
 
     public async postList() {
         await this.page.waitForSelector(`section ol li`);
@@ -37,15 +32,46 @@ export default class PostPage {
             throw new Error("No selectedPostTitle element");
         }
     }
-    
 
-    //actuadores
+    //otros
+
+    public selectedPostTitle(postTitle:string) {
+        const selectedPostTitle = this.page.$(`//*[contains(text(), '${postTitle}')]`);
+        if(selectedPostTitle != null) {
+            return selectedPostTitle;
+        } else {
+            throw new Error("No selectedPostTitle element");
+        }
+    }
+
+    public get eleLastPostAuthorSpan() {
+        //const authorSpan = this.page.locator("//input[@autocomplete='current-password']");
+        const authorSpan = this.page.locator("(//p/span/span)[1]");
+        if(authorSpan != null) {
+            return authorSpan;
+        } else {
+            throw new Error("Couldn't select last post's author");
+        }
+    }
+
+    //ACTUADORES
+
+    //clickers
 
     public async clickNewPostLink() {
         const ele = await this.eleNewPostLink;
         await ele?.click();
         await this.page.waitForURL('**/#/editor/post');
     }
+
+    public async navigateToEditionLink(link: any) {
+        const href = await link.getAttribute("href");
+        const formattedHref = href.substring(0,href.length-1)
+        await link.click();
+        await this.page.waitForURL(`**/${formattedHref}`);
+    }
+
+    // listeners
 
     public async getElePostTitle(postTitle:string) {
         const selectedPostTitle = await this.selectedPostTitle(postTitle);
@@ -70,11 +96,6 @@ export default class PostPage {
         return filteredAllHref[0];
     }
 
-    public async navigateToEditionLink(link: any) {
-        const href = await link.getAttribute("href");
-        const formattedHref = href.substring(0,href.length-1)
-        await link.click();
-        await this.page.waitForURL(`**/${formattedHref}`);
-    }
+    
 
 }

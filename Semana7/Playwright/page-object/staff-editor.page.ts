@@ -8,7 +8,9 @@ export default class StaffEditorPage {
         this.page = page;
     }
 
-    //selectores
+    //SELECTORES
+
+    //Buttons
 
     public get eleUserConfigurationButton() {
         const ele = this.page.$("button.gh-btn.gh-btn-white.gh-btn-icon.only-has-icon.user-actions-cog");
@@ -74,6 +76,55 @@ export default class StaffEditorPage {
         }
     }
 
+    public get eleNotificationCloseButton() {
+        //cy.get('button[class*="gh-notification-close"]').click()
+        const ele = this.page.$("//button[@class='gh-notification-close']");
+        //const ele = this.page.$("//button[text()[normalize-space()='Change Password']]");
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Close notification button element");
+        }
+    }
+
+    public get eleSaveButton() {
+        const ele = this.page.$("//span[text()='Save']");
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Save button element");
+        }
+    }
+
+    public get eleSavedButton() {
+        const ele = this.page.$("//button[text()='Saved']");
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Saved button element");
+        }
+    }
+
+    public get eleRetryButton() {
+        const ele = this.page.$("//span[text()='Retry']");//or button?
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Retry button element");
+        }
+    }
+
+    public get eleLeaveButton() {
+        const ele = this.page.$("//span[text()='Leave']");//or button?
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Retry button element");
+        }
+    }
+
+    //Input fields
+
     public get eleCurrentPasswordInput() {
         const currentPasswordInput = this.page.locator("//input[@autocomplete='current-password']");
         if(currentPasswordInput != null) {
@@ -111,36 +162,72 @@ export default class StaffEditorPage {
         }
     }
 
-    public get eleNotificationCloseButton() {
-        //cy.get('button[class*="gh-notification-close"]').click()
-        const ele = this.page.$("//button[@class='gh-notification-close']");
-        //const ele = this.page.$("//button[text()[normalize-space()='Change Password']]");
-        if(ele != null) {
-            return ele;
+    public get eleFullNameInput() {
+        const fullNameInput = this.page.locator("//input[@id='user-name']");
+        if(fullNameInput != null) {
+            return fullNameInput;
         } else {
-            throw new Error("No Close notification button element");
+            throw new Error("No full name input element");
         }
     }
 
-    public get eleSaveButton() {
-        const ele = this.page.$("//span[text()='Save']");
-        if(ele != null) {
-            return ele;
+    public get eleSlugInput() {
+        const slugInput = this.page.locator("//input[@id='user-slug']");
+        if(slugInput != null) {
+            return slugInput;
         } else {
-            throw new Error("No Save button element");
+            throw new Error("No slug input element");
         }
     }
 
-    public get eleSavedButton() {
-        const ele = this.page.$("//button[text()='Saved']");
-        if(ele != null) {
-            return ele;
+    public get eleLocationInput() {
+        const locationInput = this.page.locator("//input[@id='user-location']");
+        if(locationInput != null) {
+            return locationInput;
         } else {
-            throw new Error("No Saved button element");
+            throw new Error("No location input element");
         }
     }
 
-    //actuadores
+    public get eleWebsiteInput() {
+        const websiteInput = this.page.locator("//input[@id='user-website']");
+        if(websiteInput != null) {
+            return websiteInput;
+        } else {
+            throw new Error("No website input element");
+        }
+    }
+
+    public get eleFacebookProfileInput() {
+        const facebookProfileInput = this.page.locator("//input[@id='user-facebook']");
+        if(facebookProfileInput != null) {
+            return facebookProfileInput;
+        } else {
+            throw new Error("No facebook profile input element");
+        }
+    }
+
+    public get eleTwitterProfileInput() {
+        const twitterProfileInput = this.page.locator("//input[@id='user-twitter']");
+        if(twitterProfileInput != null) {
+            return twitterProfileInput;
+        } else {
+            throw new Error("No twitter profile input element");
+        }
+    }
+
+    public get eleBioTextarea() {
+        const bioTextarea = this.page.locator("//textarea[@id='user-bio']");
+        if(bioTextarea != null) {
+            return bioTextarea;
+        } else {
+            throw new Error("No bio textarea element");
+        }
+    }
+
+    //ACTUADORES
+
+    //clickers
 
     public async clickUserSuspendConfigurationButton(){
         const userConfiguration = await this.eleUserConfigurationButton;
@@ -178,25 +265,7 @@ export default class StaffEditorPage {
         await this.page.waitForSelector("//span[text()='Saved']")
     }
 
-    public async fillCurrentPaswordInput(password: string) {
-        const currentPassInput = await this.eleCurrentPasswordInput;
-        await currentPassInput?.fill(password);
-    }
-
-    public async fillNewPasswordInput(password: string) {
-        //await new Promise(r => setTimeout(r, 500));
-        const newPassInput = await this.eleNewPasswordInput;
-        await newPassInput?.fill(password);
-    }
-
-    public async fillPasswordVerificationInput(password: string) {
-        //await new Promise(r => setTimeout(r, 500));
-        const passVerificationInput = await this.elePasswordVerificationInput;
-        await passVerificationInput?.fill(password);
-    }
-
     public async clickChangePasswordButton() {
-        //await new Promise(r => setTimeout(r, 500));
         const changePasswordButton = await this.eleChangePasswordButton;
         await changePasswordButton?.click();
         await this.eleSaveButton;
@@ -209,14 +278,73 @@ export default class StaffEditorPage {
         await this.eleSavedButton;
     }
 
+    public async clickCloseNotification() {
+        const notificationCloseBtn = await this.eleNotificationCloseButton;
+        await notificationCloseBtn?.click();
+    }
+
+    public async clickLeaveButton() {
+        const leaveBtn = await this.eleLeaveButton;
+        await leaveBtn?.click();
+    }
+
+    //Form fillers
+
+    public async refillFullName(email:string) {
+        const fullNameInput = await this.eleFullNameInput;
+        await fullNameInput?.fill(email);
+    }
+
+    public async refillSlug(slug:string) {
+        const slugInput = await this.eleSlugInput;
+        await slugInput?.fill(slug);
+    }
+
     public async refillEmail(email:string) {
         const emailInput = await this.eleEmailInput;
         await emailInput?.fill(email);
     }
 
-    public async clickCloseNotification() {
-        const notificationCloseBtn = await this.eleNotificationCloseButton;
-        await notificationCloseBtn?.click();
+    public async fillLocation(email:string) {
+        const locationInput = await this.eleLocationInput;
+        await locationInput?.fill(email);
     }
+
+    public async fillWebsite(website:string) {
+        const websiteInput = await this.eleWebsiteInput;
+        await websiteInput?.fill(website);
+    }
+
+    public async fillFacebookProfile(facebookProfile:string) {
+        const facebookProfileInput = await this.eleFacebookProfileInput;
+        await facebookProfileInput?.fill(facebookProfile);
+    }
+
+    public async fillTwitterProfile(twitterProfile:string) {
+        const twitterProfileInput = await this.eleTwitterProfileInput;
+        await twitterProfileInput?.fill(twitterProfile);
+    }
+
+    public async fillBio(bio:string) {
+        const bioTextarea = await this.eleBioTextarea;
+        await bioTextarea?.fill(bio);
+    }
+
+    public async fillCurrentPaswordInput(password: string) {
+        const currentPassInput = await this.eleCurrentPasswordInput;
+        await currentPassInput?.fill(password);
+    }
+
+    public async fillNewPasswordInput(password: string) {
+        const newPassInput = await this.eleNewPasswordInput;
+        await newPassInput?.fill(password);
+    }
+
+    public async fillPasswordVerificationInput(password: string) {
+        //await new Promise(r => setTimeout(r, 500));
+        const passVerificationInput = await this.elePasswordVerificationInput;
+        await passVerificationInput?.fill(password);
+    }
+
 
 }

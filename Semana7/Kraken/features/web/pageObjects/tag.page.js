@@ -32,11 +32,11 @@ module.exports = class TagsPage {
     }
 
     get eleTagColor(){
-        const tagColor = this.driver.$('input[placeholder="abcdef"]');
-        if(tagColor != null){
+        const tagColor = this.driver.$(`//input[@name='accent-color']`);
+        if(tagColor){
             return tagColor;
         }else {
-            throw new Error("No tagColor element");
+            return new Error("No tagColor element");
         }
     }
 
@@ -62,6 +62,15 @@ module.exports = class TagsPage {
         const saveBtn = this.driver.$("//span[text()='Save']");
         if(saveBtn != null) {
             return saveBtn;
+        } else {
+            throw new Error("No loginBtn element");
+        }
+    }
+
+    get eleRetryBtn() {
+        const retryBtn = this.driver.$("//span[text()='Retry']");
+        if(retryBtn != null) {
+            return retryBtn;
         } else {
             throw new Error("No loginBtn element");
         }

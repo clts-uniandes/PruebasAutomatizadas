@@ -144,4 +144,11 @@ export default class HomePage {
         const ele = await this.eleUserLogoutLink;
         await ele?.click();
     }
+
+    public async clickPostsLinkNoWait() {
+        const ele = await this.elePostsLink;
+        await ele?.click();
+    }
+
+    
 }

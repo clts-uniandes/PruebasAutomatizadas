@@ -59,6 +59,7 @@ export default class PageGhostPage {
     }
 
     public async navigateToEditionLink(link: any) {
+        console.log("Ingresando a edicion de pagina para editarlo o eliminarla...");
         const href = await link.getAttribute("href");
         const formattedHref = href.substring(0,href.length-1)
         await link.click();
@@ -74,7 +75,7 @@ export default class PageGhostPage {
         } else {
             console.log("Pagina no fue publicada...");
         }
-
+        return linkCreatedPage;
     }
 
 }

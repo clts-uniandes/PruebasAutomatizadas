@@ -162,6 +162,15 @@ export default class PageEditorPage {
         }
     }
 
+    public get eleExcerptTextArea() {
+        const excerptTextArea = this.page.locator("//div[label[contains(text(),'Excerpt')]]//textarea");
+        if(excerptTextArea != null) {
+            return excerptTextArea;
+        } else {
+            throw new Error("No page URL input element");
+        }
+    }
+
     public get eleDeleteButton() {
         const buttonDelete = this.page.$("//span[contains(text(),'Delete')]");
         if(buttonDelete != null) {
@@ -189,6 +198,132 @@ export default class PageEditorPage {
         }
     }
 
+    public get eleLeaveButton() {
+        const leaveButton = this.page.locator("text='Leave'").first();
+        if(leaveButton != null) {
+            return leaveButton;
+        } else {
+            throw new Error("No LeaveButton button");
+        }
+    }
+
+    public get eleMetaDataSection() {
+        const metaDataSection = this.page.locator("//button[b[text()='Meta data']]");
+        if(metaDataSection != null) {
+            return metaDataSection;
+        } else {
+            throw new Error("No metaDataSection button");
+        }
+    }
+
+    public get eleMetaTitle() {
+        const metaTitle = this.page.locator("//div[label[text()='Meta title']]/input");
+        if(metaTitle != null) {
+            return metaTitle;
+        } else {
+            throw new Error("No metaTitle input");
+        }
+    }
+
+    public get eleMetaDescription() {
+        const metaDescription = this.page.locator("//div[label[text()='Meta description']]/textarea");
+        if(metaDescription != null) {
+            return metaDescription;
+        } else {
+            throw new Error("No metaDescription textarea");
+        }
+    }
+
+    public get eleMetaCanocialUrl() {
+        const metaCanonicalUrl = this.page.locator("//div[label[text()='Canonical URL']]/input");
+        if(metaCanonicalUrl != null) {
+            return metaCanonicalUrl;
+        } else {
+            throw new Error("No metaCanonicalUrl input");
+        }
+    }
+
+    public get eleCloseMetaDataSection() {
+        const closeMetaDataSection = this.page.locator("//button[span[text()='Back']]");
+        if(closeMetaDataSection != null) {
+            return closeMetaDataSection;
+        } else {
+            throw new Error("No closeMetaDataSection button");
+        }
+    }
+
+    public get eleTwitterSection() {
+        const twitterSection = this.page.locator("//button[b[text()='Twitter card']]");
+        if(twitterSection != null) {
+            return twitterSection;
+        } else {
+            throw new Error("No metaDataSection button");
+        }
+    }
+
+    public get eleTwitterTitle() {
+        const twitterTitle = this.page.locator("//div[label[text()='Twitter title']]/input");
+        if(twitterTitle != null) {
+            return twitterTitle;
+        } else {
+            throw new Error("No twitterTitle input");
+        }
+    }
+
+    public get eleTwitterDescription() {
+        const twitterDescription = this.page.locator("//div[label[text()='Twitter description']]/textarea");
+        if(twitterDescription != null) {
+            return twitterDescription;
+        } else {
+            throw new Error("No twitterDescription textarea");
+        }
+    }
+
+    public get eleCloseTwitterSection() {
+        const closeTwitterSection = this.page.locator("//button[span[text()='Back']]");
+        if(closeTwitterSection != null) {
+            return closeTwitterSection;
+        } else {
+            throw new Error("No eleCloseTwitterSection button");
+        }
+    }
+
+    public get eleFacebookSection() {
+        const facebookSection = this.page.locator("//button[b[text()='Facebook card']]");
+        if(facebookSection != null) {
+            return facebookSection;
+        } else {
+            throw new Error("No facebookSection button");
+        }
+    }
+
+    public get eleFacebookTitle() {
+        const facebookTitle = this.page.locator("//div[label[text()='Facebook title']]/input");
+        if(facebookTitle != null) {
+            return facebookTitle;
+        } else {
+            throw new Error("No facebookTitle input");
+        }
+    }
+
+    public get eleFacebookDescription() {
+        const facebookDescription = this.page.locator("//div[label[text()='Facebook description']]/textarea");
+        if(facebookDescription != null) {
+            return facebookDescription;
+        } else {
+            throw new Error("No facebookDescription textarea");
+        }
+    }
+
+    public get eleCloseFacebookSection() {
+        const closeFacebookSection = this.page.locator("//button[span[text()='Back']]");
+        if(closeFacebookSection != null) {
+            return closeFacebookSection;
+        } else {
+            throw new Error("No closeFacebookSection button");
+        }
+    }
+
     //actuadores
     public async fillPageTitle(title:string){
         console.log("Ingresando titulo de pagina...");
@@ -203,13 +338,11 @@ export default class PageEditorPage {
     }
 
     public async clickPublishLink(){
-        //await this.page.waitForSelector(`//div[contains(@class, 'gh-btn gh-btn-outline gh-publishmenu-trigger')]`);
         const publishLink = await this.elePublishLink;
         await publishLink?.click();
     }
 
     public async clickUpdateLink(){
-        //await this.page.waitForSelector("div.gh-btn.gh-btn-outline.gh-publishmenu-trigger");
         const publishLink = await this.eleUpdateLink;
         await publishLink?.click();
     }
@@ -222,6 +355,7 @@ export default class PageEditorPage {
     }
 
     public async clickUpdateButton(){
+        console.log("Actualizando pagina...");
         const publishButton = await this.eleUpdateBtn;
         await publishButton?.click();
         await this.page.waitForSelector("(//span[text()='Updated'])[2]");
@@ -232,6 +366,13 @@ export default class PageEditorPage {
         const postsLink = await this.elePagesLink;
         await postsLink?.click();
         await this.page.waitForLoadState();
+    }
+
+    public async clickPagesLinkWithoutPublishConfirmation(){
+        const postsLink = await this.elePagesLink;
+        await postsLink?.click();
+        const leaveButton = await this.eleLeaveButton;
+        await leaveButton?.click();
     }
 
     public async findErrorMessage() {
@@ -251,10 +392,11 @@ export default class PageEditorPage {
     }
 
     public async clickCloseSetting() {
+        console.log("Cerrando formulario setting...");
         const closeSetting = await this.eleCloseSetting;
         await closeSetting?.click();
-        //const formSetting = await this.eleFormSetting;
-        //await formSetting?.evaluate(node => node.setAttribute("style", "display: none"));
+        const formSetting = await this.eleFormSetting;
+        await formSetting?.evaluate(node => node.setAttribute("style", "display: none"));
     }
 
     public async updatePageURLWith(pageURL: string) {
@@ -282,14 +424,21 @@ export default class PageEditorPage {
     }
 
     public async clickSettingsButton() {
+        console.log("Abriendo formulario setting...");
         const buttonSave = await this.eleSettingsButton;
         await buttonSave?.click();
     }
 
     public async refillPageUrlField(url:string){
+        console.log("Estableciendo valor de page url...");
         const pageUrlInput = await this.elePageUrlInput;
-        //await pageUrlInput?.fill('');
         await pageUrlInput?.fill(url);
+    }
+
+    public async refillExcerptField(url:string){
+        console.log("Estableciendo valor de excerpt...");
+        const excerptTextArea = await this.eleExcerptTextArea;
+        await excerptTextArea?.fill(url);
     }
 
     public async clickDeleteButton() {
@@ -309,4 +458,92 @@ export default class PageEditorPage {
         await closeSettingsButton?.click();
     }
 
+    public async isTherePublishButton() {
+        console.log("Checking if there is publish button...");
+        try {
+            await this.page.waitForSelector("//span[contains(.,'Publish')]", { timeout: 3000 });
+            return true;
+        } catch (error) {
+            console.log("The element didn't appear.");
+            return false;
+        }
+    }
+
+    public async clickMetaDataSection() {
+        console.log("Ingresando a seccion meta data...");
+        const metaDataSection = await this.eleMetaDataSection;
+        await metaDataSection?.click();
+    }
+
+    public async fillMetaTitle(metaTitle: string) {
+        console.log("Estableciendo valor de meta title...");
+        const metaTitleInput = await this.eleMetaTitle;
+        await metaTitleInput?.fill(metaTitle);
+    }
+
+    public async fillMetaDescription(metaDescription: string) {
+        console.log("Estableciendo valor de meta description...");
+        const metaDescriptionInput = await this.eleMetaDescription;
+        await metaDescriptionInput?.fill(metaDescription);
+    }
+
+    public async fillMetaCanonicalUrl(metaCanonicalUrl: string) {
+        console.log("Estableciendo valor de meta canonical url...");
+        const metaCanonicalUrlInput = await this.eleMetaCanocialUrl;
+        await metaCanonicalUrlInput?.fill(metaCanonicalUrl);
+    }
+
+    public async closeMetaDataSection() {
+        console.log("Cerrando seccion meta data...");
+        const metaCanonicalUrlInput = await this.eleCloseMetaDataSection;
+        await metaCanonicalUrlInput?.click();
+    }
+
+    public async clickTwitterSection() {
+        console.log("Ingresando a seccion twitter...");
+        const twitterSection = await this.eleTwitterSection;
+        await twitterSection?.click();
+    }
+
+    public async fillTwitterTitle(twitterTitle: string) {
+        console.log("Estableciendo valor de twitter title...");
+        const twitterTitleInput = await this.eleTwitterTitle;
+        await twitterTitleInput?.fill(twitterTitle);
+    }
+
+    public async fillTwitterDescription(twitterDescription: string) {
+        console.log("Estableciendo valor de twitter description...");
+        const twitterDescriptionInput = await this.eleTwitterDescription;
+        await twitterDescriptionInput?.fill(twitterDescription);
+    }
+
+    public async closeTwitterSection() {
+        console.log("Cerrando seccion twitter...");
+        const twitterSection = await this.eleCloseTwitterSection;
+        await twitterSection?.click();
+    }
+
+    public async clickFacebookSection() {
+        console.log("Ingresando a seccion facebook...");
+        const facebookSection = await this.eleFacebookSection;
+        await facebookSection?.click();
+    }
+
+    public async fillFacebookTitle(facebookTitle: string) {
+        console.log("Estableciendo valor de facebook title...");
+        const facebookTitleInput = await this.eleFacebookTitle;
+        await facebookTitleInput?.fill(facebookTitle);
+    }
+
+    public async fillFacebookDescription(facebookDescription: string) {
+        console.log("Estableciendo valor de facebook description...");
+        const facebookDescriptionInput = await this.eleFacebookDescription;
+        await facebookDescriptionInput?.fill(facebookDescription);
+    }
+
+    public async closeFacebookSection() {
+        console.log("Cerrando seccion facebook...");
+        const facebookSection = await this.eleCloseFacebookSection;
+        await facebookSection?.click();
+    }
 }

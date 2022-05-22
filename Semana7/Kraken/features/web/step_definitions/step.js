@@ -134,16 +134,16 @@ When("I click on view post", async function () {
 
 //tags steps
 
-When("I enter tag color {string}", async function (color) {
-  const tagsPage = new TagsPage(this.driver);
-  const tagColor = tagsPage.eleTagColor;
-  return tagColor.setValue(color);
-});
-
 When("I click on save tag", async function () {
   const tagsPage = new TagsPage(this.driver);
   const saveBtn = tagsPage.eleSavenBtn;
   return saveBtn.click();
+});
+
+When("I click on retry tag", async function () {
+  const tagsPage = new TagsPage(this.driver);
+  const retryBtn = tagsPage.eleRetryBtn;
+  return retryBtn.click();
 });
 
 When("I click in delete tag", async function () {
@@ -242,8 +242,10 @@ When("I click on new tag", async function () {
 });
 When("I enter tag title {string}", async function (title) {
   const tagEditorPage = new TagsEditorPage(this.driver);
+  const validateString = new utilsFaker(title);
+  const randomValue = validateString.validateTypeParam;
   const pageTitle = tagEditorPage.eleTitle;
-  return await pageTitle.setValue(title);
+  return await pageTitle.setValue(randomValue);
 });
 
 When("I enter tag description {string}", async function (description) {
@@ -251,6 +253,15 @@ When("I enter tag description {string}", async function (description) {
   const pageDescription = tagEditorPage.eleDescription;
   return await pageDescription.setValue(description);
 });
+
+When("I enter tag color {string}", async function (color) {
+  const tagEditorPage = new TagsPage(this.driver);
+  const validateString = new utilsFaker(color);
+  const randomValue = validateString.validateTypeParam;
+  const tagColor = tagEditorPage.eleTagColor;
+  return await tagColor.setValue(randomValue);
+});
+
 When("I click on save page link", async function () {
   const tagsPage = new TagsEditorPage(this.driver);
   const saveTagBtn = tagsPage.saveBtn;
@@ -366,7 +377,7 @@ When("I scroll on config post", async function () {
 //helpers
 Then("I should see text {string}", async function (text) {
   let element = await this.driver.$(`//*[contains(text(), '${text}')]`);
-  assert(!element.hasOwnProperty("error"))
+  assert(element)
   /* if (element === null) {
     throw new TypeError(`Text ${text} does not exist.`);
   } */
@@ -408,9 +419,20 @@ When("I click on new user", async function () {
 
 When("I enter email new user {string}", async function (email) {
   const pagesPage = new StaffPage(this.driver);
+  const validateString = new utilsFaker(email);
+  const randomValue = validateString.validateTypeParam;
   const newPageBtn = pagesPage.elementInputEmail;
-  return newPageBtn.setValue(email);
+  return newPageBtn.setValue(randomValue);
 });
+
+When("I enter email existing user {kraken-string}", async function (email) {
+  const pagesPage = new StaffPage(this.driver);
+  const validateString = new utilsFaker(email);
+  const randomValue = validateString.validateTypeParam;
+  const newPageBtn = pagesPage.elementInputEmail;
+  return newPageBtn.setValue(randomValue);
+});
+
 When("I click on Send invitation now", async function () {
   const pagesPage = new StaffPage(this.driver);
   const newPageBtn = pagesPage.elementBtnSend;
@@ -648,4 +670,11 @@ When("I take a screenshot on {string}", async function (feature) {
   await browser.saveScreenshot(
     `${properties.PATH_SCREENSHOTS}/${feature}/${incremento}.png`
   );
+
 });
+
+Then("I should see element with class {string} and text {string}", async function (className, text) {
+  let element = await this.driver.$(`//p[contains(@class, '${className}') and text() = '${text}']`);
+  return assert(element)
+});
+
