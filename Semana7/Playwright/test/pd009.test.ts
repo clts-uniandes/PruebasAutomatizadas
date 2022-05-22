@@ -7,15 +7,17 @@ import { test, expect } from '@playwright/test';
 import StaffEditorPage from "../page-object/staff-editor.page";
 import PostEditorPage from "../page-object/post-editor.page";
 import PostPage from "../page-object/post.page";
+import AuthorPage from "../page-object/author.page";
 //import Utilities from "../functions/utilities";
 
 //let screenshotNumber = 1;
 
 const fs = require('fs');
 let selected = 0;
+let slugLimite = '';
 
-test.describe("PDxxx01 - Actualizacion perfil de usuario, todos los valores bajo el límite, \
-               nuevo post author encaja con nombre perfil nuevo", () => {
+test.describe("PDxxx09 - Actualizacion perfil de usuario, todos los valores bajo el límite pero slug al limite (191), \
+               nuevo post author y el slug/url asociado lo muestra", () => {
 
     let browser: Browser;
     let context: BrowserContext;
@@ -28,6 +30,7 @@ test.describe("PDxxx01 - Actualizacion perfil de usuario, todos los valores bajo
     let staffEditorPage: StaffEditorPage;
     let posts: PostPage;
     let postEditor: PostEditorPage;
+    let authorPage: AuthorPage;
 
     //Data pool loading
     const path = require("path");
@@ -51,7 +54,9 @@ test.describe("PDxxx01 - Actualizacion perfil de usuario, todos los valores bajo
         staffEditorPage = new StaffEditorPage(page);
         posts = new PostPage(page);
         postEditor = new PostEditorPage(page);
+        authorPage = new AuthorPage(page);
         selected = Math.floor(Math.random() * 500)-1;
+        slugLimite = foundList[selected].contenido_limite.substring(1,192)
     });
 
     test("A: A-priori (pool), F: frontera,  L: por debajo, Low", async () => {
@@ -66,18 +71,18 @@ test.describe("PDxxx01 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await staffEditorPage.refillFullName(foundList[selected].nombre_completo)//191, no explicito pero avisa, expected 191 and no numbers
-        await staffEditorPage.refillSlug(foundList[selected].nombre);//186, ni avisa pasado ese valor, ni se revienta, expected 191
-        await staffEditorPage.refillEmail(foundList[selected].e_mail);//80, no explicito pero avida, formatted, expected 191
-        await staffEditorPage.fillLocation(foundList[selected].ciudad);//150 any alphas, expected no limit and not numbers
-        await staffEditorPage.fillWebsite(foundList[selected].url);//formatted, READS 2000 characters max from input, formats with protocol if no one thus it can indirectly exceed 2000 chars, expected 2000
-        await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));//blocks any non fb url, but doesnt report it correctly nor regulates correctly, the actual limit is is the unique user resource url (everything after .com/), expected 2000 as a whole, if name < 2 it generates error
-        await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));//allows any user as long as isnt plain twitter.com, assumes whatever is writtem is the user (autoformat), can only hold 15 id characters, ergo string length total is 39, expected 2000
-        await staffEditorPage.fillBio(foundList[selected].contenido.substring(1,100));//respects 200 form, expected none
+        await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
+        await staffEditorPage.refillSlug(slugLimite);
+        await staffEditorPage.refillEmail(foundList[selected].e_mail);
+        await staffEditorPage.fillLocation(foundList[selected].ciudad);
+        await staffEditorPage.fillWebsite(foundList[selected].url);
+        await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));
+        await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));
+        await staffEditorPage.fillBio(foundList[selected].contenido.substring(1,100));
         await staffEditorPage.clickSaveButton();
         //Then the data is saved successfully
         expect(await staffEditorPage.eleSavedButton).toBeTruthy;
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 2000));
         await home.clickPostsLink();
         expect(page.url()).toContain("/#/posts");
         await posts.clickNewPostLink();
@@ -88,9 +93,13 @@ test.describe("PDxxx01 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
         //When I return to post list
-        await postEditor.clickPostsLink();
-        const postAuthor = await posts.eleLastPostAuthorSpan.textContent();
-        expect(postAuthor).toContain(foundList[selected].nombre_completo);
+        await page.goto(Env.BASE_URL + '/author/' + slugLimite);
+        const pageStatus = await authorPage.eleNotFoundHeader;
+        expect(pageStatus).toBeFalsy();
+        //const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();
+        //console.log("here:"+lastArticleTitle);
+        await new Promise(r => setTimeout(r, 2000));
+        //expect(lastArticleTitle).toContain("PostObservado");
         await new Promise(r => setTimeout(r, 3000));
     });
 
@@ -102,7 +111,7 @@ test.describe("PDxxx01 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
         await staffEditorPage.refillFullName(Env.FULL_NAME)
-        await staffEditorPage.refillSlug(Env.USER_SLUG);
+        //await staffEditorPage.refillSlug(Env.USER_SLUG);
         await staffEditorPage.refillEmail(Env.USER);
         await staffEditorPage.fillLocation('');
         await staffEditorPage.fillWebsite('');
