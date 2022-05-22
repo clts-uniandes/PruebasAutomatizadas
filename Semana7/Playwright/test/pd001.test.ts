@@ -65,14 +65,14 @@ test.describe("PDxxx30 - Probando formulario perfil de usuario, todos los valore
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
-        await staffEditorPage.refillSlug(foundList[selected].nombre);
-        await staffEditorPage.refillEmail(foundList[selected].e_mail);
-        await staffEditorPage.fillLocation(foundList[selected].palabra);//crear lugar en pool
-        await staffEditorPage.fillWebsite(foundList[selected].url);
-        await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));//clear
-        await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));//clear
-        await staffEditorPage.fillBio(foundList[selected].contenido_limite.substring(1,200));//clear
+        await staffEditorPage.refillFullName(foundList[selected].nombre_completo)//191, no explicito pero avisa, expected 191 and no numbers
+        await staffEditorPage.refillSlug(foundList[selected].nombre);//186, ni avisa pasado ese valor, ni se revienta, expected 191
+        await staffEditorPage.refillEmail(foundList[selected].e_mail);//80, no explicito pero avida, formatted, expected 191
+        await staffEditorPage.fillLocation(foundList[selected].ciudad);//150 any alphas, expected no limit and not numbers
+        await staffEditorPage.fillWebsite(foundList[selected].url);//formatted, READS 2000 characters max from input, formats with protocol if no one thus it can indirectly exceed 2000 chars, expected 2000
+        await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));//blocks any non fb url, but doesnt report it correctly nor regulates correctly, the actual limit is is the unique user resource url (everything after .com/), expected 2000 as a whole, if name < 2 it generates error
+        await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));//allows any user as long as isnt plain twitter.com, assumes whatever is writtem is the user (autoformat), can only hold 15 id characters, ergo string length total is 39, expected 2000
+        await staffEditorPage.fillBio(foundList[selected].contenido.substring(1,100));//respects 200 form, expected none
         await staffEditorPage.clickSaveButton();
         //Then the data is saved successfully
         expect(await staffEditorPage.eleSavedButton).toBeTruthy;
