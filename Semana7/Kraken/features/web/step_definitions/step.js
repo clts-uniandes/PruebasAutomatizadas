@@ -246,8 +246,18 @@ When("I enter tag title {string}", async function (title) {
 
 When("I enter tag description {string}", async function (description) {
   const tagEditorPage = new TagsEditorPage(this.driver);
+  const validateString = new utilsFaker(description);
+  const randomValue = validateString.validateTypeParam;
   const pageDescription = tagEditorPage.eleDescription;
-  return await pageDescription.setValue(description);
+  return await pageDescription.setValue(randomValue);
+});
+
+When("I enter tag slug {string}", async function (text) {
+  const tagEditorPage = new TagsEditorPage(this.driver);
+  const validateString = new utilsFaker(text);
+  const randomValue = validateString.validateTypeParam;
+  const pageDescription = tagEditorPage.eleTagSlug;
+  return await pageDescription.setValue(randomValue);
 });
 
 When("I enter tag color {string}", async function (color) {
