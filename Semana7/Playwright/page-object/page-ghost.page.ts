@@ -59,6 +59,7 @@ export default class PageGhostPage {
     }
 
     public async navigateToEditionLink(link: any) {
+        console.log("Ingresando a pagina creada para editarla...");
         const href = await link.getAttribute("href");
         const formattedHref = href.substring(0,href.length-1)
         await link.click();

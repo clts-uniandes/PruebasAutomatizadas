@@ -87,7 +87,7 @@ export default class LoginPage {
         await this.enterEmailAddress(user);
         await this.enterPassword(pass);
         await this.clickSignIn();
-        await this.page.waitForNavigation();
+        await this.page.waitForURL('**/#/site');
     }
 
     public async reenterEmailAddress(user:string) {
