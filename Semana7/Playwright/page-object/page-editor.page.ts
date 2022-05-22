@@ -162,6 +162,15 @@ export default class PageEditorPage {
         }
     }
 
+    public get eleExcerptTextArea() {
+        const excerptTextArea = this.page.locator("//div[label[contains(text(),'Excerpt')]]//textarea");
+        if(excerptTextArea != null) {
+            return excerptTextArea;
+        } else {
+            throw new Error("No page URL input element");
+        }
+    }
+
     public get eleDeleteButton() {
         const buttonDelete = this.page.$("//span[contains(text(),'Delete')]");
         if(buttonDelete != null) {
@@ -189,6 +198,15 @@ export default class PageEditorPage {
         }
     }
 
+    public get eleLeaveButton() {
+        const leaveButton = this.page.locator("text='Leave'").first();
+        if(leaveButton != null) {
+            return leaveButton;
+        } else {
+            throw new Error("No LeaveButton button");
+        }
+    }
+
     //actuadores
     public async fillPageTitle(title:string){
         console.log("Ingresando titulo de pagina...");
@@ -203,13 +221,11 @@ export default class PageEditorPage {
     }
 
     public async clickPublishLink(){
-        //await this.page.waitForSelector(`//div[contains(@class, 'gh-btn gh-btn-outline gh-publishmenu-trigger')]`);
         const publishLink = await this.elePublishLink;
         await publishLink?.click();
     }
 
     public async clickUpdateLink(){
-        //await this.page.waitForSelector("div.gh-btn.gh-btn-outline.gh-publishmenu-trigger");
         const publishLink = await this.eleUpdateLink;
         await publishLink?.click();
     }
@@ -234,6 +250,13 @@ export default class PageEditorPage {
         await this.page.waitForLoadState();
     }
 
+    public async clickPagesLinkWithoutPublishConfirmation(){
+        const postsLink = await this.elePagesLink;
+        await postsLink?.click();
+        const leaveButton = await this.eleLeaveButton;
+        await leaveButton?.click();
+    }
+
     public async findErrorMessage() {
         const errorMessage = await this.eleErrorMessage;
         console.log("Error message: " + errorMessage);
@@ -251,10 +274,11 @@ export default class PageEditorPage {
     }
 
     public async clickCloseSetting() {
+        console.log("Cerrando formulario setting...");
         const closeSetting = await this.eleCloseSetting;
         await closeSetting?.click();
-        //const formSetting = await this.eleFormSetting;
-        //await formSetting?.evaluate(node => node.setAttribute("style", "display: none"));
+        const formSetting = await this.eleFormSetting;
+        await formSetting?.evaluate(node => node.setAttribute("style", "display: none"));
     }
 
     public async updatePageURLWith(pageURL: string) {
@@ -282,14 +306,21 @@ export default class PageEditorPage {
     }
 
     public async clickSettingsButton() {
+        console.log("Abriendo formulario setting...");
         const buttonSave = await this.eleSettingsButton;
         await buttonSave?.click();
     }
 
     public async refillPageUrlField(url:string){
+        console.log("Estableciendo valor de page url...");
         const pageUrlInput = await this.elePageUrlInput;
-        //await pageUrlInput?.fill('');
         await pageUrlInput?.fill(url);
+    }
+
+    public async refillExcerptField(url:string){
+        console.log("Estableciendo valor de excerpt...");
+        const excerptTextArea = await this.eleExcerptTextArea;
+        await excerptTextArea?.fill(url);
     }
 
     public async clickDeleteButton() {
@@ -307,6 +338,17 @@ export default class PageEditorPage {
     public async clickCloseSettingsButton() {
         const closeSettingsButton = await this.eleCloseSettingsButton;
         await closeSettingsButton?.click();
+    }
+
+    public async isTherePublishButton() {
+        console.log("Checking if there is publish button.");
+        try {
+            await this.page.waitForSelector("//span[contains(.,'Publish')]", { timeout: 3000 });
+            return true;
+        } catch (error) {
+            console.log("The element didn't appear.");
+            return false;
+        }
     }
 
 }
