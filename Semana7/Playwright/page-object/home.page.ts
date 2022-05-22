@@ -100,6 +100,7 @@ export default class HomePage {
     }
 
     public async clickPostsLink() {
+        console.log("Navegando en funcionalidad post...");
         const ele = await this.elePostsLink;
         await ele?.click();
         await this.page.waitForURL('**/#/posts');
