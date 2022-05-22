@@ -4,7 +4,7 @@ export default class Env {
     public static SITE_SECTION:string = "/ghost/#/site";
     public static USER:string = "luis.sajami@gmail.com";
     public static PASS:string = "Uniandes123456";
-    public static HEADLESS:boolean = false;
+    public static HEADLESS:boolean = true;
     public static SCREENSHOT_FOLDER:string = "./screenshots/";
     public static DEFAULT_PAGE_TITLE:string = "(Untitled)";
     public static FULL_NAME:string= "Pepito Admin";
