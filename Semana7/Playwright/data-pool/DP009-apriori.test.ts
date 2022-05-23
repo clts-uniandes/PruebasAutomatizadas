@@ -12,9 +12,10 @@ import Env from "../util/environment";
 import {PostStatus} from "../util/post-status.enum";
 import {FakerCategories} from "../util/faker.enum";
 import RandomElement from "../util/utilsFaker";
+import {PageFields} from "../util/page-fields.enum";
 
 let screenshotNumber = 1;
-let testCode: string =  'DP006';
+let testCode: string =  'DP008';
 let testNumber:number = 0;
 let i:number=1;
 
@@ -22,7 +23,7 @@ let randomElement: RandomElement = new RandomElement();
 let rawData = fs.readFileSync(path.join(__dirname, "../data/MOCK_DATA.json")).toString();
 const records = JSON.parse(rawData);
 
-for (let _i = 0; _i < 3; _i++) {
+for (let _i = 13; _i < 16; _i++) {
     const record = records[_i];
 
     test.describe(`${testCode} - Post Feature`, () => {
@@ -91,6 +92,17 @@ for (let _i = 0; _i < 3; _i++) {
             await postEditor.fillPostTitle(randomTitle);
             await postEditor.fillPostContent(record.contenido);
             await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+
+            //TODO WHEN I edit twitter setting
+            await postEditor.clickSettingButton();
+            await postEditor.clickFacebookSection();
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await postEditor.fillFacebookTitle(record.ciudad);
+            await postEditor.fillFacebookDescription(record.e_mail);
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await postEditor.closeFacebookSection();
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await postEditor.clickCloseSetting();
 
             //TODO WHEN I publish the post
             await postEditor.clickPublishLink();
