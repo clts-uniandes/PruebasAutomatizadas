@@ -26,6 +26,10 @@ La entrega de esta semana está compuesta por # escenarios haciendo uso de las h
 
 * En Kraken los escenarios relacionados con `Pages` prueban la creación de post validando diferentes campos y tipos de datos. Encontrará archivos `page_random.feature` y `page_apriori.feature` con 17 escenarios y `post_apriori.feature` 14 escenarios, los cuales tienen escenarios compartidos con diferentes estrategias de generación de datos.
 
+* En Kraken los escenarios relacionados con `Tags` prueban la creacion de tagas validando diferentes campos, limites de datos y tipos de datos aceptados por los formularios,en todtal se tienen 14 escenarios para esta funcioanlidad
+
+* En Kraken los escenarios relacionados con `Staff` prueban la creacion de usuarios en la plataforma validando sobre el campo de email variando el tipo de dato y los limites de caracteres preestablecidos para este escenario se tienen 6 casos diferenrentes. 
+
 # Instrucciones de ejecución de código de escenarios de pruebas
 
 ## Precondiciones generales
