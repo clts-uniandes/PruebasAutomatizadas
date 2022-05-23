@@ -105,16 +105,101 @@ En el directorio `/utilsDataGeneration` puede encontrar la manera en que se hizo
 
 ## Playwright
 
+En Playwright usamos 3 estrategias para la generación de datos:
+- **Data pools a-priori**: Con ayuda de la herramienta **Mockaroo** se generó un archivo en formato `JSON` que cuenta con la siguiente estructura:
+A través de este archivo trabajo una función para la lectura de estos datos en diferentes escenarios.
+```json 
+[
+  {
+    "words": "ante ipsum primis in faucibus orci luctus et ultrices",
+    "paragraph": "Fusce consequat. Nulla nisl. Nunc nisl.\n\nDuis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum.\n\nIn hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo.\n\nAliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.",
+    "numbers": 48027289345045750,
+    "chars": ",。・:*:・゜’( ☻ ω ☻ )。・:*:・゜’"
+  }
+ ]
+```
+En el archivo `util/MOCK_DATA.json` puede encontrar la manera en que se hizo la implementación de la estrategia.
+
+- **Data pools pseudo aleatorea**: Con ayuda de la herramienta **FakerJS** se creo una clase typescript que cuenta con la siguiente estructura:
+A través de este archivo se trabajo la generacion de la tupla de datos pseudo aleatorea justo antes de la ejecucion de la prueba .
+```json 
+public getPageDataListWithTitleAndContentAndPageUrlAndExcerpt() {
+        let pageDataList: Map<PageFields, any>[] = [];
+
+        let pageData1 = new Map<PageFields, any>();
+        pageData1.set(PageFields.TITLE, this.randomElement.useFaker(FakerCategories.WORDS, 1));
+        pageData1.set(PageFields.CONTENT, this.randomElement.useFaker(FakerCategories.CHARS, 3000));
+        pageData1.set(PageFields.PAGE_URL, this.randomElement.useFaker(FakerCategories.CHARS, 15));
+        pageData1.set(PageFields.EXCERPT, this.randomElement.useFaker(FakerCategories.NUMBERS, 100));
+        pageDataList.push(pageData1);
+
+        let pageData2 = new Map<PageFields, any>();
+        pageData2.set(PageFields.TITLE, this.randomElement.useFaker(FakerCategories.CHARS, 160));
+        pageData2.set(PageFields.CONTENT, this.randomElement.useFaker(FakerCategories.PARAGRAPH, 50));
+        pageData2.set(PageFields.PAGE_URL, this.randomElement.useFaker(FakerCategories.NUMBERS, 100));
+        pageData2.set(PageFields.EXCERPT, this.randomElement.useFaker(FakerCategories.CHARS, 100));
+        pageDataList.push(pageData2);
+
+        let pageData3 = new Map<PageFields, any>();
+        pageData3.set(PageFields.TITLE, this.randomElement.useFaker(FakerCategories.NUMBERS, 160));
+        pageData3.set(PageFields.CONTENT, this.randomElement.useFaker(FakerCategories.WORDS, 500));
+        pageData3.set(PageFields.PAGE_URL, this.randomElement.useFaker(FakerCategories.WORDS, 100));
+        pageData3.set(PageFields.EXCERPT, this.randomElement.useFaker(FakerCategories.PARAGRAPH, 1));
+        pageDataList.push(pageData3);
+
+        return pageDataList;
+    }
+```
+En el archivo `util/pseudo-random-data.ts` puede encontrar la manera en que se hizo la implementación de la estrategia.
+
+- **Data random**: Con la librería de javascript `Faker` se generan datos de manera aleatoria durante la ejecución de las pruebas, se implementa una función que permite hacer uso de esta herramienta y las bondades de Cucumber y Gherkin, la función tiene la siguiente estructura: 
+```javascript
+public useFaker(fakerValue: FakerCategories, quantity?: number) {
+        switch (fakerValue) {
+            case FakerCategories.WORDS:
+                return faker.random.words(quantity);
+            case FakerCategories.PARAGRAPH:
+                return faker.lorem.paragraphs(quantity);
+            case FakerCategories.NUMBERS:
+                return faker.random.numeric(quantity);
+            case FakerCategories.CHARS:
+                return faker.datatype.string(quantity);
+            case FakerCategories.URL:
+                return faker.internet.url();
+            case FakerCategories.FULL_NAME:
+                return faker.name.findName();
+            case FakerCategories.FIRST_NAME:
+                return faker.name.firstName();
+            case FakerCategories.EMAIL:
+                return faker.internet.email();
+            case FakerCategories.CITY:
+                return faker.address.cityName();
+            case FakerCategories.PAGE_URL:
+                return faker.internet.url();
+            case FakerCategories.FB_PROFILE:
+                return 'https://www.facebook.com/' + faker.name.firstName();
+            case FakerCategories.TWITTER_PROFILE:
+                return 'https://twitter.com/' + faker.name.firstName();
+            case FakerCategories.ALPHANUMERIC:
+                return faker.random.alphaNumeric(quantity);
+            case FakerCategories.EMPTY:
+                return "";
+            default:
+                return "";
+        }
+    }
+```
+En el archivo `util/utilFaker.ts` puede encontrar la manera en que se hizo la implementación de la estrategia.
+
 ### Prerequisitos:
 - NodeJs 14 o posterior
 - Instancia Ghost V3.41.1 disponible 
 
 ### Ejecución de pruebas:
-1. Ingresar al directorio playwright deseado (Playwright/ghost3 o Playwright/ghost4) `cd Playwright`
+1. Ingresar al directorio playwright `cd Playwright`
 2. Ejecutar el comando `npm install`
 3. Configurar el archivo `util/environment.ts` con los parametros comentados (`BASE_URL`, `USER`, `PASS`)
 ![image](https://user-images.githubusercontent.com/98668775/168510550-069b32ab-d3eb-4ae4-99e7-2775191c3ed2.png)
 
-4. Ejecutar el comando `npx playwright test test/pa0xy.test` donde xy se reemplaza con la prueba deseada a ejecutar, e.g. PA001 usa `npx playwright test test/pa001.test` (no se soporta ejecución simultánea)
-5. Verificar que se haya creado la carperta `screenshots`
+4. Ejecutar el comando `npx playwright test test/`
 
