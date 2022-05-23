@@ -122,7 +122,7 @@ En el archivo `util/MOCK_DATA.json` puede encontrar la manera en que se hizo la 
 
 - **Data pools pseudo aleatorea**: Con ayuda de la herramienta **FakerJS** se creo una clase typescript que cuenta con la siguiente estructura:
 A través de este archivo se trabajo la generacion de la tupla de datos pseudo aleatorea justo antes de la ejecucion de la prueba .
-```json 
+```javascript 
 public getPageDataListWithTitleAndContentAndPageUrlAndExcerpt() {
         let pageDataList: Map<PageFields, any>[] = [];
 
