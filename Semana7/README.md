@@ -114,7 +114,7 @@ A través de este archivo trabajo una función para la lectura de estos datos en
   "nombre": "Katharine",
   "apellido": "Ollivier",
   "nombre_completo": "Katharine Ollivier",
-  "e_mail": "kollivier0@whitehouse.gov"',
+  "e_mail": "kollivier0@whitehouse.gov",
   "texto_llave": "n3mp40t9v18YRu868Rw3V9379T",
   "contenido": "sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa donec dapibus duis at velit",
   "url": "http://house.gov/nullam/molestie/nibh/in/lectus/pellentesque.xml?sapien=ut&cursus=mauris&vestibulum=eget&proin=massa&eu=tempor&mi=convallis&nulla=nulla&ac=neq
