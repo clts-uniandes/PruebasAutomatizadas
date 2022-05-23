@@ -114,12 +114,30 @@ export default class StaffEditorPage {
         }
     }
 
+    public get eleRetryButtonWait() {
+        const ele = this.page.locator("//span[text()='Retry']");//or button?
+        if(ele != null) {
+            return ele;
+        } else {
+            throw new Error("No Retry button element");
+        }
+    }
+
     public get eleLeaveButton() {
         const ele = this.page.$("//span[text()='Leave']");//or button?
         if(ele != null) {
             return ele;
         } else {
             throw new Error("No Retry button element");
+        }
+    }
+    public get eleEmailInputContent() {
+        //input[name*="email"]
+        const emailInputContent = this.page.inputValue("//input[@name='email']");
+        if(emailInputContent != null) {
+            return emailInputContent;
+        } else {
+            throw new Error("No email input value inside");
         }
     }
 

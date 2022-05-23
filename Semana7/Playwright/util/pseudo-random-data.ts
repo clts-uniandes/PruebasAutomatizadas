@@ -1,4 +1,5 @@
 import {PageFields} from "./page-fields.enum";
+import {ProfileFields} from "../util/profile.enum";
 import {FakerCategories} from "./faker.enum";
 import RandomElement from "./utilsFaker";
 
@@ -136,5 +137,24 @@ export default class PseudoRandomData {
         pageDataList.push(pageData3);
 
         return pageDataList;
+    }
+
+    public getProfileDataListWithFullData() {
+        let profileDataList: Map<ProfileFields, any>[] = [];
+        
+        for(let i=0;i<50;i++){
+            let profileDataRow = new Map<ProfileFields, any>();
+            profileDataRow.set(ProfileFields.FULL_NAME, this.randomElement.useFaker(FakerCategories.FULL_NAME));
+            profileDataRow.set(ProfileFields.NAME, this.randomElement.useFaker(FakerCategories.FIRST_NAME));
+            profileDataRow.set(ProfileFields.E_MAIL, this.randomElement.useFaker(FakerCategories.EMAIL));
+            profileDataRow.set(ProfileFields.LOCATION, this.randomElement.useFaker(FakerCategories.CITY));
+            profileDataRow.set(ProfileFields.WEBSITE, this.randomElement.useFaker(FakerCategories.PAGE_URL));
+            profileDataRow.set(ProfileFields.FACEBOOK_PROFILE, this.randomElement.useFaker(FakerCategories.FB_PROFILE));
+            profileDataRow.set(ProfileFields.TWITTER_PROFILE, this.randomElement.useFaker(FakerCategories.TWITTER_PROFILE));
+            profileDataRow.set(ProfileFields.BIO_PROFILE, this.randomElement.useFaker(FakerCategories.PARAGRAPH,1).substring(1,200));
+            profileDataList.push(profileDataRow);
+        }
+        return profileDataList;
+
     }
 }
