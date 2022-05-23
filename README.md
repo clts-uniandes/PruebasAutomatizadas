@@ -3,6 +3,7 @@ Para los contenidos a desarrollar en la asignatura Pruebas Automatizadas
 
 * Contenidos Semana5, ver carpeta /Semana5
 * Contenidos Semana6, ver carpeta /Semana6
+* Contenidos Semana7, ver carpeta /Semana7
 
 # Integrantes del equipo
 
