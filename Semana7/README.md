@@ -118,9 +118,9 @@ A través de este archivo trabajo una función para la lectura de estos datos en
   }
  ]
 ```
-En el archivo `util/MOCK_DATA.json` puede encontrar la manera en que se hizo la implementación de la estrategia.
+En el archivo `data/MOCK_DATA.json` puede encontrar la manera en que se hizo la implementación de la estrategia.
 
-- **Data pools pseudo aleatorea**: Con ayuda de la herramienta **FakerJS** se creo una clase typescript que cuenta con la siguiente estructura:
+- **Data pools pseudo aleatorea**: Con ayuda de la herramienta `FakerJS` se creo una clase typescript que cuenta con la siguiente estructura:
 A través de este archivo se trabajo la generacion de la tupla de datos pseudo aleatorea justo antes de la ejecucion de la prueba .
 ```javascript 
 public getPageDataListWithTitleAndContentAndPageUrlAndExcerpt() {
@@ -152,7 +152,7 @@ public getPageDataListWithTitleAndContentAndPageUrlAndExcerpt() {
 ```
 En el archivo `util/pseudo-random-data.ts` puede encontrar la manera en que se hizo la implementación de la estrategia.
 
-- **Data random**: Con la librería de javascript `Faker` se generan datos de manera aleatoria durante la ejecución de las pruebas, se implementa una función que permite hacer uso de esta herramienta y las bondades de Cucumber y Gherkin, la función tiene la siguiente estructura: 
+- **Data random**: Con la librería de javascript `FakerJS` se generan datos de manera aleatoria durante la ejecución de las pruebas, se implementa una función que permite hacer uso de esta herramienta de una forma mas sencilla de acuerdo a la necesidad de cada escenario de prueba, la función tiene la siguiente estructura: 
 ```javascript
 public useFaker(fakerValue: FakerCategories, quantity?: number) {
         switch (fakerValue) {
