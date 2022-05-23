@@ -12,9 +12,10 @@ import Env from "../util/environment";
 import {PostStatus} from "../util/post-status.enum";
 import {FakerCategories} from "../util/faker.enum";
 import RandomElement from "../util/utilsFaker";
+import {PageFields} from "../util/page-fields.enum";
 
 let screenshotNumber = 1;
-let testCode: string =  'DP006';
+let testCode: string =  'DP007';
 let testNumber:number = 0;
 let i:number=1;
 
@@ -22,7 +23,7 @@ let randomElement: RandomElement = new RandomElement();
 let rawData = fs.readFileSync(path.join(__dirname, "../data/MOCK_DATA.json")).toString();
 const records = JSON.parse(rawData);
 
-for (let _i = 0; _i < 3; _i++) {
+for (let _i = 5; _i < 8; _i++) {
     const record = records[_i];
 
     test.describe(`${testCode} - Post Feature`, () => {
@@ -91,6 +92,18 @@ for (let _i = 0; _i < 3; _i++) {
             await postEditor.fillPostTitle(randomTitle);
             await postEditor.fillPostContent(record.contenido);
             await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+
+            //TODO WHEN I edit meta data setting
+            await postEditor.clickSettingButton();
+            await postEditor.clickMetaDataSection();
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await postEditor.fillMetaTitle(record.texto_llave);
+            await postEditor.fillMetaDescription(record.contenido);
+            await postEditor.fillMetaCanonicalUrl(record.url);
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await postEditor.closeMetaDataSection();
+            await page.screenshot({path: utilities.generateScreenshotPath(screenshotNumber++)});
+            await postEditor.clickCloseSetting();
 
             //TODO WHEN I publish the post
             await postEditor.clickPublishLink();
