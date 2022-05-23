@@ -20,11 +20,11 @@
 
 # Escenarios de prueba
 
-La entrega de esta semana esta compuesta por # escenarios haciendo uso de las herramientas Playwright y Kraken. 
+La entrega de esta semana está compuesta por # escenarios haciendo uso de las herramientas Playwright y Kraken. 
 
-* En Kraken los escenarios relacionados con `Post` prueban la creacion de post validando diferentes campos y tipos de datos. Encontrará archivos `post_random.feature` con 17 escenarios y `post_apriori.feature` 14 escenarios, los cuales tienen escenarios compartidos con diferentes estrategias de generacion de datos.
+* En Kraken los escenarios relacionados con `Post` prueban la creación de post validando diferentes campos y tipos de datos. Encontrará archivos `post_random.feature` con 17 escenarios y `post_apriori.feature` 14 escenarios, los cuales tienen escenarios compartidos con diferentes estrategias de generación de datos.
 
-* En Kraken los escenarios relacionados con `Pages` prueban la creacion de post validando diferentes campos y tipos de datos. Encontrará archivos `page_random.feature` y `page_apriori.feature` con 17 escenarios y `post_apriori.feature` 14 escenarios, los cuales tienen escenarios compartidos con diferentes estrategias de generacion de datos.
+* En Kraken los escenarios relacionados con `Pages` prueban la creación de post validando diferentes campos y tipos de datos. Encontrará archivos `page_random.feature` y `page_apriori.feature` con 17 escenarios y `post_apriori.feature` 14 escenarios, los cuales tienen escenarios compartidos con diferentes estrategias de generación de datos.
 
 # Instrucciones de ejecución de código de escenarios de pruebas
 
@@ -48,7 +48,7 @@ ej. `docker run -d -e url=http://localhost:3002 -p 3001:2368 --name ghost_3.41.1
 
 En Kraken usamos 2 estrategias para la generación de datos:
 - **Data pools a-priori**: Con ayuda de la herramienta **Mockaroo** se generó un archivo en formato `JSON` que cuenta con la siguiente estructura:
-A traves de este archivo trabajo una funcion para la lectura de estos datos en diferentes escenarios.
+A través de este archivo trabajo una función para la lectura de estos datos en diferentes escenarios.
 ```json 
 [
   {
@@ -59,7 +59,7 @@ A traves de este archivo trabajo una funcion para la lectura de estos datos en d
   }
  ]
 ```
-- **Data random**: Con la libreria de javascript `Faker` se generan datos de manera aleatoria durante la ejecucion de las pruebas, se implementa una funcion que permite hacer uso de esta herramienta y las bondades de Cucumber y Gherkin, la funcion tiene la siguiente estructura: 
+- **Data random**: Con la librería de javascript `Faker` se generan datos de manera aleatoria durante la ejecución de las pruebas, se implementa una función que permite hacer uso de esta herramienta y las bondades de Cucumber y Gherkin, la función tiene la siguiente estructura: 
 ```javascript
 useFaker(string) {
     const type = string.split("-")[0];
@@ -82,7 +82,7 @@ useFaker(string) {
     }
   }
 ```
-En el directorio `/utilsDataGeneration` puede encontrar la manera en que se hizo la implementacion de estas dos estrategias de generacion de datos
+En el directorio `/utilsDataGeneration` puede encontrar la manera en que se hizo la implementación de estas dos estrategias de generación de datos
    
 ### Prerequisitos:
 - NodeJS 12 o posterior
@@ -91,7 +91,7 @@ En el directorio `/utilsDataGeneration` puede encontrar la manera en que se hizo
 ### Ejecución de pruebas:
 1. Ingresar al directorio kraken `cd kraken`
 2. Instalar dependencias `npm install`
-3. Configurar el archivo `kraken/properties.js` con los parametros 
+3. Configurar el archivo `kraken/properties.js` con los parámetros 
 ```json
 {
     "USERNAME": "usuario@login.ghost", //usuario login del sitio
