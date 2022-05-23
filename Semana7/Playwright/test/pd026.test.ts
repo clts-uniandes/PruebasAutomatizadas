@@ -15,7 +15,7 @@ import AuthorPage from "../page-object/author.page";
 //let screenshotNumber = 1;
 let randomTrialBio: string;
 
-test.describe("PDxxx26 - Actualizacion perfil de usuario, todos los valores bajo el límite pero bio no-ascii/Unicode, \
+test.describe("PDRRX26 - Actualizacion perfil de usuario, todos los valores bajo el límite pero bio no-ascii/Unicode, \
                nuevo post author sin problemas y la bio se observa", () => {
 
     let browser: Browser;
@@ -71,7 +71,7 @@ test.describe("PDxxx26 - Actualizacion perfil de usuario, todos los valores bajo
         randomTrialBio = randomElement.useFaker(FakerCategories.PARAGRAPH, 1).substring(1,150) + "❤️ 💔 💌 💕";
     });
 
-    test("A: A-priori (pool), M: Sobre la frontera, Mid", async () => {
+    test("R: Random scenario, R: Robustez, unicode", async () => {
         console.log("The drawn full name is: " + randomFullName);
         console.log("The drawn slug is: " + randomSlug);
         console.log("The drawn e-mail is: " + randomEmail);
@@ -86,10 +86,7 @@ test.describe("PDxxx26 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName(randomFullName);
         await staffEditorPage.refillSlug(randomSlug);
         await staffEditorPage.refillEmail(randomEmail);

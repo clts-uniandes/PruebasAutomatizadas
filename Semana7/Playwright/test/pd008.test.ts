@@ -15,7 +15,7 @@ import AuthorPage from "../page-object/author.page";
 const fs = require('fs');
 let selected = 0;
 
-test.describe("PDxxx08 - Actualizacion perfil de usuario, todos los valores bajo el límite pero slug no-ascii/Unicode, \
+test.describe("PDARX08 - Actualizacion perfil de usuario, todos los valores bajo el límite pero slug no-ascii/Unicode, \
                nuevo post author y el slug/url asociado lo muestra", () => {
 
     let browser: Browser;
@@ -57,7 +57,7 @@ test.describe("PDxxx08 - Actualizacion perfil de usuario, todos los valores bajo
         selected = Math.floor(Math.random() * 500)-1;
     });
 
-    test("A: A-priori (pool), R: Robustez, _", async () => {
+    test("A: A-priori (pool), R: Robustez, unicode", async () => {
         console.log("The selected element is " + selected);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
@@ -65,10 +65,7 @@ test.describe("PDxxx08 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
         await staffEditorPage.refillSlug('和製漢語');//lo parece "localizar, igual enruta bien con localizacion y caracteres originales"
         await staffEditorPage.refillEmail(foundList[selected].e_mail);
@@ -90,10 +87,11 @@ test.describe("PDxxx08 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.fillPostContent("Contenido de post observado");
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
-        //When I return to post list
+        //Then new slug works
         await page.goto(Env.BASE_URL + '/author/' + '和製漢語');
         const pageStatus = await authorPage.eleNotFoundHeader;
         expect(pageStatus).toBeFalsy();
+        //The new post exists
         const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();
         expect(lastArticleTitle).toContain("PostObservado");
         await new Promise(r => setTimeout(r, 3000));

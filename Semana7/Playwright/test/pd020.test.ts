@@ -1,26 +1,31 @@
 import { Browser, BrowserContext, chromium, Page } from "playwright";
-import HomePage from "../page-object/home.page";
-import LoginPage from "../page-object/login.page"
-import Env from "../util/environment";
-
 import { test, expect } from '@playwright/test';
+import Env from "../util/environment";
+import RandomElement from "../util/utilsFaker";
+import {ProfileFields} from "../util/profile.enum";
+import {FakerCategories} from "../util/faker.enum";
+import PseudoRandomData from "../util/pseudo-random-data";
+//import Utilities from "../functions/utilities";
+
+import HomePage from "../page-object/home.page";
+import LoginPage from "../page-object/login.page";
 import StaffEditorPage from "../page-object/staff-editor.page";
 import PostEditorPage from "../page-object/post-editor.page";
 import PostPage from "../page-object/post.page";
 import AuthorPage from "../page-object/author.page";
-//import Utilities from "../functions/utilities";
 
 //let screenshotNumber = 1;
-
-const fs = require('fs');
+let pseudoRandomData: PseudoRandomData = new PseudoRandomData();
+let formDataList = pseudoRandomData.getProfileDataListWithFullData();
 let selected = 0;
 
-test.describe("PDARX10 - Actualizacion perfil de usuario, todos los valores bajo el límite pero slug alfanumerico, \
-               nuevo post author y el slug/url asociado lo muestra", () => {
+test.describe("PDPRX20 - Actualizacion perfil de usuario, todos los valores bajo el límite pero location no-ascii/Unicode, \
+               nuevo post author sin problemas y la location es la correcta", () => {
 
     let browser: Browser;
     let context: BrowserContext;
     let page: Page;
+    let randomElement: RandomElement;
     //let utilities: Utilities;
 
     //My pageObjects
@@ -30,13 +35,16 @@ test.describe("PDARX10 - Actualizacion perfil de usuario, todos los valores bajo
     let posts: PostPage;
     let postEditor: PostEditorPage;
     let authorPage: AuthorPage;
-
-    //Data pool loading
-    const path = require("path");
-    const directoryPath = path.join(__dirname, "../data/MOCK_DATA.json");
-    let rawdata = fs.readFileSync(directoryPath);
-    const dataPool = JSON.parse(rawdata);
-    const foundList = dataPool;
+    
+    //Random Elements
+    let randomFullName: string;
+    let randomEmail: string;
+    let randomLocation: string;
+    let randomWebsite: string;
+    let randomFacebookProfile: string;
+    let randomTwitterProfile: string;
+    let randomBio: string;
+    let randomSlug: string;
     
     test.beforeAll( async() => {
         browser = await chromium.launch({
@@ -54,11 +62,30 @@ test.describe("PDARX10 - Actualizacion perfil de usuario, todos los valores bajo
         posts = new PostPage(page);
         postEditor = new PostEditorPage(page);
         authorPage = new AuthorPage(page);
-        selected = Math.floor(Math.random() * 500)-1;
+        randomElement = new RandomElement();
+        selected = Math.floor(Math.random() * 49);
+        
+        //Random data pool extraction
+        randomFullName = formDataList[selected].get(ProfileFields.FULL_NAME);
+        randomSlug = formDataList[selected].get(ProfileFields.NAME);
+        randomEmail = formDataList[selected].get(ProfileFields.E_MAIL);
+        randomLocation = formDataList[selected].get(ProfileFields.LOCATION)+"ÅÍÎÏ˝ÓÔÒÚÆ☃";
+        randomWebsite = formDataList[selected].get(ProfileFields.WEBSITE);
+        randomFacebookProfile = formDataList[selected].get(ProfileFields.FACEBOOK_PROFILE);
+        randomTwitterProfile = formDataList[selected].get(ProfileFields.TWITTER_PROFILE);
+        randomBio = formDataList[selected].get(ProfileFields.BIO_PROFILE);
     });
 
-    test("A: A-priori (pool), R: Robustez, alfanumerico", async () => {
+    test("P: Pseudorandom (pool) dynamic, R: Robustez, unicode", async () => {
         console.log("The selected element is " + selected);
+        console.log("The generated pool drawn full name is: " + randomFullName);
+        console.log("The generated pool drawn slug is: " + randomSlug);
+        console.log("The generated pool drawn e-mail is: " + randomEmail);
+        console.log("The generated pool drawn location is: " + randomLocation);
+        console.log("The generated pool drawn website is: " + randomWebsite);
+        console.log("The generated pool drawn facebook profile is: " + randomFacebookProfile);
+        console.log("The generated pool drawn twitter profile is: " + randomTwitterProfile);
+        console.log("The generated pool drawn bio fragment is: " + randomBio);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
         //When I enter the user profile settings
@@ -66,18 +93,18 @@ test.describe("PDARX10 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
         //When I edit the relevant fields
-        await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
-        await staffEditorPage.refillSlug(foundList[selected].texto_llave);
-        await staffEditorPage.refillEmail(foundList[selected].e_mail);
-        await staffEditorPage.fillLocation(foundList[selected].ciudad);
-        await staffEditorPage.fillWebsite(foundList[selected].url);
-        await staffEditorPage.fillFacebookProfile('https://www.facebook.com/'.concat(foundList[selected].nombre));
-        await staffEditorPage.fillTwitterProfile('https://twitter.com/'.concat(foundList[selected].nombre));
-        await staffEditorPage.fillBio(foundList[selected].contenido.substring(1,100));
+        await staffEditorPage.refillFullName(randomFullName)
+        await staffEditorPage.refillSlug(randomSlug);
+        await staffEditorPage.refillEmail(randomEmail);
+        await staffEditorPage.fillLocation(randomLocation);
+        await staffEditorPage.fillWebsite(randomWebsite);
+        await staffEditorPage.fillFacebookProfile(randomFacebookProfile);
+        await staffEditorPage.fillTwitterProfile(randomTwitterProfile);
+        await staffEditorPage.fillBio(randomBio);
         await staffEditorPage.clickSaveButton();
         //Then the data is saved successfully
         expect(await staffEditorPage.eleSavedButton).toBeTruthy;
-        await new Promise(r => setTimeout(r, 3000));
+        await new Promise(r => setTimeout(r, 2000));
         await home.clickPostsLink();
         expect(page.url()).toContain("/#/posts");
         await posts.clickNewPostLink();
@@ -87,11 +114,15 @@ test.describe("PDARX10 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.fillPostContent("Contenido de post observado");
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
-        //Then the new slug works
-        await page.goto(Env.BASE_URL + '/author/' + foundList[selected].texto_llave);
+        //When I return to post list
+        await page.goto(Env.BASE_URL + '/author/' + randomSlug);
         //Then the profile can be seen
         const pageStatus = await authorPage.eleNotFoundHeader;
         expect(pageStatus).toBeFalsy();
+        //Then the location can be seen
+        const authorLocation = await authorPage.eleLocationDiv.textContent();
+        expect(authorLocation).toContain(randomLocation);
+        await new Promise(r => setTimeout(r, 2000));
         //Then the post can be seen
         const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();
         expect(lastArticleTitle).toContain("PostObservado");

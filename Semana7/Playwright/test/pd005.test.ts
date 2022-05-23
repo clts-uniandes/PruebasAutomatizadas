@@ -15,7 +15,7 @@ const fs = require('fs');
 let selected = 0;
 let nombreLimite = '';
 
-test.describe("PDxxx03 - Actualizacion perfil de usuario, todos los valores bajo el límite pero nombre arriba del limite, \
+test.describe("PDAFH05 - Actualizacion perfil de usuario, todos los valores bajo el límite pero nombre arriba del limite, \
 no se puede cambiar nombre, pero post author encaja con nombre perfil actual", () => {
 
     let browser: Browser;
@@ -56,7 +56,7 @@ no se puede cambiar nombre, pero post author encaja con nombre perfil actual", (
         nombreLimite = (foundList[selected].contenido_limite).substring(1,193);
     });
 
-    test("A: A-priori (pool), M: Sobre la frontera, Mid", async () => {
+    test("A: A-priori (pool), F: Arriba la frontera, High", async () => {
         console.log("The selected element is " + selected);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
@@ -64,10 +64,7 @@ no se puede cambiar nombre, pero post author encaja con nombre perfil actual", (
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName(nombreLimite)
         await staffEditorPage.refillSlug(foundList[selected].nombre);
         await staffEditorPage.refillEmail(foundList[selected].e_mail);
@@ -92,6 +89,7 @@ no se puede cambiar nombre, pero post author encaja con nombre perfil actual", (
         await postEditor.clickPublishButton();
         //When I return to post list
         await postEditor.clickPostsLink();
+        //Then Author hasn't changed
         const postAuthor = await posts.eleLastPostAuthorSpan.textContent();
         expect(postAuthor).toContain(Env.FULL_NAME);
         await new Promise(r => setTimeout(r, 3000));

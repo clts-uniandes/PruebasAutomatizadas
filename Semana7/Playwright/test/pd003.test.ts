@@ -15,7 +15,7 @@ const fs = require('fs');
 let selected = 0;
 let nombreLimite = '';
 
-test.describe("PDxxx03 - Actualizacion perfil de usuario, todos los valores bajo el límite pero nombre al limite (191), \
+test.describe("PDAFM03 - Actualizacion perfil de usuario, todos los valores bajo el límite pero nombre al limite (191), \
                nuevo post author encaja con nombre perfil nuevo", () => {
 
     let browser: Browser;
@@ -56,7 +56,7 @@ test.describe("PDxxx03 - Actualizacion perfil de usuario, todos los valores bajo
         nombreLimite = (foundList[selected].letras_limite+foundList[selected].letras_limite+foundList[selected].letras_limite+foundList[selected].letras_limite).substring(1,192)
     });
 
-    test("A: A-priori (pool), M: Sobre la frontera, Mid", async () => {
+    test("A: A-priori (pool), F: Sobre la frontera, Mid", async () => {
         console.log("The selected element is " + selected);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
@@ -64,10 +64,7 @@ test.describe("PDxxx03 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName(nombreLimite)
         await staffEditorPage.refillSlug(foundList[selected].nombre);
         await staffEditorPage.refillEmail(foundList[selected].e_mail);
@@ -91,6 +88,7 @@ test.describe("PDxxx03 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.clickPublishButton();
         //When I return to post list
         await postEditor.clickPostsLink();
+        //Then Author has changed
         const postAuthor = await posts.eleLastPostAuthorSpan.textContent();
         expect(postAuthor).toContain(nombreLimite);
         await new Promise(r => setTimeout(r, 3000));

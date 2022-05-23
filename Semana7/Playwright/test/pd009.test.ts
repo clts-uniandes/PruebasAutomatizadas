@@ -16,7 +16,7 @@ const fs = require('fs');
 let selected = 0;
 let slugLimite = '';
 
-test.describe("PDxxx09 - Actualizacion perfil de usuario, todos los valores bajo el límite pero slug al limite (191), \
+test.describe("PDAFM09 - Actualizacion perfil de usuario, todos los valores bajo el límite pero slug al limite (191) (ISSUE:Salva pero incompleto, navegacion erra llegando a 4040 ), \
                nuevo post author y el slug/url asociado lo muestra", () => {
 
     let browser: Browser;
@@ -59,7 +59,7 @@ test.describe("PDxxx09 - Actualizacion perfil de usuario, todos los valores bajo
         slugLimite = foundList[selected].contenido_limite.substring(1,192)
     });
 
-    test("A: A-priori (pool), F: frontera,  L: por debajo, Low", async () => {
+    test("A: A-priori (pool), F: Sobre la frontera, Mid", async () => {
         console.log("The selected element is " + selected);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
@@ -67,10 +67,7 @@ test.describe("PDxxx09 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
         await staffEditorPage.refillSlug(slugLimite);
         await staffEditorPage.refillEmail(foundList[selected].e_mail);
@@ -92,14 +89,13 @@ test.describe("PDxxx09 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.fillPostContent("Contenido de post observado");
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
-        //When I return to post list
+        //Then the new slug works
         await page.goto(Env.BASE_URL + '/author/' + slugLimite);
         const pageStatus = await authorPage.eleNotFoundHeader;
         expect(pageStatus).toBeFalsy();
-        //const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();
-        //console.log("here:"+lastArticleTitle);
         await new Promise(r => setTimeout(r, 2000));
-        //expect(lastArticleTitle).toContain("PostObservado");
+        const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();
+        expect(lastArticleTitle).toContain("PostObservado");
         await new Promise(r => setTimeout(r, 3000));
     });
 

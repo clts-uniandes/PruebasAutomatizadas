@@ -1,20 +1,20 @@
 import { Browser, BrowserContext, chromium, Page } from "playwright";
-import HomePage from "../page-object/home.page";
-import LoginPage from "../page-object/login.page"
-import Env from "../util/environment";
-
 import { test, expect } from '@playwright/test';
+import Env from "../util/environment";
+//import Utilities from "../functions/utilities";
+
 import StaffEditorPage from "../page-object/staff-editor.page";
 import PostEditorPage from "../page-object/post-editor.page";
 import PostPage from "../page-object/post.page";
-//import Utilities from "../functions/utilities";
+import HomePage from "../page-object/home.page";
+import LoginPage from "../page-object/login.page";
 
 //let screenshotNumber = 1;
 
 const fs = require('fs');
 let selected = 0;
 
-test.describe("PDxxx02 - Actualizacion perfil de usuario, todos los valores bajo el límite pero nombre no-ascii/Unicode, \
+test.describe("PDARX02 - Actualizacion perfil de usuario, todos los valores bajo el límite pero nombre no-ascii/Unicode, \
                nuevo post author encaja con nombre perfil nuevo", () => {
 
     let browser: Browser;
@@ -54,7 +54,7 @@ test.describe("PDxxx02 - Actualizacion perfil de usuario, todos los valores bajo
         selected = Math.floor(Math.random() * 500)-1;
     });
 
-    test("A: A-priori (pool), R: Robustez, _", async () => {
+    test("A: A-priori (pool), R: Robustez, unicode", async () => {
         console.log("The selected element is " + selected);
         //Given I log in
         await login.signInWith(Env.USER, Env.PASS);
@@ -62,10 +62,7 @@ test.describe("PDxxx02 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName('울란바토르')
         await staffEditorPage.refillSlug(foundList[selected].nombre);
         await staffEditorPage.refillEmail(foundList[selected].e_mail);
@@ -89,6 +86,7 @@ test.describe("PDxxx02 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.clickPublishButton();
         //When I return to post list
         await postEditor.clickPostsLink();
+        //Then Author has changed
         const postAuthor = await posts.eleLastPostAuthorSpan.textContent();
         expect(postAuthor).toContain('울란바토르');
         await new Promise(r => setTimeout(r, 3000));

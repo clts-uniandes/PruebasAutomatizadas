@@ -15,7 +15,7 @@ import AuthorPage from "../page-object/author.page";
 const fs = require('fs');
 let selected = 0;
 
-test.describe("PDxxx07 - Actualizacion perfil de usuario, todos los valores bajo el límite, \
+test.describe("PDAFL07 - Actualizacion perfil de usuario, todos los valores bajo el límite, \
                nuevo post author y el slug/url asociado lo muestra", () => {
 
     let browser: Browser;
@@ -65,10 +65,7 @@ test.describe("PDxxx07 - Actualizacion perfil de usuario, todos los valores bajo
         await home.clickUserMenu();
         await home.clickUserProfileLink();
         await staffEditorPage.eleSaveButton;
-        await page.goto(Env.BASE_URL + Env.ADMIN_SECTION);
-        await home.clickUserMenu();
-        await home.clickUserProfileLink();
-        await staffEditorPage.eleSaveButton;
+        //When I edit the relevant fields
         await staffEditorPage.refillFullName(foundList[selected].nombre_completo)
         await staffEditorPage.refillSlug(foundList[selected].nombre);
         await staffEditorPage.refillEmail(foundList[selected].e_mail);
@@ -90,10 +87,11 @@ test.describe("PDxxx07 - Actualizacion perfil de usuario, todos los valores bajo
         await postEditor.fillPostContent("Contenido de post observado");
         await postEditor.clickPublishLink();
         await postEditor.clickPublishButton();
-        //When I return to post list
+        //Then new slug works
         await page.goto(Env.BASE_URL + '/author/' + foundList[selected].nombre);
         const pageStatus = await authorPage.eleNotFoundHeader;
         expect(pageStatus).toBeFalsy();
+        //Then new post exist
         const lastArticleTitle = await authorPage.eleRecentArticleHeader.textContent();
         expect(lastArticleTitle).toContain("PostObservado");
         await new Promise(r => setTimeout(r, 3000));
